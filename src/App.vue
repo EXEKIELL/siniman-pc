@@ -6,35 +6,33 @@
       </div>
       <div class="tab-list">
         <div class="list1">
-          <div class="list1-top">
+          <div class="list1-top" @click="handleChange">
             <router-link to="#">
-              <span></span><span>个人中心</span>
+              <span class="left-jiantou"></span><span>个人中心</span>
             </router-link>
           </div>
-          <div class="list1-shou">
-            <div>
+          <div class="list1-shou" >
+            <div v-for="(item,index) in navTabs" :key="item.key" v-if="show">
               <router-link to="#">
-                <span></span><span>我的门店</span>
-              </router-link>
-            </div>
-            <div>
-              <router-link to="#">
-                <span></span><span>我的方案</span>
-              </router-link>
-            </div>
-            <div>
-              <router-link to="#">
-                <span></span><span>个人资料</span>
-              </router-link>
-            </div>
-            <div>
-              <router-link to="#">
-                <span></span><span>积分明细</span>
+                <span></span><span>{{item.text}}</span>
               </router-link>
             </div>
           </div>
         </div>
-        <div></div>
+        <div class="list1">
+          <div class="list1-top" @click="handleChange">
+            <router-link to="#">
+              <span class="left-jiantou"></span><span>个人中心</span>
+            </router-link>
+          </div>
+          <div class="list1-shou" >
+            <div v-for="(item,index) in navTabs" :key="index" v-if="show" :id="item.key">
+              <router-link to="#" >
+                <span></span><span>{{item.text}}</span>
+              </router-link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -49,8 +47,33 @@ export default {
   data(){
     return {
       navTabs: [
-
-      ]
+        {text:"我的门店",id:"d0"},
+        {text:"我的方案",id:"d1"},
+        {text:"个人资料",id:"d2"},
+        {text:"积分明细",id:"d3"}
+      ],
+      show:false
+    }
+  },
+  methods:{
+    handleChange(){
+      console.log(this.$data.show)
+      this.$data.show = !this.$data.show
+      if(this.$data.show){
+        $('.list1-shou').css({
+          "transform":"scaleY(1)"
+        })
+        $('.left-jiantou').css({
+          "transform":"rotateZ(90deg)"
+        })
+      }else{
+        $('.list1-shou').css({
+          "transform":"scaleY(0)"
+        })
+        $('.left-jiantou').css({
+          "transform":"rotateZ(0deg)"
+        })
+      }
     }
   }
 }
@@ -102,13 +125,17 @@ export default {
               width: 15px;
               height: 15px;
               background: url("assets/img/icon01.png") no-repeat;
-              background-position: 2px 2px;
-              transform: rotateZ(90deg);
+              background-position: 5px 2px;
+              margin-right: 5px;
+              transition: 0.4s;
             }
           }
         }
         .list1-shou{
           background-color: #444444;
+          transition: 0.5s;
+          transform-origin: top left;
+          transform: scaleY(0);
           >div{
             a{
               padding: 20px 0 20px 30px;
