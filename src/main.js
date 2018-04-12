@@ -3,22 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import museUi from 'muse-ui'
-import 'muse-ui/dist/muse-ui.css'
-import 'muse-ui/dist/theme-carbon.css'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/reset.css'
 import './assets/css/swiper-3.4.2.min.css'
 import './assets/js/swiper-3.4.2.min.js'
 
-
 Vue.config.productionTip = false
-Vue.use(museUi)
+Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  museUi,
   components: { App },
   template: '<App/>'
 })
