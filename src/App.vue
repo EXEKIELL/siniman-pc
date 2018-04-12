@@ -113,7 +113,7 @@
           <div class="wrap2 clearFix">
             <div class="w2-left">
               <div class="clearFix left-1">
-                <div>
+                <div class="clearFix">
                   <div>我的业绩：</div>
                   <div class="clearFix">
                     <el-date-picker
@@ -131,7 +131,7 @@
                 </div>
               </div>
               <div class="left-2">
-                <canvas id="canvas1" width="100%" height="100%"></canvas>
+                <canvas id="canvas1" width="530" height="320"></canvas>
               </div>
             </div>
             <div class="w2-right"></div>
@@ -207,8 +207,24 @@ export default {
       prevButton:'.swiper-button-prev',
       nextButton:'.swiper-button-next'
     })
-    var cas = $('#canvas1')[0].getContext('2d');
-    console.log(cas)
+    var canv = $('#canvas1')[0];
+    var ctx = canv.getContext('2d');
+    ctx.clearRect(0,0,canv.width,canv.height);
+    (function () {
+      var num = 0
+      for (var i = 0;i<6;i++) {
+        ctx.beginPath();
+        ctx.moveTo(0,num)
+        ctx.lineTo(canv.width,num);
+        ctx.lineWidth = 2.0;
+        ctx.strokeStyle = '#f6f6f6';
+        ctx.stroke();
+        num+=55;
+      }
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.lineTo(0,canv.h)
+    })()
   }
 }
 </script>
@@ -501,30 +517,34 @@ export default {
           margin: 30px 0 10px 0;
           >div:first-child{
             float: left;
+            width: 75%;
             >div{
-              display: inline-block;
-              vertical-align: middle;
+              float: left;
             }
             >div:first-child{
               font-size: 16px;
               color: #333333;
               font-weight: bold;
               margin-right: 15px;
+              padding: 10px 0;
             }
             >div:last-child{
+              width: 40%;
+              max-width: 130px;
+              min-width: 103px;
+              position: relative;
               .el-date-editor.el-input{
                 float: left;
-                width: 150px;
-                height: 50px;
+                width: 95%;
               }
               >button{
-                float: left;
-                vertical-align: middle;
+                position: absolute;
+                height: 100%;
+                top: 0;
+                margin-left: -2.8%;
                 background-color: #fff2ef;
                 width: 50px;
-                height: 50px;
                 border: 1px solid #ffcac0;
-                border-left: 0;
                 img{
                   margin: auto;
                 }
@@ -533,11 +553,13 @@ export default {
           }
           >div:last-child{
             float: right;
+            width: 25%;
+            height: 100%;
             a{
               display: block;
               font-size: 14px;
               color: #ffa897;
-              padding: 14px 20px;
+              padding: 10px 0px;
               background-color: #fff2ef;
               border: 1px solid #ffcac0;
             }
@@ -583,17 +605,25 @@ export default {
     display: none;
   }
   .el-input__inner{
-    height: 50px;
     border-radius: 0;
     background-color: #fff2ef;
     border: 1px solid #ffcac0;
-    font-size: 16px;
+    border-right: 0;
+    font-size: 1.14em;
     color: #333333;
+  }
+  .el-input--prefix .el-input__inner{
+    padding-left: 5px;
+  }
+  .el-input--suffix .el-input__inner{
+    padding-right: 5px;
   }
   .el-input__inner:focus{
     border: 1px solid #ffcac0;
+    border-right: 0;
   }
   .el-input__inner:hover{
     border: 1px solid #ffcac0;
+    border-right: 0;
   }
 </style>
