@@ -92,50 +92,7 @@
           </div>
         </el-header>
         <el-main>
-          <div class="wrap1">
-            <div id="swiper1" class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-                  <router-link to="#">
-                    <img :src="item.src" alt="">
-                  </router-link>
-                </div>
-              </div>
-              <div class="swiper-pagination"></div>
-              <div class="swiper-button-prev">
-                <img src="../static/img/btn-left.png" alt="">
-              </div>
-              <div class="swiper-button-next">
-                <img src="../static/img/btn-right.png" alt="">
-              </div>
-            </div>
-          </div>
-          <div class="wrap2 clearFix">
-            <div class="w2-left">
-              <div class="clearFix left-1">
-                <div class="clearFix">
-                  <div>我的业绩：</div>
-                  <div class="clearFix">
-                    <el-date-picker
-                      v-model="value1"
-                      type="date"
-                      placeholder="选择日期">
-                    </el-date-picker>
-                    <button class="aaa" @click="dianwo">
-                      <img src="../static/img/icon11.png" alt="">
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <router-link to="#">全部明细</router-link>
-                </div>
-              </div>
-              <div class="left-2">
-                <canvas id="canvas1" width="530" height="320"></canvas>
-              </div>
-            </div>
-            <div class="w2-right"></div>
-          </div>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -200,31 +157,7 @@ export default {
     }
   },
   mounted(){
-    var swiper1 = new Swiper('#swiper1',{
-      pagination: '.swiper-pagination',
-      paginationClickable: true,
-      loop:true,
-      prevButton:'.swiper-button-prev',
-      nextButton:'.swiper-button-next'
-    })
-    var canv = $('#canvas1')[0];
-    var ctx = canv.getContext('2d');
-    ctx.clearRect(0,0,canv.width,canv.height);
-    (function () {
-      var num = 0
-      for (var i = 0;i<6;i++) {
-        ctx.beginPath();
-        ctx.moveTo(0,num)
-        ctx.lineTo(canv.width,num);
-        ctx.lineWidth = 2.0;
-        ctx.strokeStyle = '#f6f6f6';
-        ctx.stroke();
-        num+=55;
-      }
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.lineTo(0,canv.h)
-    })()
+
   }
 }
 </script>
@@ -461,118 +394,6 @@ export default {
     color: #333;
     text-align: center;
     padding: 20px 40px;
-    .wrap1{
-      .swiper-container{
-        width: 100%;
-        .swiper-wrapper{
-          width: 100%;
-          .swiper-slide{
-            width: 100%;
-            a{
-              display: block;
-              img{
-                width: 100%;
-              }
-            }
-          }
-        }
-        .swiper-button-prev,.swiper-button-next{
-          background-image: none;
-          background-color: rgba(0,0,0,0.1);
-          width: 50px;
-          height: 60px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          display: -webkit-flex;
-          -webkit-align-items: center;
-          -webkit-justify-content: center;
-          -webkit-flex-direction: column;
-        }
-        .swiper-button-prev:hover,.swiper-button-next:hover{
-          background-color: #a51e32;
-        }
-        .swiper-pagination{
-          bottom: 15px;
-        }
-
-      }
-    }
-    .wrap2{
-      width: 100%;
-      margin-top: 20px;
-      >div{
-        float: left;
-        width: 49%;
-        height: 460px;
-        background-color: #fff;
-      }
-      >div:last-child{
-        float: right;
-      }
-      .w2-left{
-        .left-1{
-          padding: 0 50px;
-          margin: 30px 0 10px 0;
-          >div:first-child{
-            float: left;
-            width: 75%;
-            >div{
-              float: left;
-            }
-            >div:first-child{
-              font-size: 16px;
-              color: #333333;
-              font-weight: bold;
-              margin-right: 15px;
-              padding: 10px 0;
-            }
-            >div:last-child{
-              width: 40%;
-              max-width: 130px;
-              min-width: 103px;
-              position: relative;
-              .el-date-editor.el-input{
-                float: left;
-                width: 95%;
-              }
-              >button{
-                position: absolute;
-                height: 100%;
-                top: 0;
-                margin-left: -2.8%;
-                background-color: #fff2ef;
-                width: 50px;
-                border: 1px solid #ffcac0;
-                img{
-                  margin: auto;
-                }
-              }
-            }
-          }
-          >div:last-child{
-            float: right;
-            width: 25%;
-            height: 100%;
-            a{
-              display: block;
-              font-size: 14px;
-              color: #ffa897;
-              padding: 10px 0px;
-              background-color: #fff2ef;
-              border: 1px solid #ffcac0;
-            }
-          }
-        }
-        .left-2{
-          height: 345px;
-          padding: 0 50px;
-          #canvas1{
-          }
-        }
-      }
-    }
   }
 
   body > .el-container {
@@ -589,41 +410,15 @@ export default {
   }
 }
 </style>
-<style>
-  .swiper-pagination-bullet{
-    opacity: 1;
-    background-color: #fff;
+<style lang="scss">
+  .clearFix::after{
+    content: '';
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
   }
-  .swiper-pagination-bullet-active{
-    background-color: #a51e32;
-    width: 12px;
-    height: 12px;
-    position: relative;
-    top: 2px;
-  }
-  .el-input__prefix{
-    display: none;
-  }
-  .el-input__inner{
-    border-radius: 0;
-    background-color: #fff2ef;
-    border: 1px solid #ffcac0;
-    border-right: 0;
-    font-size: 1.14em;
-    color: #333333;
-  }
-  .el-input--prefix .el-input__inner{
-    padding-left: 5px;
-  }
-  .el-input--suffix .el-input__inner{
-    padding-right: 5px;
-  }
-  .el-input__inner:focus{
-    border: 1px solid #ffcac0;
-    border-right: 0;
-  }
-  .el-input__inner:hover{
-    border: 1px solid #ffcac0;
-    border-right: 0;
+  .clearFix{
+    zoom: 1;
   }
 </style>
