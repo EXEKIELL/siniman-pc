@@ -1,14 +1,15 @@
 <template>
   <div id="app" class="clearFix">
-    <el-container>
-      <el-aside width="200px">
+    <div is="login" v-if="loginView"></div>
+    <el-container v-if="content">
+      <el-aside width="200px" v-if="true">
         <div class="logo">
           <img src="../static/img/logo.png" alt="">
         </div>
         <div class="list" >
           <ul>
             <li class="list1" @click="handleChange1">
-              <router-link to="#">
+              <router-link to="/login">
                 <span></span>分享社区
               </router-link>
             </li>
@@ -100,12 +101,17 @@
 </template>
 
 <script>
+import Login from './components/login'
 export default {
   name: 'App',
+  components:{
+    login:Login
+  },
   data(){
     return {
       show1:true,
       show2:true,
+      login:Login,
       value1: '',
       headLeft: {
         src:"./static/img/hlicon.png",
@@ -154,6 +160,14 @@ export default {
     },
     dianwo(){
       $('.el-input__inner').focus()
+    }
+  },
+  computed:{
+    content(){
+      return this.$store.state.content
+    },
+    loginView(){
+      return this.$store.state.loginView
     }
   },
   mounted(){
@@ -241,7 +255,7 @@ export default {
             border-left: 1px solid #e4e4e4;
             position: absolute;
             top: 0;
-            left: 0;
+            left: -1px;
           }
           >li:nth-child(1){
             >a{

@@ -1,0 +1,121 @@
+$fz:30px;
+$fz1:20px;
+#myProject{
+  .mp-top{
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 40px 0px 40px 45px;
+    .top-left{
+      width: 33%;
+      .bigImg{
+        width: 100%;
+        overflow: hidden;
+        img{
+          width: 100%;
+        }
+      }
+      #swiper1{
+        height: 100px;
+        margin: 10px 0;
+        .swiper-wrapper{
+          height: 100%;
+          .swiper-slide{
+            overflow: hidden;
+            img{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .top-right{
+      width: 67%;
+      text-align: left;
+      >div{
+        margin: 22px 75px;
+      }
+      .tright-1{
+        span{
+          font-size: $fz;
+          font-weight: bold;
+          margin-right: 30px;
+        }
+        span:last-child{
+          float: right;
+          margin-right: 0;
+        }
+      }
+      .tright-2{
+        span{
+          font-size: 18px;
+          color: #333333;
+          display: inline-block;
+          vertical-align: middle;
+        }
+        span:nth-child(2n+1){
+          width: 16px;
+          height: 17px;
+          background: url("../../static/img/icon15.png") no-repeat;
+          background-size: 100% 100%;
+          margin: 0 5px;
+        }
+        span:nth-child(2n){
+          margin-right: 24px;
+        }
+        span:nth-child(3){
+          background: url("../../static/img/icon16.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        span:nth-child(5){
+          background: url("../../static/img/icon17.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .tright-3{
+        display: flex;
+        justify-content: space-between;
+        padding-right: 50px;
+        margin-bottom: 10px;
+        span{
+          display: inline-block;
+          vertical-align: middle;
+          width: 22%;
+          padding: 10px 0;
+          text-align: center;
+          border: 1px solid #e4e8ff;
+          font-size: 16px;
+          color: #555555;
+        }
+      }
+      .tright-4{
+        >div:first-child{
+          margin: 10px 0;
+          font-size: $fz1;
+          font-weight: bold;
+          color: #333333;
+        }
+        >div:nth-child(2){
+          p{
+            font-size: 14px;
+            color: #555555;
+            text-align: justify;
+            line-height: 39px;
+          }
+        }
+      }
+      .tright-5{
+        button{
+          font-size: 16px;
+          color: #ffffff;
+          padding: 13px 25px;
+          background-color: #83b844;
+        }
+        >button:first-child{
+          background-color: #dd1c5d;
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}
