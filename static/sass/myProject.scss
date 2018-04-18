@@ -3,11 +3,11 @@ $fz1:20px;
 #myProject{
   .mp-top{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: #fff;
     padding: 40px 0px 40px 45px;
     .top-left{
-      width: 33%;
+      width: 38%;
       .bigImg{
         width: 100%;
         overflow: hidden;
@@ -17,7 +17,7 @@ $fz1:20px;
       }
       #swiper1{
         height: 100px;
-        margin: 10px 0;
+        margin: 15px 0;
         .swiper-wrapper{
           height: 100%;
           .swiper-slide{
@@ -30,12 +30,15 @@ $fz1:20px;
       }
     }
     .top-right{
-      width: 67%;
+      width: 65%;
+      max-width: 785px;
       text-align: left;
+      margin-left: 50px;
       >div{
-        margin: 22px 75px;
+        margin: 25px 75px;
       }
       .tright-1{
+        margin-bottom: 30px;
         span{
           font-size: $fz;
           font-weight: bold;
@@ -47,6 +50,7 @@ $fz1:20px;
         }
       }
       .tright-2{
+        margin-bottom: 30px;
         span{
           font-size: 18px;
           color: #333333;
@@ -76,7 +80,7 @@ $fz1:20px;
         display: flex;
         justify-content: space-between;
         padding-right: 50px;
-        margin-bottom: 10px;
+        margin-bottom: 50px;
         span{
           display: inline-block;
           vertical-align: middle;
@@ -89,8 +93,9 @@ $fz1:20px;
         }
       }
       .tright-4{
+        margin-bottom: 60px;
         >div:first-child{
-          margin: 10px 0;
+          margin: 10px 0 25px 0;
           font-size: $fz1;
           font-weight: bold;
           color: #333333;
@@ -110,10 +115,60 @@ $fz1:20px;
           color: #ffffff;
           padding: 13px 25px;
           background-color: #83b844;
+          span{
+            display: inline-block;
+            vertical-align: middle;
+          }
+          span:first-child{
+            background: url("../../static/img/icon19.png") no-repeat;
+            background-size: 100% 100%;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
         }
         >button:first-child{
           background-color: #dd1c5d;
           margin-right: 20px;
+          span:first-child{
+            background: url("../../static/img/icon18.png") no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+    }
+  }
+  .mp-cont{
+    background-color: #fff;
+    margin-top: 30px;
+    .nav{
+      border-bottom: 1px solid #e4e4e4;
+      ul{
+        display: flex;
+        justify-content: center;
+        li{
+          font-size: 16px;
+          color: #333333;
+          cursor: pointer;
+          margin: 30px 0;
+          width: 15%;
+          position: relative;
+        }
+        li::after{
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100%;
+          border-right: 1px solid #e4e4e4;
+        }
+        li:last-child::after{
+          display: none;
+        }
+        li.sel{
+          color: #a51e32;
+          font-weight: bold;
         }
       }
     }

@@ -1,0 +1,111 @@
+#projectComment{
+  padding: 80px 50px;
+  .wrap{
+    .list{
+      padding: 40px 0;
+      border-top: 1px solid #f6f6f6;
+      >div{
+        float: left;
+      }
+      .list-1{
+        width: 10%;
+        >div{
+          width: 105px;
+          height: 105px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          border: 1px solid #e8f2dd;
+          img{
+            width: 95%;
+          }
+        }
+
+      }
+      .list-2{
+        width: 80%;
+        text-align: left;
+        >div:nth-child(1){
+          font-size: 20px;
+          color: #333333;
+          font-weight: bold;
+          span{
+            display: inline-block;
+            vertical-align: middle;
+          }
+          span:first-child{
+            background: url("../../static/img/icon21.png") no-repeat;
+            background-size: 100% 100% ;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+          }
+        }
+        .huifu{
+          padding: 20px 0 0 25px;
+          p{
+            font-size: 16px;
+            color: #333333;
+            text-align: justify;
+            margin-bottom: 20px;
+          }
+          .huifu1{
+            font-size: 16px;
+            color: #333333;
+            border: 1px solid #e4e4e4;
+            background-color: #f6f6f6;
+            width: 55%;
+            padding: 20px 40px 20px 30px;
+            .huifuList{
+              width: 88%;
+              div{
+                margin: 8px 0;
+              }
+              div:first-child{
+                display: flex;
+                span:first-child{
+                  width: 8%;
+                  min-width: 65px;
+                }
+                span:last-child{
+                  width: 92%;
+                }
+              }
+              div:last-child{
+                color: #888888;
+                text-align: right;
+              }
+            }
+          }
+        }
+      }
+      .list-3,.list-4{
+        width: 10%;
+        padding: 45px 0;
+        font-size: 16px;
+        color: #ff0000;
+      }
+      .list-4{
+        text-align: right;
+        color: #333333;
+        div:last-child{
+          span{
+            display: inline-block;
+            vertical-align: middle;
+          }
+          span:first-child{
+            background: url("../../static/img/icon23.png") no-repeat;
+            background-size: 100% 100%;
+            width: 18px;
+            height: 16px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+  .pagina{
+    margin-top: 50px;
+  }
+}

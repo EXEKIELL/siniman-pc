@@ -6,6 +6,7 @@
           <el-form-item label="用户名：">
             <el-input v-model="form.username"></el-input>
             <span class="name"></span>
+            <img src="" alt="">
           </el-form-item>
           <el-form-item label="密码：">
             <el-input type="password" v-model="form.pswd"></el-input>
@@ -43,12 +44,18 @@
             this.$http({
               url: 'http://118.24.62.151:8080/snimay_sharing/user/checkLogin',
               method: 'POST',
-              data:this.$data.form,
+              params:this.$data.form,
               headers: {
                 'Content-Type': 'x-www-from-urlencoded'
               }
             }).then(function (res) {
-              console.log(res)
+              var loginData = res.body.data;
+              console.log(loginData)
+              if(loginData.fristLogin == false){
+                this.$store.commit("logined")
+              }else{
+                
+              }
             }, function () {
               console.log("请求失败")
             });

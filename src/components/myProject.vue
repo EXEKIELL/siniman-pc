@@ -46,12 +46,42 @@
         </div>
       </div>
     </div>
+    <div class="mp-cont">
+      <div class="nav">
+        <ul>
+          <li v-for="(item,index) in navBtns" :class="{sel:item.ok}" @click="navBtn(index,item.component)">{{item.text}}</li>
+        </ul>
+      </div>
+      <div>
+        <detail :is="detail"></detail>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import ProjectSpace from './projectSpace'
+  import ProjectConvert from './projectConvert'
+  import ProjectComment from './projectComment'
     export default {
       name: "MyProject",
+      data(){
+        return {
+          detail:ProjectSpace,
+          navBtns:[
+            {text:"空间详情",ok:true,component:ProjectSpace},
+            {text:"兑换详情",ok:false,component:ProjectConvert},
+            {text:"分享家用户评论",ok:false,component:ProjectComment}
+          ]
+        }
+      },
+      methods:{
+        navBtn(index,component){
+          $(event.target).addClass('sel');
+          $(event.target).siblings('li').removeClass('sel')
+          this.$data.detail = component
+        }
+      },
       mounted(){
         var swiper1 = new Swiper('#swiper1',{
           pagination: '.swiper-pagination',
