@@ -88,4 +88,41 @@
       color: #666666;
     }
   }
+  .mp-bianjiBox{
+    .el-input__inner{
+      width: 100%;
+      height: 47px;
+      font-size: 14px;
+      padding: 0 10px;
+      border-radius: 0;
+      border: 1px solid #a8d375;
+      background-color: #ecfadb;
+      color: #83b844;
+      text-align: center;
+    }
+    .el-input__inner::placeholder{
+      color: #83b844;
+      text-align: center;
+    }
+    .el-input__suffix{
+      display: none;
+    }
+    .bianjiBoxWrap{
+      .biankuang{
+        .formItem1{
+          >div:nth-child(3){
+            .el-input__inner{
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.el-select-dropdown__item.selected{
+  color: #83b844;
+}
+.el-select-dropdown__item{
+  text-align: center;
 }

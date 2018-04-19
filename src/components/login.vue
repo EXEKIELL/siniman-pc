@@ -1,22 +1,28 @@
 <template>
     <div id="login">
+      <div class="mask1" v-if="firstLogin"></div>
       <div class="wrap">
-        <h1>登录</h1>
-        <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="用户名：">
-            <el-input v-model="form.username"></el-input>
-            <span class="name"></span>
-            <img src="" alt="">
-          </el-form-item>
-          <el-form-item label="密码：">
-            <el-input type="password" v-model="form.pswd"></el-input>
-            <span class="pw"></span>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="sub">提交</el-button>
-            <el-button @click="reset1">重置</el-button>
-          </el-form-item>
-        </el-form>
+        <div>
+          <img src="../../static/img/logo01.png" alt="">
+        </div>
+        <div><span>诗尼曼分享家后台登录</span></div>
+        <div>
+          <form class="form1" :model="form" v-if="loging">
+            <div><span>
+              <img src="../../static/img/loginIcon01.png" alt="">
+            </span><input type="text" v-model="form.username"></div>
+            <div><span>
+               <img src="../../static/img/loginIcon02.png" alt="">
+            </span><input type="password" v-model="form.pswd"></div>
+            <div><span @click="xuan"><span class="xuan"></span><input type="checkbox" ></span><span>自动登录</span></div>
+            <div><button @click="sub">登录</button></div>
+          </form>
+          <form class="form2" v-if="firstLogin">
+            <div><input type="tel"><span @click="huoqu"><span v-if="ok">获取验证码</span><span v-else>重新获取({{num1}})</span></span></div>
+            <div><input type="text" placeholder="输入验证码"></div>
+            <div><button>登录</button></div>
+          </form>
+        </div>
       </div>
     </div>
 </template>
@@ -26,6 +32,12 @@
       name: "Login",
       data() {
         return {
+          xuan1:false,
+          loging:true,
+          firstLogin:false,
+          ok:true,
+          num1:'',
+          timer:null,
           form: {
             username: '',
             pswd:''
@@ -34,55 +46,94 @@
       },
       methods:{
         sub(){
-          if(this.$data.form.username == ''){
-            $('.name').text("用户名不能为空")
-          }else if(this.$data.form.pswd == ''){
-            $('.pw').text("密码不能为空")
-          }else{
-            $('.name').text("")
-            $('.pw').text("")
-            this.$http({
-              url: 'http://118.24.62.151:8080/snimay_sharing/user/checkLogin',
-              method: 'POST',
-              params:this.$data.form,
-              headers: {
-                'Content-Type': 'x-www-from-urlencoded'
-              }
-            }).then(function (res) {
-              var loginData = res.body.data;
-              console.log(loginData)
-              if(loginData.fristLogin == false){
-                this.$store.commit("logined")
-              }else{
-                
-              }
-            }, function () {
-              console.log("请求失败")
-            });
-          }
+          console.log(this.$data.form)
+          // this.loging = false
+          console.log(this.firstLogin)
+          this.loging = false
+          this.firstLogin = true
+          console.log(this.firstLogin)
+          // if(this.$data.form.username == ''){
+          //   $('.name').text("用户名不能为空")
+          // }else if(this.$data.form.pswd == ''){
+          //   $('.pw').text("密码不能为空")
+          // }else{
+          //   this.$http({
+          //     url: 'http://118.24.62.151:8080/snimay_sharing/user/checkLogin',
+          //     method: 'POST',
+          //     params:this.$data.form,
+          //     headers: {
+          //       'Content-Type': 'x-www-from-urlencoded'
+          //     }
+          //   }).then(function (res) {
+          //     var loginData = res.body.data;
+          //     console.log(loginData)
+          //     if(loginData.fristLogin == false){
+          //       this.$store.commit("logined")
+          //     }else{
+          //
+          //     }
+          //   }, function () {
+          //     console.log("请求失败")
+          //   });
+          // }
         },
         reset1(){
           this.$data.form.username = "";
           this.$data.form.pswd = "";
+        },
+        xuan(){
+          if(this.$data.xuan1==false){
+            $('.xuan').show()
+            $(event.target).find('input').attr("checked")
+            this.$data.xuan1 = true
+          }else{
+            $('.xuan').hide();
+            $(event.target).find('input').removeAttr("checked")
+            this.$data.xuan1 = false
+          }
+        },
+        huoqu(){
+          this.ok = false;
+          var e = event.target
+          const TIME = 60;
+          if(!this.timer){
+            this.num1 = TIME;
+            this.timer = setInterval(()=> {
+              if(this.num1>0&&this.num1<=TIME){
+                console.log(1)
+                this.num1--;
+              }else {
+                clearInterval(this.timer);
+                this.timer = null;
+                this.ok = true
+              }
+            },1000)
+          }
+        }
+      },
+      watch:{
+        firstLogin:()=> {
+          if(this.firstLogin = false){
+            $('.wrap').css({
+              "box-shadow":"0 0 30px #e4e4e4"
+            })
+          }else{
+            $('.wrap').css({
+              "box-shadow":"none"
+            })
+          }
         }
       },
       mounted(){
-
+        // $('.form2 input').focusin(function () {
+        //   $(this).css({
+        //     "border":"1px solid #f8c1c9"
+        //   })
+        // })
       }
     }
 </script>
 
 <style lang="scss" scoped>
-#login{
-  position: absolute;
-  right: 50%;
-  top: 50%;
-  margin-top: -2.5%;
-  h1{
-    margin-bottom: 20px;
-  }
-  .name,.pw{
-    color: #ff0000;
-  }
-}
+@import "../../static/sass/login";
 </style>

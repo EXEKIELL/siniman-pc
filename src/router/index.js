@@ -18,6 +18,11 @@ export default new Router({
       path: '/personCenter',
       name: 'PersonCenter',
       component: PersonCenter
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
