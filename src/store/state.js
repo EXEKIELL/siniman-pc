@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state:{
-    content:false,
-    loginView:true,
+    content:true,
+    loginView:false,
     loginData:{}
   },
   mutations:{

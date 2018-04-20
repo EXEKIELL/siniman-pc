@@ -4,6 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import PersonCenter from '@/components/personCenter'
 import Login from '@/components/login'
 import MyProject from '@/components/myProject'
+import ShareProject from '@/components/shareProject'
+import ShareCommunity from '@/components/shareCommunity'
+import MyProjectIndex from '@/components/myProjectIndex'
+import MessageManage from '@/components/messageManage'
 
 Vue.use(Router)
 
@@ -20,9 +24,29 @@ export default new Router({
       component: PersonCenter
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      path: '/myProject',
+      name: 'MyProject',
+      component: MyProject
+    },
+    {
+      path: '/shareProject',
+      name: 'ShareProject',
+      component: ShareProject
+    },
+    {
+      path: '/shareCommunity',
+      name: 'ShareCommunity',
+      component: ShareCommunity
+    },
+    {
+      path: '/myProjectIndex',
+      name: 'MyProjectIndex',
+      component: MyProjectIndex
+    },
+    {
+      path: '/messageManage',
+      name: 'MessageManage',
+      component: MessageManage
     }
   ]
 })

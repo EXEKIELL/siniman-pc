@@ -1,5 +1,5 @@
 <template>
-  <div id="personCenter" class="clearFix">
+  <div id="shareCommunity">
     <div class="wrap1">
       <div id="swiper1" class="swiper-container">
         <div class="swiper-wrapper">
@@ -18,61 +18,28 @@
         </div>
       </div>
     </div>
-    <div class="wrap2 clearFix">
-      <div class="w2-left">
-        <div class="clearFix left-1">
-          <div class="clearFix">
-            <div>我的业绩：</div>
-            <div class="clearFix">
-              <div class="detaSel1">
-                <el-date-picker
-                  v-model="value1"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-              <button class="aaa" @click="dianwo">
-                <img src="../../static/img/icon11.png" alt="">
-              </button>
-            </div>
-          </div>
-          <div>
-            <router-link to="#">全部明细</router-link>
-          </div>
-        </div>
-        <div class="left-2">
-          <canvas id="canvas1"  height="320"></canvas>
-        </div>
-      </div>
-      <div class="w2-right">
-        <div class="clearFix left-1">
-          <div class="clearFix">
-            <div>我的客户：</div>
-            <div class="clearFix">
-              <div class="detaSel2">
-                <el-date-picker
-                  v-model="value1"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-              <button class="aaa" @click="dianwo">
-                <img src="../../static/img/icon11.png" alt="">
-              </button>
-            </div>
-          </div>
-          <div>
-            <router-link to="#">全部明细</router-link>
-          </div>
-        </div>
-        <div class="left-2">
-          <canvas id="canvas2" width="530" height="320"></canvas>
-        </div>
-      </div>
-    </div>
     <div class="wrap3">
       <div class="w3-title">
-        <span>我的设计</span>
+        <span>共享方案</span>
+      </div>
+      <div class="w3-seek">
+        <div>
+          <div>排序：</div>
+          <div>
+            <ul>
+              <li :class="{sel:item.isSel}" v-for="(item,index) in paixus" :key="index" @click="paixu1(index)">{{item.text}}</li>
+            </ul>
+          </div>
+          <div>
+            <input type="text" value="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
+            <span>~</span>
+            <input value="1000" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+        </div>
+        <div>
+          <input type="text" placeholder="请输入设计师姓名或文案名称">
+          <button>搜索</button>
+        </div>
       </div>
       <div class="w3-nav">
         <ul>
@@ -436,10 +403,81 @@
     </div>
   </div>
 </template>
-<script src="../../static/js/personCenter.js"></script>
+
+<script>
+    export default {
+      name: "ShareCommunity",
+      data(){
+        return {
+          swiperList:[
+            {src:"./static/img/img01.png"},
+            {src:"./static/img/img01.png"},
+            {src:"./static/img/img01.png"}
+          ],
+          paixus:[
+            {text:"价格",isSel:true},
+            {text:"销量",isSel:false},
+            {text:"点赞量",isSel:false},
+            {text:"收藏量",isSel:false}
+          ],
+          leixing:[
+            {text:"全部"},
+            {text:"全屋方案"},
+            {text:"空间方案"}
+          ],
+          jieduan:[
+            {text:"全部"},
+            {text:"户型阶段"},
+            {text:"装修阶段"}
+          ],
+          huxing:[
+            {text:"全部"},
+            {text:"一室一厅"},
+            {text:"两室一厅"},
+            {text:"两室二厅"},
+            {text:"三室一厅"},
+            {text:"三室二厅"},
+            {text:"四室一厅"},
+            {text:"四室两厅"},
+            {text:"其他"}
+          ],
+          fengge:[
+            {text:"全部"},
+            {text:"北欧"},
+            {text:"简欧"},
+            {text:"现代简约"},
+            {text:"新中式"},
+            {text:"其他"}
+          ],
+        }
+      },
+      methods:{
+        navSel(){
+          var e = event.target;
+          $(e).addClass("sel");
+          $(e).parent('div').siblings('div').find('div').removeClass('sel')
+        },
+        paixu1(index){
+          for(var i = 0;i<this.paixus.length;i++){
+            this.paixus[i].isSel = false;
+          }
+          this.paixus[index].isSel = true;
+        }
+      },
+      mounted(){
+        var swiper1 = new Swiper('#swiper1',{
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          loop:true,
+          prevButton:'.swiper-button-prev',
+          nextButton:'.swiper-button-next'
+        })
+      }
+    }
+</script>
 
 <style lang="scss" scoped>
-  @import "../../static/sass/personCenter";
+@import "../../static/sass/shareCommunity";
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

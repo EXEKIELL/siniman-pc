@@ -1,4 +1,4 @@
-#projectConvert{
+#shareComment{
   padding: 80px 50px;
   .wrap{
     .list{
@@ -21,62 +21,26 @@
             width: 95%;
           }
         }
+
       }
       .list-2{
-        width: 70%;
+        width: 80%;
         text-align: left;
-        >div{
-          margin-bottom: 15px;
-        }
         >div:nth-child(1){
-          display: flex;
-          div:first-child{
-            font-size: 20px;
-            color: #333333;
-            font-weight: bold;
-            margin-right: 30px;
-            span{
-              display: inline-block;
-              vertical-align: middle;
-            }
-            span:first-child{
-              background: url("../../static/img/icon21.png") no-repeat;
-              background-size: 100% 100% ;
-              width: 18px;
-              height: 18px;
-              margin-right: 8px;
-            }
+          font-size: 20px;
+          color: #333333;
+          font-weight: bold;
+          span{
+            display: inline-block;
+            vertical-align: middle;
           }
-          div:last-child{
-            font-size: 16px;
-            color: #333333;
-            span{
-              display: inline-block;
-              vertical-align: middle;
-            }
-            span:first-child{
-              background: url("../../static/img/icon22.png") no-repeat;
-              background-size: 100%;
-              background-position: 0 4px;
-              width: 16px;
-              height: 21px;
-              margin-right: 10px;
-            }
+          span:first-child{
+            background: url("../../static/img/icon21.png") no-repeat;
+            background-size: 100% 100% ;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
           }
-        }
-        >div:nth-child(2){
-          display: flex;
-          padding-left: 25px;
-          div{
-            font-size: 14px;
-            color: #333333;
-            margin-right: 25px;
-          }
-        }
-        >div:nth-child(3){
-          font-size: 14px;
-          color: #a51e32;
-          padding-left: 25px;
         }
         .huifu{
           padding: 20px 0 0 25px;
@@ -91,10 +55,10 @@
             color: #333333;
             border: 1px solid #e4e4e4;
             background-color: #f6f6f6;
-            width: 60%;
+            width: 55%;
             padding: 20px 40px 20px 30px;
             .huifuList{
-              width: 93%;
+              width: 88%;
               div{
                 margin: 8px 0;
               }
@@ -139,9 +103,6 @@
           }
         }
       }
-    }
-    .list:last-child{
-      border-bottom: 1px solid #f6f6f6;
     }
   }
   .pagina{

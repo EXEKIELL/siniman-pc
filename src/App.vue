@@ -9,30 +9,16 @@
         <div class="list" >
           <ul>
             <li class="list1" @click="handleChange1">
-              <router-link to="/login">
+              <router-link to="/shareCommunity">
                 <span></span>分享社区
               </router-link>
             </li>
-            <ul class="shou1">
-              <li><router-link to="#">
-                <span></span>我的门店
-              </router-link></li>
-              <li><router-link to="#">
-                <span></span>我的方案
-              </router-link></li>
-              <li><router-link to="#">
-                <span></span>个人资料
-              </router-link></li>
-              <li><router-link to="#">
-                <span></span>积分明细
-              </router-link></li>
-            </ul>
           </ul>
         </div>
         <div class="list" >
           <ul>
             <li class="list2" @click="handleChange2">
-              <router-link to="#">
+              <router-link to="/personCenter">
                 <span></span>个人中心
               </router-link>
             </li>
@@ -40,7 +26,7 @@
               <li><router-link to="#">
                 <span></span>我的门店
               </router-link></li>
-              <li><router-link to="#">
+              <li><router-link to="/myProjectIndex">
                 <span></span>我的方案
               </router-link></li>
               <li><router-link to="#">
@@ -69,7 +55,7 @@
 
                 </li>
                 <li>
-                  <router-link to="#">
+                  <router-link to="/messageManage">
                     <span></span><span>消息</span><span>{{headRight.message}}</span>
                   </router-link>
                 </li>
@@ -195,6 +181,9 @@ export default {
   height: 100%;
   >div{
     float: left;
+  }
+  .el-container{
+    width: 100%;
   }
   .el-header, .el-footer {
     background-color: #f6f6f6;
@@ -410,18 +399,6 @@ export default {
     padding: 20px 40px;
   }
 
-  body > .el-container {
-    margin-bottom: 40px;
-  }
-
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
 }
 </style>
 <style lang="scss">

@@ -206,13 +206,6 @@
         </div>
       </div>
     </div>
-    <div class="mp-fenxiangBox">
-      <div class="fenxiangBoxWrap">
-        <div class="biankuang">
-
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

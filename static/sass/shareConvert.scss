@@ -1,4 +1,4 @@
-#projectConvert{
+#shareConvert{
   padding: 80px 50px;
   .wrap{
     .list{
@@ -40,11 +40,12 @@
               vertical-align: middle;
             }
             span:first-child{
-              background: url("../../static/img/icon21.png") no-repeat;
-              background-size: 100% 100% ;
-              width: 18px;
-              height: 18px;
+              width: 20px;
+              height: 20px;
               margin-right: 8px;
+              img{
+                margin: auto;
+              }
             }
           }
           div:last-child{
