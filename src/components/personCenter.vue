@@ -37,7 +37,7 @@
             </div>
           </div>
           <div>
-            <router-link to="#">全部明细</router-link>
+            <router-link to="/myPerformaceDetail">全部明细</router-link>
           </div>
         </div>
         <div class="left-2">
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div>
-            <router-link to="#">全部明细</router-link>
+            <router-link to="/myClientDetail">全部明细</router-link>
           </div>
         </div>
         <div class="left-2">

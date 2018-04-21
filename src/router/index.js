@@ -8,6 +8,10 @@ import ShareProject from '@/components/shareProject'
 import ShareCommunity from '@/components/shareCommunity'
 import MyProjectIndex from '@/components/myProjectIndex'
 import MessageManage from '@/components/messageManage'
+import IntegralDetail from '@/components/integralDetail'
+import MyClientDetail from '@/components/myClientDetail'
+import MyPerformaceDetail from '@/components/myPerformaceDetail'
+import MyShop from '@/components/myShop'
 
 Vue.use(Router)
 
@@ -47,6 +51,26 @@ export default new Router({
       path: '/messageManage',
       name: 'MessageManage',
       component: MessageManage
+    },
+    {
+      path: '/integralDetail',
+      name: 'IntegralDetail',
+      component: IntegralDetail
+    },
+    {
+      path: '/myClientDetail',
+      name: 'MyClientDetail',
+      component: MyClientDetail
+    },
+    {
+      path: '/myPerformaceDetail',
+      name: 'MyPerformaceDetail',
+      component: MyPerformaceDetail
+    },
+    {
+      path: '/myShop',
+      name: 'MyShop',
+      component: MyShop
     }
   ]
 })

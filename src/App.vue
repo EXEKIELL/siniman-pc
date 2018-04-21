@@ -23,7 +23,7 @@
               </router-link>
             </li>
             <ul class="shou2">
-              <li><router-link to="#">
+              <li><router-link to="/myShop">
                 <span></span>我的门店
               </router-link></li>
               <li><router-link to="/myProjectIndex">
@@ -32,7 +32,7 @@
               <li><router-link to="#">
                 <span></span>个人资料
               </router-link></li>
-              <li><router-link to="#">
+              <li><router-link to="/integralDetail">
                 <span></span>积分明细
               </router-link></li>
             </ul>
