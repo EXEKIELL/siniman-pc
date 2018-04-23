@@ -47,7 +47,7 @@
           <span>朱秋冬</span>
           <span>2200.00</span>
           <span>3</span>
-          <span>查看详情</span>
+          <span @click="NavTo">查看详情</span>
         </li>
         <li>
           <span>广州分店</span>
@@ -110,7 +110,12 @@
 
 <script>
     export default {
-        name: "MyShop"
+      name: "MyShop",
+      methods:{
+        NavTo(){
+          this.$router.push("/myShopXq")
+        }
+      }
     }
 </script>
 

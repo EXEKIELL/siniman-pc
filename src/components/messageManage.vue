@@ -9,7 +9,7 @@
               </div>
               <div>
                 <div><span>系统消息</span><span>3</span></div>
-                <div><span>查看系统消息>></span></div>
+                <div><span @click="navTo">查看系统消息>></span></div>
               </div>
             </div>
           </div>
@@ -75,7 +75,12 @@
 
 <script>
     export default {
-        name: "MessageManage"
+      name: "MessageManage",
+      methods:{
+        navTo(){
+          this.$router.push("/messageXq")
+        }
+      }
     }
 </script>
 

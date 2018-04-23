@@ -6,7 +6,7 @@
         <div class="logo">
           <img src="../static/img/logo.png" alt="">
         </div>
-        <div class="list" >
+        <div class="list" id="lis1">
           <ul>
             <li class="list1" @click="handleChange1">
               <router-link to="/shareCommunity">
@@ -15,26 +15,39 @@
             </li>
           </ul>
         </div>
-        <div class="list" >
+        <div class="list" id="lis2" >
           <ul>
             <li class="list2" @click="handleChange2">
-              <router-link to="/personCenter">
+              <router-link to="/personCenter" >
                 <span></span>个人中心
               </router-link>
             </li>
             <ul class="shou2">
-              <li><router-link to="/myShop">
-                <span></span>我的门店
-              </router-link></li>
-              <li><router-link to="/myProjectIndex">
-                <span></span>我的方案
-              </router-link></li>
-              <li><router-link to="#">
-                <span></span>个人资料
-              </router-link></li>
-              <li><router-link to="/integralDetail">
-                <span></span>积分明细
-              </router-link></li>
+              <li>
+                <router-link to="/accountAssignment">
+                  <span></span>账号分配
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/myShop">
+                  <span></span>我的门店
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/myProjectIndex">
+                  <span></span>我的方案
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/myData">
+                  <span></span>我的资料
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/integralDetail">
+                  <span></span>积分明细
+                </router-link>
+              </li>
             </ul>
           </ul>
         </div>
@@ -117,32 +130,30 @@ export default {
   },
   methods:{
     handleChange1(){
-      if(this.$data.show1){
-        $('.shou1').slideDown();
-        $('.list1').css({
-          "background-color":"#a51e32"
-        })
-      }else{
-        $('.shou1').slideUp();
-        $('.list1').css({
-          "background-color":"#333333"
-        })
-      }
-      this.$data.show1 = !this.$data.show1
+      $('#lis2 .list2').css({
+        "background-color":"#333333"
+      })
+      $('#lis2 .shou2').slideUp();
+      $('#lis1 .shou1').slideDown();
+      $('#lis1 .list1').css({
+        "background-color":"#a51e32"
+      })
+      $('#lis2 .list2 span').css({
+        transform:"rotateZ(0deg)"
+      })
     },
     handleChange2(){
-      if(this.$data.show2){
-        $('.shou2').slideDown();
-        $('.list2').css({
-          "background-color":"#a51e32"
-        })
-      }else{
-        $('.shou2').slideUp();
-        $('.list2').css({
-          "background-color":"#333333"
-        })
-      }
-      this.$data.show2 = !this.$data.show2
+      $('#lis1 .list1').css({
+        "background-color":"#333333"
+      })
+      $('#lis1 .shou1').slideUp();
+      $('#lis2 .shou2').slideDown();
+      $('#lis2 .list2').css({
+        "background-color":"#a51e32"
+      })
+      $('#lis2 .list2 span').css({
+        transform:"rotateZ(90deg)"
+      })
     },
     dianwo(){
       $('.el-input__inner').focus()
@@ -363,6 +374,7 @@ export default {
               background: url("../static/img/icon01.png") no-repeat;
               background-position: 6px 2px;
               margin-right: 5px;
+              transition: transform 0.5s;
             }
           }
         }
@@ -381,6 +393,35 @@ export default {
                 height: 20px;
                 margin-right: 5px;
                 background: url("../static/img/icon02.png") no-repeat;
+              }
+            }
+          }
+          >li:first-child{
+            a{
+              span{
+                background: url("../static/img/icon60.png") no-repeat;
+                background-size: 100% 80%;
+              }
+            }
+          }
+          >li:nth-child(3){
+            a{
+              span{
+                background: url("../static/img/icon03.png") no-repeat;
+              }
+            }
+          }
+          >li:nth-child(4){
+            a{
+              span{
+                background: url("../static/img/icon04.png") no-repeat;
+              }
+            }
+          }
+          >li:nth-child(5){
+            a{
+              span{
+                background: url("../static/img/icon05.png") no-repeat;
               }
             }
           }

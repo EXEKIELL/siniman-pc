@@ -12,6 +12,10 @@ import IntegralDetail from '@/components/integralDetail'
 import MyClientDetail from '@/components/myClientDetail'
 import MyPerformaceDetail from '@/components/myPerformaceDetail'
 import MyShop from '@/components/myShop'
+import MessageXq from '@/components/messageXq'
+import MyData from '@/components/myData'
+import AccountAssignment from '@/components/accountAssignment'
+import MyShopXq from '@/components/myShopXq'
 
 Vue.use(Router)
 
@@ -71,6 +75,26 @@ export default new Router({
       path: '/myShop',
       name: 'MyShop',
       component: MyShop
+    },
+    {
+      path: '/messageXq',
+      name: 'MessageXq',
+      component:MessageXq
+    },
+    {
+      path: '/myData',
+      name: 'MyData',
+      component: MyData
+    },
+    {
+      path: '/accountAssignment',
+      name: 'AccountAssignment',
+      component: AccountAssignment
+    },
+    {
+      path: '/myShopXq',
+      name: 'MyShopXq',
+      component: MyShopXq
     }
   ]
 })
