@@ -36,6 +36,7 @@
           display: flex;
           justify-content: center;
           margin-bottom: 30px;
+          position: relative;
           span{
             display: flex;
             justify-content: center;
@@ -54,6 +55,15 @@
             font-size: 14px;
             color: #333333;
             border-radius: 0 7px 7px 0;
+          }
+          input:focus{
+            border: 1px solid #f8c1c9;
+            border-left: 0;
+          }
+          >div:last-child{
+            position: absolute;
+            color: #ff0000;
+            bottom: -20px;
           }
         }
         >div:nth-child(3){
@@ -121,6 +131,9 @@
             border-radius: 6px 0 0 6px;
             font-size: 14px;
           }
+          input:disabled{
+            background-color: #fff;
+          }
           >span{
             font-size: 14px;
             color: #a51e32;
@@ -139,6 +152,7 @@
           display: flex;
           justify-content: center;
           margin-bottom: 30px;
+          position: relative;
           input{
             width: 71%;
             height: 50px;
@@ -149,6 +163,12 @@
           input::placeholder{
             font-size: 14px;
             color: #888888;
+          }
+          .tishi3{
+            color: #ff0000;
+            font-size: 16px;
+            position: absolute;
+            bottom: -30px;
           }
         }
         >div:nth-child(3){

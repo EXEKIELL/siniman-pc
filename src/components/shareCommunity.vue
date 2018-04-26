@@ -83,7 +83,7 @@
             <img src="../../static/img/img05.png" alt="">
             <div>
               <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
+              <button @click="toUrl">编辑方案</button>
             </div>
             <div>
               <div>
@@ -239,7 +239,7 @@
             <img src="../../static/img/img02.png" alt="">
             <div>
               <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
+              <button @click="toUrl">编辑方案</button>
             </div>
             <div>
               <div>
@@ -462,6 +462,9 @@
             this.paixus[i].isSel = false;
           }
           this.paixus[index].isSel = true;
+        },
+        toUrl(){
+          this.$router.push('/shareProject')
         }
       },
       mounted(){

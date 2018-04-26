@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueResource from 'vue-resource'
 import Vuex from 'vuex'
-import store from './store/state'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import store from './store/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/reset.css'
@@ -13,7 +14,7 @@ import './assets/css/swiper-3.4.2.min.css'
 import './assets/js/swiper-3.4.2.min.js'
 
 Vue.config.productionTip = false
-Vue.use(VueResource)
+Vue.use(VueAxios, axios)
 Vue.use(Vuex)
 Vue.use(store)
 Vue.use(ElementUI)

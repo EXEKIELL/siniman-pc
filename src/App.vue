@@ -23,29 +23,9 @@
               </router-link>
             </li>
             <ul class="shou2">
-              <li>
-                <router-link to="/accountAssignment">
-                  <span></span>账号分配
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/myShop">
-                  <span></span>我的门店
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/myProjectIndex">
-                  <span></span>我的方案
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/myData">
-                  <span></span>我的资料
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/integralDetail">
-                  <span></span>积分明细
+              <li v-for="(item,index) in shou2List" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
+                <router-link :to="item.path">
+                  <span></span>{{item.text}}
                 </router-link>
               </li>
             </ul>
@@ -96,6 +76,7 @@
         </el-main>
       </el-container>
     </el-container>
+    <div class="top" @click="toTop"></div>
   </div>
 </template>
 
@@ -125,6 +106,14 @@ export default {
         {src:"./static/img/img01.png"},
         {src:"./static/img/img01.png"},
         {src:"./static/img/img01.png"}
+      ],
+      shou2List:[
+        {text:"帐号分配",path:"/accountAssignment",selClass:false},
+        {text:"我的门店",path:"/myShop",selClass:false},
+        {text:"我的方案",path:"/myProjectIndex",selClass:false},
+        {text:"我的资料",path:"/myData",selClass:false},
+        {text:"积分明细",path:"/integralDetail",selClass:false},
+        {text:"我的订单",path:"/myIndent",selClass:false}
       ]
     }
   },
@@ -154,303 +143,52 @@ export default {
       $('#lis2 .list2 span').css({
         transform:"rotateZ(90deg)"
       })
+      for(var i = 0;i<this.shou2List.length;i++){
+        this.shou2List[i].selClass = false;
+      }
     },
     dianwo(){
       $('.el-input__inner').focus()
+    },
+    click1(index){
+      for(var i = 0;i<this.shou2List.length;i++){
+        this.shou2List[i].selClass = false;
+      }
+      this.shou2List[index].selClass = true
+    },
+    toTop(){
+      $('html , body').animate({scrollTop: 0},'slow');
     }
   },
   computed:{
     content(){
-      return this.$store.state.content
+      return this.$store.state.login.content
     },
     loginView(){
-      return this.$store.state.loginView
+      return this.$store.state.login.loginView
     }
   },
   mounted(){
-
+    $('#lis2 .list2').css({
+      "background-color":"#a51e32"
+    })
+    $('#lis2 .list2 span').css({
+      transform:"rotateZ(90deg)"
+    })
+    $(window).scroll(function (event) {
+      if($(this).scrollTop()>100){
+        $('.top').show()
+      }else{
+        $('.top').hide()
+      }
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.clearFix::after{
-  content: '';
-  display: block;
-  visibility: hidden;
-  clear: both;
-  height: 0;
-}
-.clearFix{
-  zoom: 1;
-}
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  >div{
-    float: left;
-  }
-  .el-container{
-    width: 100%;
-  }
-  .el-header, .el-footer {
-    background-color: #f6f6f6;
-    color: #333;
-    text-align: center;
-    padding: 0 40px;
-  }
-  .el-header{
-    border-bottom: 1px solid #e4e4e4;
-    .head{
-      position: relative;
-      height: 100%;
-      .head-left{
-        float: left;
-        padding: 20px 0;
-        >span{
-          display: inline-block;
-          vertical-align: middle;
-          font-size: 14px;
-          color: #333333;
-        }
-        >span:first-child{
-          width: 11px;
-          height: 12px;
-          margin-right: 6px;
-          img{
-            width: 100%;
-          }
-        }
-      }
-      .head-right{
-        position: absolute;
-        top: 0;
-        right: 0;
-        ul{
-          >li{
-            float: left;
-            padding: 0px 35px;
-            font-size: 14px;
-            color: #333333;
-            height: 20px;
-            position: relative;
-            margin: 20px 0;
-            a{
-              font-size: 14px;
-              color: #333333;
-            }
-            span{
-              display: inline-block;
-              vertical-align: middle;
-              margin-top: -2.5%;
-            }
-          }
-          >li::before{
-            content: '';
-            display: block;
-            height: 100%;
-            border-left: 1px solid #e4e4e4;
-            position: absolute;
-            top: 0;
-            left: -1px;
-          }
-          >li:nth-child(1){
-            >a{
-              width: 40px;
-              height: 40px;
-              display: block;
-              position: relative;
-              top: 0;
-              margin-top: -25%;
-              >div{
-                border-radius: 50%;
-                overflow: hidden;
-                >img{
-                  height: 100%;
-                }
-              }
-              >img{
-                width: 11px;
-                height: 12px;
-                position: absolute;
-                bottom: 0;
-                right: 0;
-              }
-            }
-          }
-          >li:nth-child(2){
-            a{
-              >span:first-child{
-                width: 13px;
-                height: 15px;
-                background: url("../static/img/icon07.png") no-repeat;
-                background-size: 100% 100%;
-                margin-right: 5px;
-              }
-              >span:last-child{
-                padding: 0 1px;
-                text-align: center;
-                margin-left: 5px;
-                background-color: #ff0000;
-                border-radius: 50%;
-                font-size: 10px;
-                color: #ffffff;
-              }
-            }
-          }
-          >li:nth-child(3){
-            a{
-              >span:first-child{
-                width: 16px;
-                height: 15px;
-                background: url("../static/img/icon08.png") no-repeat;
-                background-size: 100% 100%;
-                margin-right: 5px;
-
-              }
-            }
-          }
-          >li:nth-child(4){
-            a{
-              >span:first-child{
-                width: 10px;
-                height: 14px;
-                background: url("../static/img/icon09.png") no-repeat;
-                background-size: 100% 100%;
-                margin-right: 5px;
-              }
-            }
-          }
-          >li:nth-child(5){
-            a{
-              >span:first-child{
-                width: 14px;
-                height: 15px;
-                background: url("../static/img/icon10.png") no-repeat;
-                background-size: 100% 100%;
-                margin-right: 5px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .el-aside {
-    background-color: #333333;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    .logo{
-      width: 100%;
-      height: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      display: -webkit-flex;
-      -webkit-align-items: center;
-      -webkit-justify-content: center;
-      -webkit-flex-direction: column;
-      border-bottom: 1px solid #444444;
-    }
-    .list{
-      >ul{
-        font-size: 0;
-        line-height: 60px;
-        >li{
-          a{
-            font-size: 14px;
-            color: #ecf1f5;
-            span{
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              vertical-align: middle;
-              background: url("../static/img/icon01.png") no-repeat;
-              background-position: 6px 2px;
-              margin-right: 5px;
-              transition: transform 0.5s;
-            }
-          }
-        }
-        >ul{
-          background-color: #444444;
-          display: none;
-          >li{
-            padding-left: 30px;
-            a{
-              font-size: 14px;
-              color: #ecf1f5;
-              span{
-                display: inline-block;
-                vertical-align: middle;
-                width: 20px;
-                height: 20px;
-                margin-right: 5px;
-                background: url("../static/img/icon02.png") no-repeat;
-              }
-            }
-          }
-          >li:first-child{
-            a{
-              span{
-                background: url("../static/img/icon60.png") no-repeat;
-                background-size: 100% 80%;
-              }
-            }
-          }
-          >li:nth-child(3){
-            a{
-              span{
-                background: url("../static/img/icon03.png") no-repeat;
-              }
-            }
-          }
-          >li:nth-child(4){
-            a{
-              span{
-                background: url("../static/img/icon04.png") no-repeat;
-              }
-            }
-          }
-          >li:nth-child(5){
-            a{
-              span{
-                background: url("../static/img/icon05.png") no-repeat;
-              }
-            }
-          }
-        }
-        >li:hover{
-          background-color: #a51e32;
-        }
-      }
-    }
-  }
-
-  .el-main {
-    background-color: #f6f6f6;
-    color: #333;
-    text-align: center;
-    padding: 20px 40px;
-  }
-
-}
+@import "../static/sass/App";
 </style>
 <style lang="scss">
-  .clearFix::after{
-    content: '';
-    display: block;
-    visibility: hidden;
-    clear: both;
-    height: 0;
-  }
-  .clearFix{
-    zoom: 1;
-  }
+@import "../static/sass/public";
 </style>

@@ -16,6 +16,7 @@ import MessageXq from '@/components/messageXq'
 import MyData from '@/components/myData'
 import AccountAssignment from '@/components/accountAssignment'
 import MyShopXq from '@/components/myShopXq'
+import MyIndent from '@/components/myIndent'
 
 Vue.use(Router)
 
@@ -23,8 +24,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MyProject',
-      component: MyProject
+      redirect: '/personCenter'
     },
     {
       path: '/personCenter',
@@ -95,6 +95,11 @@ export default new Router({
       path: '/myShopXq',
       name: 'MyShopXq',
       component: MyShopXq
+    },
+    {
+      path: '/myIndent',
+      name: 'MyIndent',
+      component: MyIndent
     }
   ]
 })

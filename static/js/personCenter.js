@@ -59,6 +59,9 @@ export default {
     dianwo(){
       var e = event.target;
       $(e).parent('div').find('.el-input__inner').focus()
+    },
+    toUrl(){
+      this.$router.push('/myProject')
     }
   },
   watch:{
@@ -141,7 +144,7 @@ export default {
         ctx.font = "14px 微软雅黑";
         ctx.fillStyle = "#ffa897";
         ctx.textAlign = "center";
-        ctx.fillText(data[i],num1*(2*i+1)+27,275*(1-data[i]/275)-10)
+        ctx.fillText(data[i],num1*(2*i+1)+32,275*(1-data[i]/275)-10)
       }
     }
     function paintRight(el,data) {
@@ -193,7 +196,7 @@ export default {
         ctx.font = "14px 微软雅黑";
         ctx.fillStyle = "#8ac3fa";
         ctx.textAlign = "center";
-        ctx.fillText(data[i],num1*(2*i+1)+27,275*(1-data[i]/275)-10)
+        ctx.fillText(data[i],num1*(2*i+1)+30,275*(1-data[i]/275)-10)
       }
     }
     paintLeft(canv,leftData);

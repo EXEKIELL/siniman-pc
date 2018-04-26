@@ -274,6 +274,7 @@
           spaceBetween: 20,
           freeMode: true
         })
+        $(window).scrollTop(0)
       }
     }
 </script>

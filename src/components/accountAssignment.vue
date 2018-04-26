@@ -17,7 +17,7 @@
                 <option value="user">用户名2</option>
                 <option value="user">用户名3</option>
               </select>
-              <button>
+              <button @click="la">
                 <img src="../../static/img/icon57.png" alt="">
               </button>
             </div>
@@ -238,6 +238,9 @@
           var e = event.target
           $(e).hide()
           $('.seleBox').removeAttr("checked")
+        },
+        la(){
+          console.log(1)
         }
       }
     }

@@ -272,7 +272,7 @@
             <img src="../../static/img/img02.png" alt="">
             <div>
               <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
+              <button @click="toUrl">编辑方案</button>
             </div>
             <div>
               <div>
