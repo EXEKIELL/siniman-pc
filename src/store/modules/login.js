@@ -79,7 +79,7 @@ const loginInfo = {
     }
   },
   actions:{
-    userLogin(context,)
+    
   },
   getters:{
 
