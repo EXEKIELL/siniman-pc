@@ -1,19 +1,20 @@
 import axios from 'axios'
+import api from '../../api/index'
+import router from '../../router/index'
 const loginInfo = {
   namespaced:true,
   state:{
-    content:false,
-    loginView:true,
     fL:false,
     loging:true,
     form:{
       username:'',
-      pswd:'',
-      phone:'',
-      yanzhengma:''
+      pswd:''
     },
     loginMessage:{},
-    userData:{}
+    userData:{},
+    userInfo:{},
+    token:null,
+    loginSuccess:null
   },
   mutations:{
     GETUSERNAME(state,val){
@@ -22,42 +23,24 @@ const loginInfo = {
     GETPSWD(state,val){
       state.form.pswd = val.pswd
     },
-    LOGINPOST(state)
-    {
-      console.log(this.state)
-      axios({
-        url:this.state.baseURL+'/user/checkLogin',
-        method:'post',
-        headers:this.state.headers[0],
-        params:state.form
-      }).then(res=>{
-        console.log(state.loginMessage)
-        if(state.loginMessage.fristLogin == true){
-          state.fL = true
-          state.loging = false
-        }else{
-          for(let i in res.data.data){
-            state.loginMessage[i] = res.data.data[i]
-          }
-          console.log(state.loginMessage)
-          axios({
-            url:this.state.baseURL+'/user/userLogin',
-            method:'post',
-            headers:this.state.headers[0],
-            params:{
-              username:state.form.username,
-              pswd:state.form.pswd
-            }
-          }).then(res=>{
-            state.userData = res.data.user
-            console.log(state.userData)
-          })
-          state.content = true;
-          state.loginView = false;
-        }
-      }).catch(err=>{
-        console.log(err)
-      })
+    GETTOKEN(state,token){
+      state.token = token
+    },
+    LOGINVIEW(state,data){
+      if(data.ok){
+        state.userData = data.userData
+        console.log(data)
+      }
+    },
+    USERINFO(state,data){
+      state.userInfo = data
+    },
+    PHONEYZ(state,suc){
+      if(suc){
+        state.fL = true;
+        state.loging = false;
+
+      }
     },
     PHONEYANZHENG(state,baseURL){
       console.log(baseURL)
@@ -79,7 +62,56 @@ const loginInfo = {
     }
   },
   actions:{
-    
+    //用户登录请求
+    LoginPost(context){
+      api.axiosPost('/user/checkLogin',context.state.form,function (res) {
+        console.log(res)
+        if(res.data.success!=null&&res.data.success==false){
+          console.log(1)
+        }else if(res.data.status!=null&&res.data.status==200){
+          var data = res.data.data
+          if(data.firstLogin==true){
+            context.commit('PHONEYZ',true)
+          }else{
+            api.axiosPost('/user/userLogin',context.state.form,function (res) {
+              console.log(res.data)
+              var data = {
+                ok:true,
+                userData:res.data
+              }
+              //将登录请求的数据保存到vuex
+              context.commit('LOGINVIEW',data);
+              context.commit('GETTOKEN',data.userData.token)
+              console.log("用户信息已保存到vuex");
+              //保存到本地
+              localStorage.setItem('user-data',JSON.stringify(res.data))
+              console.log("已保存到本地")
+              router.push('/indexWrap/personCenter')
+            })
+          }
+        }else{
+          console.log(3)
+        }
+      })
+    },
+    //获取用户基本信息
+    getUserInfo(context){
+      let userId = {userId:''}
+      if(localStorage.getItem('user-data')!=null){
+        userId.userId = JSON.parse(localStorage.getItem('user-data')).user.id+''
+      }else if(context.state.userData.length>0){
+        userId.userId = context.state.userData.user.id+''
+      }else{
+        router.push('/login')
+      }
+      api.axiosGet('/person/userInfo',userId,function (res) {
+        console.log("用户信息：",res)
+        context.commit('USERINFO',res.data)
+        console.log("已保存到vux")
+        localStorage.setItem('user-info',JSON.stringify(res.data))
+        console.log("已保存到本地")
+      })
+    }
   },
   getters:{
 

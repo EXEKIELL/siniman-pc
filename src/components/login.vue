@@ -65,7 +65,7 @@
           }else if(this.$store.state.login.form.pswd==''){
             $('.tishi2').text('密码不能为空')
           }else {
-            this.$store.commit('login/LOGINPOST')
+            this.$store.dispatch('login/LoginPost')
             console.log(1)
           }
           this.$nextTick(()=>{
@@ -83,6 +83,8 @@
               },1000)
             }
           })
+
+          event.preventDefault()
         },
         sub1(){
           if(this.$store.state.login.form.yanzhengma==''){
@@ -91,6 +93,7 @@
             console.log(this.$store.state.login.form.yanzhengma)
             this.$store.commit('login/PHONEYANZHENG')
           }
+          event.preventDefault()
         },
         reset1(){
           this.$data.form.username = "";

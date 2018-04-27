@@ -78,6 +78,7 @@ export default {
       prevButton:'.swiper-button-prev',
       nextButton:'.swiper-button-next'
     })
+    // this.$store.dispatch('login/getUserInfo')
     const that = this
     window.onresize = () => {
       return (() => {

@@ -437,7 +437,6 @@
   </div>
 </template>
 <script src="../../static/js/personCenter.js"></script>
-
 <style lang="scss" scoped>
   @import "../../static/sass/personCenter";
 </style>
