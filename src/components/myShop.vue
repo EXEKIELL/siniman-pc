@@ -113,7 +113,7 @@
       name: "MyShop",
       methods:{
         NavTo(){
-          this.$router.push("/myShopXq")
+          this.$router.push("/indexWrap/myShopXq")
         }
       }
     }

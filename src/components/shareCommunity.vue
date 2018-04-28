@@ -464,7 +464,7 @@
           this.paixus[index].isSel = true;
         },
         toUrl(){
-          this.$router.push('/shareProject')
+          this.$router.push('/indexWrap/shareProject')
         }
       },
       mounted(){

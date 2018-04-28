@@ -118,6 +118,9 @@
         return {
           value1:''
         }
+      },
+      mounted(){
+
       }
     }
 </script>

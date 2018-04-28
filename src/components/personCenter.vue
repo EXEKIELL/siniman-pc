@@ -27,17 +27,18 @@
               <div class="detaSel1">
                 <el-date-picker
                   v-model="value1"
-                  type="date"
-                  placeholder="选择日期">
+                  type="daterange"
+                  @change="change"
+                  value-format="yyyy-MM-dd"
+                  start-placeholder="选择日期"
+                end-placeholder="结束日期">
                 </el-date-picker>
               </div>
-              <button class="aaa" @click="dianwo">
-                <img src="../../static/img/icon11.png" alt="">
-              </button>
+              <button class="aaa" @click="dianwo"></button>
             </div>
           </div>
           <div>
-            <router-link to="/myPerformaceDetail">全部明细</router-link>
+            <router-link to="/indexWrap/myPerformaceDetail">全部明细</router-link>
           </div>
         </div>
         <div class="left-2">
@@ -51,18 +52,18 @@
             <div class="clearFix">
               <div class="detaSel2">
                 <el-date-picker
-                  v-model="value1"
-                  type="date"
-                  placeholder="选择日期">
+                  v-model="value2"
+                  @change="change1"
+                  type="daterange"
+                  start-placeholder="选择日期"
+                  end-placeholder="结束日期">
                 </el-date-picker>
               </div>
-              <button class="aaa" @click="dianwo">
-                <img src="../../static/img/icon11.png" alt="">
-              </button>
+              <button class="aaa" @click="dianwo"></button>
             </div>
           </div>
           <div>
-            <router-link to="/myClientDetail">全部明细</router-link>
+            <router-link to="/indexWrap/myClientDetail">全部明细</router-link>
           </div>
         </div>
         <div class="left-2">

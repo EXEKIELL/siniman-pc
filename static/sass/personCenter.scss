@@ -61,6 +61,7 @@
         >div:first-child{
           float: left;
           width: 75%;
+          display: flex;
           >div{
             float: left;
           }
@@ -72,25 +73,16 @@
             padding: 10px 0;
           }
           >div:last-child{
-            width: 40%;
-            max-width: 130px;
+            width: 45%;
             min-width: 103px;
             position: relative;
-            .el-date-editor.el-input{
-              float: left;
-              width: 95%;
-            }
+            display: flex;
             >button{
-              position: absolute;
-              height: 100%;
-              top: 0;
-              margin-left: -2.8%;
-              background-color: #fff2ef;
+              background: url("../../static/img/icon11.png") no-repeat #fff2ef;
+              background-position: 50% 50%;
               width: 50px;
               border: 1px solid #ffcac0;
-              img{
-                margin: auto;
-              }
+
             }
           }
         }

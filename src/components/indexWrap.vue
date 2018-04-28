@@ -47,7 +47,7 @@
 
                   </li>
                   <li>
-                    <router-link to="/messageManage">
+                    <router-link to="/indexWrap/messageManage">
                       <span></span><span>消息</span><span>{{headRight.message}}</span>
                     </router-link>
                   </li>

@@ -64,7 +64,7 @@ const loginInfo = {
   actions:{
     //用户登录请求
     LoginPost(context){
-      api.axiosPost('/user/checkLogin',context.state.form,function (res) {
+      api.axiosPost('/user/checkLogin',0,context.state.form,function (res) {
         console.log(res)
         if(res.data.success!=null&&res.data.success==false){
           console.log(1)
@@ -73,7 +73,7 @@ const loginInfo = {
           if(data.firstLogin==true){
             context.commit('PHONEYZ',true)
           }else{
-            api.axiosPost('/user/userLogin',context.state.form,function (res) {
+            api.axiosPost('/user/userLogin',0,context.state.form,function (res) {
               console.log(res.data)
               var data = {
                 ok:true,
