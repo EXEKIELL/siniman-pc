@@ -95,9 +95,15 @@
               page:val
             }
             ,function (res) {
-              console.log(res.data)
-              that.listValue = res.data.attributes.datas
-              console.log(that.listValue)
+              if(res.data.code!=null&&res.data.code==1003){
+                localStorage.removeItem('user-data')
+                localStorage.removeItem('user-info')
+                this.$router.push('/login')
+              }else{
+                console.log(res.data)
+                that.listValue = res.data.attributes.datas
+                console.log(that.listValue)
+              }
             })
         }
         listPost(1)

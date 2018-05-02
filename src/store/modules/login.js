@@ -29,7 +29,6 @@ const loginInfo = {
     LOGINVIEW(state,data){
       if(data.ok){
         state.userData = data.userData
-        console.log(data)
       }
     },
     USERINFO(state,data){
@@ -74,7 +73,6 @@ const loginInfo = {
             context.commit('PHONEYZ',true)
           }else{
             api.axiosPost('/user/userLogin',0,context.state.form,function (res) {
-              console.log(res.data)
               var data = {
                 ok:true,
                 userData:res.data

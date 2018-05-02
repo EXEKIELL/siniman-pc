@@ -47,7 +47,7 @@
             <span class="nav-left">类型：</span>
             <div class="nav-right">
               <div v-for="(item,index) in leixing" :key="index">
-                <div @click="navSel">{{item.text}}</div>
+                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
               </div>
             </div>
           </li>
@@ -55,7 +55,7 @@
             <span class="nav-left">阶段：</span>
             <div class="nav-right">
               <div v-for="(item,index) in jieduan" :key="index">
-                <div @click="navSel">{{item.text}}</div>
+                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
               </div>
             </div>
           </li>
@@ -63,7 +63,7 @@
             <span class="nav-left">户型：</span>
             <div class="nav-right">
               <div v-for="(item,index) in huxing" :key="index">
-                <div @click="navSel">{{item.text}}</div>
+                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
               </div>
             </div>
           </li>
@@ -71,14 +71,14 @@
             <span class="nav-left">风格：</span>
             <div class="nav-right">
               <div v-for="(item,index) in fengge" :key="index">
-                <div @click="navSel">{{item.text}}</div>
+                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
               </div>
             </div>
           </li>
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1">
+        <div class="list1" v-for="(item,index) in listData" :key="index">
           <div class="list1-img">
             <img src="../../static/img/img05.png" alt="">
             <div>
@@ -113,281 +113,21 @@
             </div>
           </div>
           <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
+            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>02户型</span><span>{{item.area}}m²</span></div>
             <div class="l1cont-2 clearFix">
               <div>
-                <span></span><span>张若昀 </span>
+                <span></span><span>{{item.customername}}</span>
               </div>
               <div>
-                <span></span><span>15205201520</span>
+                <span></span><span>{{item.customercontact}}</span>
               </div>
               <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
+                <span></span><span>{{item.customeraddr}}</span>
               </div>
             </div>
           </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
-          </div>
-        </div>
-        <div class="list1">
-          <div class="list1-img">
-            <img src="../../static/img/img06.png" alt="">
-            <div>
-              <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
-            </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
-            <div class="l1cont-2 clearFix">
-              <div>
-                <span></span><span>张若昀 </span>
-              </div>
-              <div>
-                <span></span><span>15205201520</span>
-              </div>
-              <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
-              </div>
-            </div>
-          </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
-          </div>
-        </div>
-        <div class="list1">
-          <div class="list1-img">
-            <img src="../../static/img/img07.png" alt="">
-            <div>
-              <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
-            </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
-            <div class="l1cont-2 clearFix">
-              <div>
-                <span></span><span>张若昀 </span>
-              </div>
-              <div>
-                <span></span><span>15205201520</span>
-              </div>
-              <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
-              </div>
-            </div>
-          </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
-          </div>
-        </div>
-        <div class="list1">
-          <div class="list1-img">
-            <img src="../../static/img/img02.png" alt="">
-            <div>
-              <button>分享家·赢豪礼</button>
-              <button @click="toUrl">编辑方案</button>
-            </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
-            <div class="l1cont-2 clearFix">
-              <div>
-                <span></span><span>张若昀 </span>
-              </div>
-              <div>
-                <span></span><span>15205201520</span>
-              </div>
-              <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
-              </div>
-            </div>
-          </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
-          </div>
-        </div>
-        <div class="list1">
-          <div class="list1-img">
-            <img src="../../static/img/img03.png" alt="">
-            <div>
-              <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
-            </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
-            <div class="l1cont-2 clearFix">
-              <div>
-                <span></span><span>张若昀 </span>
-              </div>
-              <div>
-                <span></span><span>15205201520</span>
-              </div>
-              <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
-              </div>
-            </div>
-          </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
-          </div>
-        </div>
-        <div class="list1">
-          <div class="list1-img">
-            <img src="../../static/img/img04.png" alt="">
-            <div>
-              <button>分享家·赢豪礼</button>
-              <button>编辑方案</button>
-            </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span></div>
-            <div class="l1cont-2 clearFix">
-              <div>
-                <span></span><span>张若昀 </span>
-              </div>
-              <div>
-                <span></span><span>15205201520</span>
-              </div>
-              <div>
-                <span></span><span>天河区科韵路方圆E时光西座2202</span>
-              </div>
-            </div>
-          </div>
-          <div class="list1-tag">
-            <span>全属方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
+          <div class="list1-tag" >
+            <span v-for="(item1,index1) in item.producttag" :key="index1">{{item1.tagname}}</span>
           </div>
         </div>
       </div>
@@ -398,7 +138,8 @@
         layout="prev, pager, next"
         prev-text="上一页"
         next-text="下一页"
-        :total="40">
+        @current-change="change"
+        :total="100">
       </el-pagination>
     </div>
   </div>
@@ -449,6 +190,7 @@
             {text:"新中式"},
             {text:"其他"}
           ],
+          listData:[]
         }
       },
       methods:{
@@ -465,6 +207,22 @@
         },
         toUrl(){
           this.$router.push('/indexWrap/shareProject')
+        },
+        change(val){
+          const that = this;
+          this.$api.axiosPost('/product/productList',1,{
+            data:{
+              orderByCondition:'DESC',
+              orderByField:'productionmark'
+            },
+            page:{
+              pageNum:val,
+              pageSize:9
+            }
+          },function (res) {
+            that.listData = res.data.data
+            console.log(that.listData)
+          })
         }
       },
       mounted(){
@@ -474,6 +232,20 @@
           loop:true,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next'
+        })
+        const that = this;
+        this.$api.axiosPost('/product/productList',1,{
+          data:{
+            orderByCondition:'DESC',
+            orderByField:'productionmark'
+          },
+          page:{
+            pageNum:1,
+            pageSize:9
+          }
+        },function (res) {
+          that.listData = res.data.data
+          console.log(that.listData)
         })
       }
     }

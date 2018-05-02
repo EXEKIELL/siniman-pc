@@ -44,7 +44,7 @@
               <div><span>创建时间</span></div>
               <div><span>操作</span></div>
             </li>
-            <li class="contList">
+            <li class="contList" v-for="(item,index) in userList" :key="index">
               <div>
                 <div class="checkBox">
                   <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
@@ -52,137 +52,12 @@
                   </span>
                 </div>
               </div>
-              <div><span>admin</span></div>
+              <div><span>{{item.account}}</span></div>
               <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="contList">
-              <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
-              </div>
-              <div><span>admin</span></div>
-              <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="contList">
-              <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
-              </div>
-              <div><span>admin</span></div>
-              <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="contList">
-              <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
-              </div>
-              <div><span>admin</span></div>
-              <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="contList">
-              <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
-              </div>
-              <div><span>admin</span></div>
-              <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="contList">
-              <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
-              </div>
-              <div><span>admin</span></div>
-              <div><span>超级管理员</span></div>
-              <div><span>李冰和</span></div>
-              <div><div><span>邮箱：804657038@qq.com</span><span>手机：18520329226</span></div></div>
-              <div><span>42</span></div>
-              <div><span>2017-11-15</span></div>
+              <div><span>{{item.username}}</span></div>
+              <div><div><span></span><span>{{'手机：'+item.phone}}</span></div></div>
+              <div><span>{{item.logincount}}</span></div>
+              <div><span>{{item.createtime|time}}</span></div>
               <div>
                 <div>
                   <button>
@@ -202,6 +77,7 @@
             layout="prev, pager, next"
             prev-text="上一页"
             next-text="下一页"
+            @current-change="change"
             :total="40">
           </el-pagination>
         </div>
@@ -210,8 +86,14 @@
 </template>
 
 <script>
+  import method from '../../static/js/public'
     export default {
       name: "AccountAssignment",
+      data(){
+        return {
+          userList:[]
+        }
+      },
       methods:{
         selAll(){
           var e =event.target
@@ -241,7 +123,43 @@
         },
         la(){
           console.log(1)
+        },
+        change(val){
+          let that = this;
+          this.$api.axiosPost('./user/getUserList',1,{
+            data:{
+              orderByCondition:'desc',
+              orderByField:'score'
+            },
+            page:{
+              pageNum:val-1,
+              pageSize:10
+            }
+          },function (res) {
+            that.userList = res.data.data
+          })
         }
+      },
+      filters:{
+        time:function (val) {
+          var val = method.transformDate(val)
+          return val
+        }
+      },
+      mounted(){
+        let that = this
+        this.$api.axiosPost('./user/getUserList',1,{
+          data:{
+            orderByCondition:'desc',
+            orderByField:'score'
+          },
+          page:{
+            pageNum:0,
+            pageSize:10
+          }
+        },function (res) {
+          that.userList = res.data.data
+        })
       }
     }
 </script>

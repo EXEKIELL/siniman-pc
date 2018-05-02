@@ -71,7 +71,6 @@ function axiosPost(url,index,params,fun) {
         return data
       }else{
         data = JSON.stringify(data)
-        console.log(data)
         return data
       }
     }]

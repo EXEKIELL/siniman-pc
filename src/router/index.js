@@ -172,8 +172,6 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next)=>{
-  // console.log(to)
-  // console.log(from)
   if(to.meta.requireAuth){
     console.log(1)
     if(localStorage.getItem('user-data')!=null){

@@ -40,59 +40,14 @@
           <span>方案数量</span>
           <span>备注</span>
         </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
+        <li v-for="(item,index) in postList" :key="index">
+          <span>{{item.shopname}}</span>
+          <span>{{item.detailaddress}}</span>
+          <span>{{item.shopcontact}}</span>
           <span>朱秋冬</span>
-          <span>2200.00</span>
+          <span>{{item.shopsales}}</span>
           <span>3</span>
-          <span @click="NavTo">查看详情</span>
-        </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
-          <span>朱秋冬</span>
-          <span>2200.00</span>
-          <span>3</span>
-          <span>查看详情</span>
-        </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
-          <span>朱秋冬</span>
-          <span>2200.00</span>
-          <span>3</span>
-          <span>查看详情</span>
-        </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
-          <span>朱秋冬</span>
-          <span>2200.00</span>
-          <span>3</span>
-          <span>查看详情</span>
-        </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
-          <span>朱秋冬</span>
-          <span>2200.00</span>
-          <span>3</span>
-          <span>查看详情</span>
-        </li>
-        <li>
-          <span>广州分店</span>
-          <span>广东省广州市天河区美林湖畔</span>
-          <span>15208201520</span>
-          <span>朱秋冬</span>
-          <span>2200.00</span>
-          <span>3</span>
-          <span>查看详情</span>
+          <span @click="NavTo(item.id)">查看详情</span>
         </li>
       </ul>
     </div>
@@ -102,6 +57,7 @@
         layout="prev, pager, next"
         prev-text="上一页"
         next-text="下一页"
+        @current-change="change"
         :total="40">
       </el-pagination>
     </div>
@@ -111,10 +67,47 @@
 <script>
     export default {
       name: "MyShop",
-      methods:{
-        NavTo(){
-          this.$router.push("/indexWrap/myShopXq")
+      data(){
+        return {
+          postList:[]
         }
+      },
+      methods:{
+        NavTo(shopId){
+          this.$router.push({path:"/indexWrap/myShopXq",query:{shopId:shopId}})
+        },
+        change(val){
+          const that = this;
+          this.$api.axiosPost('/shop/getShopList',1,{
+            data:{
+              orderByCondition:'desc',
+              orderByField:'score'
+            },
+            page:{
+              pageNum:val+1,
+              pageSize:10
+            }
+          },function (res) {
+            console.log(res)
+            that.postList = res.data
+          })
+        }
+      },
+      mounted(){
+        const that = this
+        this.$api.axiosPost('/shop/getShopList',1,{
+          data:{
+            orderByCondition:'desc',
+            orderByField:'score'
+          },
+          page:{
+            pageNum:0,
+            pageSize:10
+          }
+        },function (res) {
+          console.log(res)
+          that.postList = res.data
+        })
       }
     }
 </script>

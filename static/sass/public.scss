@@ -561,6 +561,21 @@
     }
   }
 }
+#myShopXq{
+  .el-input__inner{
+    text-align: center;
+    height: 60px;
+    font-size: 16px;
+    color: #d94650;
+    padding:  0 1% ;
+    background-color: #fff1f2;
+    border: 1px solid #ffc7cb;
+    border-radius: 0;
+  }
+  .el-input__inner::placeholder{
+    color: #d94650;
+  }
+}
 #accountAssignment{
   .btn-prev,.btn-next{
     font-size: 14px;
@@ -648,4 +663,25 @@
 }
 .clearFix{
   zoom: 1;
+}
+.abc{
+  background-color: #fff1f2;
+  border: 1px solid #ffc7cb;
+  color: #d94650;
+  .el-select-dropdown__item{
+    left: 1px;
+  }
+  .popper__arrow::after{
+    border-bottom-color: #fff1f2!important;
+  }
+  .el-select-dropdown__item.selected{
+    color: #d94650;
+  }
+  .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
+    background-color: #fff1f2;
+    color: #d94650;
+  }
+  .el-icon-arrow-up:before{
+    color: #d94650;
+  }
 }

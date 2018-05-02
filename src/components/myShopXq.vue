@@ -24,43 +24,46 @@
             <div>
               <div>
                 <span>门店名称：</span>
-                <input type="text">
+                <input type="text" v-model="detailData.shopname">
               </div>
               <div>
                 <span>联系方式：</span>
-                <input type="text">
+                <input type="text" v-model="detailData.shopcontact">
               </div>
-              <div>
-                <span>门店地址：</span>
-                <input type="text">
-              </div>
+              <div></div>
               <div></div>
             </div>
             <div>
               <div>
                 <span>地区：</span>
-                <div>
-                  <select v-model='type1' name="province" id="province">
-                    <option v-for="item in selectList" :value=item.value selected>{{item.text}}</option>
-                  </select>
-                  <span>{{type1}}</span>
-                </div>
-                <div>
-                  <select name="city" id="city" v-model='type2'>
-                    <option v-for="item in selectList1" :value=item.value selected>{{item.text}}</option>
-                  </select>
-                  <span>{{type2}}</span>
-                </div>
-                <div>
-                  <select name="district" id="district" v-model='type3' >
-                    <option v-for="item in selectList2" :value=item.value selected>{{item.text}}</option>
-                  </select>
-                  <span>{{type3}}</span>
-                </div>
+                <el-select v-model="value" placeholder="请选择" popper-class="abc">
+                  <el-option
+                    v-for="(item,index) in selectList"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select v-model="value1" placeholder="请选择" popper-class="abc">
+                  <el-option
+                    v-for="(item,index) in selectList1"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select v-model="value2" placeholder="请选择" popper-class="abc">
+                  <el-option
+                    v-for="(item,index) in selectList2"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </div>
               <div>
                 <span>详细地址：</span>
-                <input type="text">
+                <input type="text" v-model="detailData.detailaddress">
               </div>
             </div>
             <div>
@@ -90,17 +93,21 @@
           type2:'广州市',
           type3:'海珠区',
           imgs:[],
+          detailData:{},
+          value:'',
+          value1:'',
+          value2:'',
           selectList:[
-            {text:"广东省",value:"广东省"},
-            {text:"广东省1",value:"广东省1"}
+            {label:"广东省",value:"广东省"},
+            {label:"广东省1",value:"广东省1"}
           ],
           selectList1:[
-            {text:"广州市",value:"广州市"},
-            {text:"广州市1",value:"广州市1"}
+            {label:"广州市",value:"广州市"},
+            {label:"广州市1",value:"广州市1"}
           ],
           selectList2:[
-            {text:"海珠区",value:"海珠区"},
-            {text:"海珠区1",value:"海珠区1"}
+            {label:"海珠区",value:"海珠区"},
+            {label:"海珠区1",value:"海珠区1"}
           ],
           province:'',
           city:'',
@@ -132,6 +139,15 @@
         }
       },
       mounted(){
+        var shopId = this.$router.history.current.query.shopId
+        console.log(shopId)
+        const that = this;
+        this.$api.axiosGet('/shop/shopDetail',{
+          shopId:shopId
+        },function (res) {
+          console.log(res)
+          that.detailData = res.data.data
+        })
         var geocoder,map,marker = null;
         var init = function(Lat,Lng) {
           var center = new qq.maps.LatLng(Lat,Lng);//23.134751, 113.339327
