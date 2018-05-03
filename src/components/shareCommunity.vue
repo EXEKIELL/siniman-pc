@@ -78,42 +78,26 @@
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in listData" :key="index">
+        <div class="list1" v-for="(item,index) in listData" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
             <img src="../../static/img/img05.png" alt="">
             <div>
-              <button>分享家·赢豪礼</button>
-              <button @click="toUrl">编辑方案</button>
-            </div>
-            <div>
               <div>
                 <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
               </div>
               <div>
                 <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
               </div>
               <div>
                 <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
               </div>
               <div>
                 <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
               </div>
             </div>
           </div>
           <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>02户型</span><span>{{item.area}}m²</span></div>
+            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
             <div class="l1cont-2 clearFix">
               <div>
                 <span></span><span>{{item.customername}}</span>
@@ -127,7 +111,7 @@
             </div>
           </div>
           <div class="list1-tag" >
-            <span v-for="(item1,index1) in item.producttag" :key="index1">{{item1.tagname}}</span>
+            <span v-for="(item1,index1) in item.producttag" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
           </div>
         </div>
       </div>
@@ -139,7 +123,7 @@
         prev-text="上一页"
         next-text="下一页"
         @current-change="change"
-        :total="100">
+        :total="1000">
       </el-pagination>
     </div>
   </div>
@@ -190,7 +174,8 @@
             {text:"新中式"},
             {text:"其他"}
           ],
-          listData:[]
+          listData:[],
+          tags:['全部','全部','全部','全部']
         }
       },
       methods:{
@@ -198,6 +183,34 @@
           var e = event.target;
           $(e).addClass("sel");
           $(e).parent('div').siblings('div').find('div').removeClass('sel')
+          var text = e.innerText;
+          var str = $(e).parents('.nav-right').siblings('.nav-left').text()
+          str = str.replace(/：/,'')
+          if(str=='类型'){
+            this.tags[0] = text
+          }else if(str=='阶段'){
+            this.tags[1] = text
+          }else if(str=='户型'){
+            this.tags[2] = text
+          }else{
+            this.tags[3] = text
+          }
+          console.log(this.tags)
+          const that = this
+          this.$api.axiosPost('/product/productList',1,{
+            data:{
+              tags:that.tags,
+              orderByCondition:'DESC',
+              orderByField:'productionmark'
+            },
+            page:{
+              pageNum:1,
+              pageSize:9
+            }
+          },function (res) {
+            that.listData = res.data.data
+            console.log(that.listData)
+          })
         },
         paixu1(index){
           for(var i = 0;i<this.paixus.length;i++){
@@ -205,8 +218,9 @@
           }
           this.paixus[index].isSel = true;
         },
-        toUrl(){
-          this.$router.push('/indexWrap/shareProject')
+        toUrl(val){
+          console.log(val)
+          this.$router.push({path:'/indexWrap/shareProject',query:{productId:val}})
         },
         change(val){
           const that = this;
@@ -224,6 +238,9 @@
             console.log(that.listData)
           })
         }
+      },
+      filters:{
+
       },
       mounted(){
         var swiper1 = new Swiper('#swiper1',{

@@ -133,8 +133,8 @@ export default {
         that.screenWidth = $('.w2-left').width();
         canv.width = ($('.w2-left').width()*0.80);
         canv1.width = ($('.w2-left').width()*0.80)
-        Canvas.paintLeft(canv,leftData);
-        Canvas.paintRight(canv1,rightData);
+        Canvas.paintLeft(canv,this.leftData);
+        Canvas.paintRight(canv1,this.rightData);
       })()
     }
     var canv = $('#canvas1')[0];

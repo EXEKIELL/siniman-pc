@@ -53,7 +53,7 @@
                 </div>
               </div>
               <div><span>{{item.account}}</span></div>
-              <div><span>超级管理员</span></div>
+              <div><span>{{item.roles|str}}</span></div>
               <div><span>{{item.username}}</span></div>
               <div><div><span></span><span>{{'手机：'+item.phone}}</span></div></div>
               <div><span>{{item.logincount}}</span></div>
@@ -144,6 +144,24 @@
         time:function (val) {
           var val = method.transformDate(val)
           return val
+        },
+        str:function (val) {
+          var val = JSON.parse(val)
+          var role = []
+          console.log(val.roles)
+          for (var i = 0; i < val.roles.length; i++) {
+            role[i] = val.roles[i].code
+          }
+          console.log(role)
+          if(role.indexOf('DEALER')!=-1){
+            return '经销商'
+          }else if(role.indexOf('SHOPMANAGER')!=-1){
+            return '店长'
+          }else if(role.indexOf('SHOPPINGGUIDE')!=-1){
+            return '家居顾问'
+          }else{
+            return '设计师'
+          }
         }
       },
       mounted(){
@@ -159,6 +177,7 @@
           }
         },function (res) {
           that.userList = res.data.data
+          console.log(res)
         })
       }
     }

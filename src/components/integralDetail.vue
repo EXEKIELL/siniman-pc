@@ -70,10 +70,10 @@
         <div class="cont">
           <ul>
             <li>
-              <span>时间</span><span>类型</span><span>类型</span><span>商品/任务/客户</span><span>获得/消耗积分</span>
+              <span>时间</span><span>类型</span><span>动作</span><span>商品/任务/客户</span><span>获得/消耗积分</span>
             </li>
             <li v-for="(item,index) in postList" :key="index">
-              <span>{{item.createTime}}</span><span>{{item.score<0?'积分消耗':'积分获取'}}</span><span>{{item.description.replace(/\[.*?\]/g,'')}}</span><span>{{item.description.replace(/.*\[|\].*/g,'')}}</span><span>{{item.score<0?item.score:('+'+item.score)}}</span>
+              <span>{{item.createTime}}</span><span>{{item.score<0?'积分消耗':'积分获取'}}</span><span>{{}}</span><span>{{item.description}}</span><span>{{item.score<0?item.score:('+'+item.score)}}</span>
             </li>
           </ul>
         </div>
@@ -139,6 +139,7 @@
             page:val,
             pageSize:'10'
           },function (res) {
+            console.log(res)
             that.postList = res.data.attributes.records
           })
         }

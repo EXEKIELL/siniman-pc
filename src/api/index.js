@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import router from '../router/index'
 //url
 var root = 'http://118.24.62.151:8080/snimay_sharing';
 var headers = [
@@ -75,7 +76,9 @@ function axiosPost(url,index,params,fun) {
       }
     }]
   }).then(res=>{
-    if(typeof fun=="function"){
+    if(res.data.code!=null&&res.data.code=='1003'){
+      router.push('/login')
+    }else if(typeof fun=="function"){
       fun(res)
     }
   })

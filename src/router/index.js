@@ -18,6 +18,7 @@ import AccountAssignment from '@/components/accountAssignment'
 import MyShopXq from '@/components/myShopXq'
 import MyIndent from '@/components/myIndent'
 import IndexWrap from '@/components/indexWrap'
+import MyCollect from '@/components/myCollect'
 import Test from '@/components/test'
 
 Vue.use(Router)
@@ -152,6 +153,14 @@ const router = new Router({
           path: '/indexWrap/myIndent',
           name: 'MyIndent',
           component: MyIndent,
+          meta:{
+            requireAuth:true //是否登录验证
+          },
+        },
+        {
+          path: '/indexWrap/myCollect',
+          name: 'MyCollect',
+          component: MyCollect,
           meta:{
             requireAuth:true //是否登录验证
           },

@@ -107,7 +107,8 @@
             {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false},
             {text:"我的资料",path:"/indexWrap/myData",selClass:false},
             {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false},
-            {text:"我的订单",path:"/indexWrap/myIndent",selClass:false}
+            {text:"我的订单",path:"/indexWrap/myIndent",selClass:false},
+            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false}
           ]
         }
       },

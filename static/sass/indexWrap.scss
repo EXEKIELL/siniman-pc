@@ -254,6 +254,20 @@
               }
             }
           }
+          >li:nth-child(6){
+            a{
+              span{
+                background: url("../../static/img/icon66.png") no-repeat;
+              }
+            }
+          }
+          >li:nth-child(7){
+            a{
+              span{
+                background: url("../../static/img/icon65.png") no-repeat;
+              }
+            }
+          }
         }
         >li:hover{
           background-color: #a51e32;

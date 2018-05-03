@@ -44,7 +44,7 @@
           <span>{{item.shopname}}</span>
           <span>{{item.detailaddress}}</span>
           <span>{{item.shopcontact}}</span>
-          <span>朱秋冬</span>
+          <span>{{JSON.parse(userInfo).data.username}}</span>
           <span>{{item.shopsales}}</span>
           <span>3</span>
           <span @click="NavTo(item.id)">查看详情</span>
@@ -69,7 +69,8 @@
       name: "MyShop",
       data(){
         return {
-          postList:[]
+          postList:[],
+          userInfo:localStorage.getItem('user-info')
         }
       },
       methods:{
