@@ -78,14 +78,17 @@
           this.$router.push({path:"/indexWrap/myShopXq",query:{shopId:shopId}})
         },
         change(val){
+          console.log(val)
           const that = this;
+          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
           this.$api.axiosPost('/shop/getShopList',1,{
             data:{
+              userId:userId,
               orderByCondition:'desc',
               orderByField:'score'
             },
             page:{
-              pageNum:val+1,
+              pageNum:val-1,
               pageSize:10
             }
           },function (res) {
@@ -96,8 +99,11 @@
       },
       mounted(){
         const that = this
+        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
+        console.log(userId)
         this.$api.axiosPost('/shop/getShopList',1,{
           data:{
+            userId:userId,
             orderByCondition:'desc',
             orderByField:'score'
           },

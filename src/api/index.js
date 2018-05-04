@@ -81,6 +81,7 @@ function axiosPost(url,index,params,fun) {
     }else if(typeof fun=="function"){
       fun(res)
     }
+    $('html , body').animate({scrollTop: 0},'fast');
   })
 }
 function axiosGet(url,params,fun) {

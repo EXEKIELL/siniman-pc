@@ -55,7 +55,7 @@
               <span>彭于晏</span>
             </div>
             <div>
-              <button @click="lijiduihuan">{{text1}}</button>
+              <button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>
             </div>
           </div>
         </div>
@@ -97,6 +97,11 @@
               <div>
                 <div><span>本次消耗：</span><span>{{productInfo.productionmark}}积分</span></div>
                 <div><span>当前积分余额：</span><span>{{JSON.parse(userInfo).data.score}}积分</span></div>
+              </div>
+              <div>
+                <div>
+                  <textarea placeholder="用户备注" id="textarea1"></textarea>
+                </div>
               </div>
               <div>
                 <button @click="sucbtn(productInfo.productionmark)">确认兑换</button>
@@ -167,7 +172,6 @@
         },
         sucbtn(val){
           var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
-          console.log(val,userScore)
           if(val<userScore){
             this.duihuan = false;
             this.title = "";
@@ -177,7 +181,7 @@
             const that = this;
             this.$api.axiosPost('/product/exchangeProduct',0,{
               userAccount:userAccount,
-              desId:desId
+              desId:'3FO4IH6X46RN'
             },function (res) {
               console.log(res)
             })
@@ -206,7 +210,6 @@
           }
         },
         check(val){
-          console.log(val)
           var bigImg = this.$refs.bigImg
           $(bigImg).attr({
             src:val
@@ -218,7 +221,7 @@
       updated(){
         var swiper1 = new Swiper('#swiper1',{
           pagination: '.swiper-pagination',
-          slidesPerView: 5,
+          slidesPerView: 4,
           paginationClickable: true,
           spaceBetween: 20,
           freeMode: true
@@ -232,21 +235,25 @@
         },function (res) {
           console.log(JSON.parse(res.data.productInfo))
           that.productInfo = JSON.parse(res.data.productInfo)
+          var userId = JSON.parse(localStorage.getItem('user-info')).data.userid
           var res1 = JSON.parse(res.data.productInfo)
+          if(res1.userid==userId){
+            that.text1 = '无需兑换'
+            var btn = that.$refs.duihuanbtn
+            $(btn).attr('disabled',true)
+          }
           console.log(res1)
           var desid = res1.desid;
           var st = res1.createtime;
-          console.log(desid,st)
           that.$api.axiosGet('/render/synchro',{
             designId:desid,
             // startTime:st,
             start:0,
             num:10
           },function (res){
-            console.log(res.data.renders)
+            console.log(res)
             that.imgInfo = res.data.renders
             that.shareSpaceInfo = res.data.renders
-            console.log(that.shareSpaceInfo)
             var bigImg = that.$refs.bigImg
             $(bigImg).attr({
               src:res.data.renders[0].img

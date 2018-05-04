@@ -236,6 +236,7 @@
           },function (res) {
             that.listData = res.data.data
             console.log(that.listData)
+
           })
         }
       },

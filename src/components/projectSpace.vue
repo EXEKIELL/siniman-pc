@@ -1,17 +1,17 @@
 <template>
     <div id="projectSpace">
       <div class="wrap">
-        <div class="wrap-list" v-for="(item,index) in projectSpaceList" :key="index">
+        <div class="wrap-list" v-for="(item,index) in projectSpace" :key="index">
           <div>
-            <img :src=item.imgsrc>
+            <img :src=item.img>
             <button class="del">
               <img src="../../static/img/icon20.png" alt="">
             </button>
           </div>
           <div>
-            <div class="xianshi clearFix" v-if="item.ok">
+            <div class="xianshi clearFix" v-if="ok">
               <div>
-                <span>创意描述：</span><span>{{item.miaoshu}}</span>
+                <span>创意描述：</span><span>{{}}</span>
               </div>
               <button @click="xian(item)">编辑描述</button>
             </div>
@@ -33,6 +33,7 @@
       data(){
         return {
           indexs:null,
+          ok:true,
           projectSpaceList:[
             {
               imgsrc:"../../static/img/img09.png",
@@ -57,16 +58,22 @@
           ]
         }
       },
+      props:{
+        projectSpace:{
+          type:Array,
+          required:true
+        }
+      },
       methods:{
         xian(item){
-          item.ok = false;
-          item.miaoshu = ''
+          this.ok = false;
+          // item.miaoshu = ''
         },
         bz(item){
-          item.ok = true;
-          if(item.miaoshu == ''){
-            item.miaoshu = '您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~'
-          }
+          this.ok = true;
+          // if(item.miaoshu == ''){
+          //   item.miaoshu = '您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~'
+          // }
         }
       },
       mounted(){

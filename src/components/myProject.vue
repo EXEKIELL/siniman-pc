@@ -3,41 +3,32 @@
     <div class="mp-top clearFix">
       <div class="top-left">
         <div class="bigImg">
-          <img src="../../static/img/img08.png" alt="">
+          <img src="" alt="" ref="bigImg">
         </div>
         <div id="swiper1" class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="../../static/img/img08.png" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="../../static/img/img08.png" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="../../static/img/img08.png" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="../../static/img/img08.png" alt="">
+            <div class="swiper-slide" v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+              <img :src="item.img" alt="">
             </div>
           </div>
         </div>
       </div>
       <div class="top-right">
         <div class="tright-1">
-          <span>广州天河·恒大御府</span><span>02户型</span><span>78m²</span>
+          <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
         </div>
         <div class="tright-2">
-          <span></span><span>张若昀</span>
-          <span></span><span>15205201520</span>
-          <span></span><span>天河区科韵路方圆E时光西座2202</span>
+          <span></span><span>{{productInfo.customername}}</span>
+          <span></span><span>{{productInfo.customercontact}}</span>
+          <span></span><span>{{productInfo.customeraddr}}</span>
         </div>
         <div class="tright-3">
-          <span>全屋方案</span><span>装修阶段</span><span>一室一厅</span><span>北欧</span>
+          <span v-for="(item,index) in productInfo.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>
         </div>
         <div class="tright-4">
           <div>需求描述</div>
           <div>
-            <p>这里是该套餐的内容介绍：该户型比较不规范，转角以及不规则的开关区域较多，导致浪费了较多的空间。业主是比较传统的中国知识女性，在沟通的时候，获希望能装修成新中风格。本套方案，通过对家具、饰品等商品的选材极大的考虑了这个问题，结合一些特殊商品，很好的将本来不能摆放家具的地方，巧妙地摆放了家具。</p>
+            <p>{{productInfo.productdesc}}</p>
           </div>
         </div>
         <div class="tright-5">
@@ -53,13 +44,13 @@
         </ul>
       </div>
       <div>
-        <detail :is="detail"></detail>
+        <detail :is="detail" :projectSpace="projectSpace"></detail>
       </div>
     </div>
     <div class="mp-bianjiBox" v-if="bianjiBox">
       <div class="bianjiBoxWrap">
         <div class="biankuang">
-          <div class="bianjiBoxTitle">{{bianjiBoxTitle}}<span @click="bianjiBox = false"></span></div>
+          <div class="bianjiBoxTitle">{{bianjiBoxTitle}}<span @click="closeBox"></span></div>
           <div class="bianji" v-if="bianji">
             <form :model="form1">
               <div class="formItem1">
@@ -67,22 +58,22 @@
                 <div class="item-cont">
                   <div>
                     <label>客户姓名：</label>
-                    <input type="text" v-model="form1.name">
+                    <input type="text" v-model="form1.customername">
                   </div>
                   <div>
                     <label>联系方式：</label>
-                    <input type="text" v-model="form1.contact">
+                    <input type="text" v-model="form1.customercontact">
                   </div>
                 </div>
                 <div class="item-cont">
                   <div>
                     <label>客户地址：</label>
                     <div>
-                      <el-select v-model="form1.add1" placeholder="请选择">
+                      <el-select v-model="add1" placeholder="请选择">
                         <el-option label="区域一" value="shanghai"></el-option>
                         <el-option label="区域二" value="beijing"></el-option>
                       </el-select>
-                      <el-select v-model="form1.add2" placeholder="请选择">
+                      <el-select v-model="add2" placeholder="请选择">
                         <el-option label="区域一" value="shanghai"></el-option>
                         <el-option label="区域二" value="beijing"></el-option>
                       </el-select>
@@ -90,7 +81,7 @@
                   </div>
                   <div>
                     <label>详细地址：</label>
-                    <input type="text" v-model="form1.add3">
+                    <input type="text" v-model="add3">
                   </div>
                 </div>
               </div>
@@ -99,47 +90,67 @@
                 <div class="item-cont">
                   <div>
                     <label>方案名称：</label>
-                    <input type="text" v-model="form1.fanganName">
+                    <input type="text" placeholder="请输入方案名称" v-model="form1.fanganName">
                   </div>
                   <div>
                     <div>
-                      <label>类型：</label>
-                      <el-select v-model="form1.type" placeholder="请选择">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
+                      <label style="width: 27%">户型/面积：</label>
+                      <input type="text" placeholder="请输入面积" v-model="form1.area">
                     </div>
-                    <div>
-                      <label>户型/面积：</label>
-                      <el-select v-model="form1.area" placeholder="请选择">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                    </div>
-                  </div>
-                  <div>
                     <div>
                       <label>面积：</label>
                       <input type="text" placeholder="请输入数字" v-model="form1.area1">
                       <span>m²</span>
                     </div>
-                    <div>
-                      <label>风格：</label>
-                      <el-select v-model="form1.style1" placeholder="请选择">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                    </div>
                   </div>
                 </div>
               </div>
               <div class="formItem3">
+                <div class="item-title">标签信息</div>
+                <div class="item-cont">
+                  <div>已选择：</div>
+                  <div class="shou">
+                    <div>
+                      <label>类型：</label>
+                      <div>
+                        <span>全屋方案<span></span></span>
+                        <span>空间方案<span></span></span>
+                      </div>
+                    </div>
+                    <div>
+                      <label>阶段：</label>
+                      <div>
+                        <span>户型阶段<span></span></span>
+                        <span>装修阶段<span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>请选择：</div>
+                  <div class="info">
+                    <div>
+                      <label>类型：</label>
+                      <div>
+                        <span>全屋方案</span>
+                        <span>空间方案</span>
+                      </div>
+                    </div>
+                    <div>
+                      <label>阶段：</label>
+                      <div>
+                        <span>户型阶段</span>
+                        <span>装修阶段</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="formItem4">
                 <div class="item-title">需求信息</div>
                 <div class="item-cont">
                   <textarea id="" cols="30" rows="10" v-model="form1.message1"></textarea>
                 </div>
               </div>
-              <div class="formItem4">
+              <div class="formItem5">
                 <button @click="bianjiBoxSub">保存</button>
                 <button @click="bianjiBox = false">取消</button>
               </div>
@@ -226,20 +237,24 @@
             {text:"兑换详情",ok:false,component:ProjectConvert},
             {text:"分享家用户评论",ok:false,component:ProjectComment}
           ],
+          add1:'',
+          add2:'',
+          add3:'',
           bianjiBoxTitle:"",
           form1:{
-            name:'',
-            contact:'',
-            add1:'',
-            add2:'',
-            add3:'',
-            fanganName:'',
-            type:'',
+            customername:'',
+            customercontact:'',
+            customeraddr:this.add1+this.add2+this.add3,
+            productname:'',
+            housetype:'',
             area:'',
             area1:'',
             style1:'',
             message1:''
-          }
+          },
+          productInfo:[],
+          imgInfo:[],
+          projectSpace:[]
         }
       },
       methods:{
@@ -255,6 +270,9 @@
             this.$data.bianjiBoxTitle = "分享家·赢豪礼，最高可得苹果笔记本电脑"
             this.$data.bianjiBox = true
           }else if(index==2){
+            $('body').css({
+              overflow:'hidden'
+            })
             this.$data.bianji = true
             this.$data.fenxiang = false
             this.$data.bianjiBoxTitle = "编辑方案信息"
@@ -264,9 +282,24 @@
         bianjiBoxSub(){
           console.log(this.$data.form1)
           this.$data.bianjiBox = false
+          $('body').css({
+            overflow:'initial'
+          })
+        },
+        closeBox(){
+          this.bianjiBox = false
+          $('body').css({
+            overflow:'initial'
+          })
+        },
+        check(val){
+          var bigImg = this.$refs.bigImg
+          $(bigImg).attr({
+            src:val
+          })
         }
       },
-      mounted(){
+      updated(){
         var swiper1 = new Swiper('#swiper1',{
           pagination: '.swiper-pagination',
           slidesPerView: 4,
@@ -274,7 +307,38 @@
           spaceBetween: 20,
           freeMode: true
         })
-        $(window).scrollTop(0)
+      },
+      mounted(){
+        let productId = this.$router.history.current.query.productId
+        const that = this;
+        this.$api.axiosGet('/product/productDetail',{
+          productId:productId
+        },function (res) {
+          console.log(JSON.parse(res.data.productInfo))
+          that.productInfo = JSON.parse(res.data.productInfo)
+          var res1 = JSON.parse(res.data.productInfo)
+          console.log(res1)
+          var desid = res1.desid;
+          var st = res1.createtime;
+          that.$api.axiosGet('/render/synchro',{
+            designId:desid,
+            // startTime:st,
+            start:0,
+            num:10
+          },function (res){
+            console.log(res)
+            that.imgInfo = res.data.renders
+            console.log(that.imgInfo)
+            that.projectSpace = res.data.renders
+            // console.log(that.projectSpace)
+            var bigImg = that.$refs.bigImg
+            $(bigImg).attr({
+              src:res.data.renders[0].img
+            })
+            // console.log(that.imgInfo)
+            // console.log(JSON.parse(res.data.productInfo))
+          })
+        })
       }
     }
 </script>

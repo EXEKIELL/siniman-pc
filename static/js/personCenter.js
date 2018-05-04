@@ -51,7 +51,9 @@ export default {
         {text:"新中式"},
         {text:"其他"}
       ],
-      aaa:"aaa"
+      aaa:"aaa",
+      tagsList:['全部','全部','全部','全部'],
+      contList:[]
     }
   },
   methods:{
@@ -65,8 +67,8 @@ export default {
       console.log(1)
       $(e).siblings('div').find('input').focus()
     },
-    toUrl(){
-      this.$router.push('/indexWrap/myProject')
+    toUrl(val){
+      this.$router.push({path:'/indexWrap/myProject',query:{productId:val}})
     },
     change(val){
       let that = this
@@ -79,6 +81,7 @@ export default {
         token:token,
         userId:userId
       },function (res) {
+        console.log(res)
         var data = res.data.attributes
         that.leftData = [data.peddingAudit,data.hasReturned,data.hasQuotedPrice,data.hasDeliver,data.hasFinished]
         Canvas.paintLeft(canv,that.leftData);
@@ -99,6 +102,21 @@ export default {
         var data = res.data.attributes
         that.rightData = [data.inTouch,data.hasSended,data.hasMeasured,data.hasScheme,data.hasChecked,data.hasOrder]
         Canvas.paintRight(canv1,that.rightData);
+      })
+    },
+    pageChange(val){
+      const that = this;
+      this.$api.axiosPost('/product/productList',1,{
+        data:{
+          orderByCondition:'DESC',
+          orderByField:'productionmark'
+        },
+        page:{
+          pageNum:val,
+          pageSize:9
+        }
+      },function (res) {
+        that.contList = res.data.data
       })
     }
   },
@@ -144,5 +162,19 @@ export default {
     canv1.width = ($('.w2-left').width()*0.80)
     Canvas.paintLeft(canv,this.leftData);
     Canvas.paintRight(canv1,this.rightData);
+    this.$api.axiosPost('/product/productList',1,{
+      data:{
+        userId:userId,
+        orderByCondition:'DESC',
+        orderByField:'productionmark'
+      },
+      page:{
+        pageNum:1,
+        pageSize:9
+      }
+    },function (res) {
+      that.contList = res.data.data
+      console.log(res)
+    })
   }
 }
