@@ -255,7 +255,9 @@
         this.$api.axiosPost('/product/productList',1,{
           data:{
             orderByCondition:'DESC',
-            orderByField:'productionmark'
+            orderByField:'productionmark',
+            prostatus:1,
+            productName:'123'
           },
           page:{
             pageNum:1,

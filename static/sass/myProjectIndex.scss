@@ -142,8 +142,8 @@
     }
     .w3-cont{
       display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap-reverse;
+      justify-content: space-around;
+      flex-wrap: wrap;
       align-content: space-between;
       padding: 0 40px;
       .list1{
@@ -151,6 +151,7 @@
         transition: box-shadow 0.5s;
         border: 1px solid #f6f6f6;
         margin-bottom: 80px;
+        cursor: pointer;
         .list1-img{
           position: relative;
           overflow: hidden;

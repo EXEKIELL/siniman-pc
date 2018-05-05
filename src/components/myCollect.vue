@@ -2,7 +2,7 @@
   <div id="myCollect">
     <div class="wrap3">
       <div class="w3-title">
-        <span>我的订单</span>
+        <span>我的收藏</span>
       </div>
       <div class="w3-cont">
         <div class="list1">

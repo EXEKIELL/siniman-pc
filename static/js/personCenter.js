@@ -8,8 +8,8 @@ export default {
       show2:true,
       value1: '',
       value2:'',
-      leftData:[65,82,36,236,125],
-      rightData:[26,40,20,63,45,45],
+      leftData:[0,0,0,0,0],
+      rightData:[0,0,0,0,0,0],
       headLeft: {
         src:"./static/img/hlicon.png",
         text:"个人中心"
@@ -106,10 +106,12 @@ export default {
     },
     pageChange(val){
       const that = this;
+      let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
       this.$api.axiosPost('/product/productList',1,{
         data:{
           orderByCondition:'DESC',
-          orderByField:'productionmark'
+          orderByField:'productionmark',
+          userids:[userId]
         },
         page:{
           pageNum:val,

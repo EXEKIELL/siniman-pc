@@ -2,14 +2,14 @@
     <div id="accountAssignment">
       <div class="wrap">
         <div class="list1">
-          <div class="l1-1">
-            <button>
-              <span></span><span>批量删除</span>
-            </button>
-            <button>
-              <span></span><span>添加</span>
-            </button>
-          </div>
+          <!--<div class="l1-1">-->
+            <!--<button>-->
+              <!--<span></span><span>批量删除</span>-->
+            <!--</button>-->
+            <!--<button>-->
+              <!--<span></span><span>添加</span>-->
+            <!--</button>-->
+          <!--</div>-->
           <div class="l1-2">
             <div>
               <select name="username" id="username">
@@ -22,7 +22,7 @@
               </button>
             </div>
             <div>
-              <input type="text" placeholder="请输入搜索内容">
+              <!--<input type="text" placeholder="请输入搜索内容">-->
               <button>搜索</button>
             </div>
           </div>
@@ -31,10 +31,10 @@
           <ul>
             <li>
               <div>
-                <div class="checkBox">
-                  <input type="checkbox" @click.stop="selAll" name="name1">
-                  <span class="seled" @click.stop="clAll"></span>
-                </div>
+                <!--<div class="checkBox">-->
+                  <!--<input type="checkbox" @click.stop="selAll" name="name1">-->
+                  <!--<span class="seled" @click.stop="clAll"></span>-->
+                <!--</div>-->
               </div>
               <div><span>用户名称</span></div>
               <div><span>所属角色</span></div>
@@ -46,11 +46,11 @@
             </li>
             <li class="contList" v-for="(item,index) in userList" :key="index">
               <div>
-                <div class="checkBox">
-                  <input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">
-                  <span class="seled" @click.stop="qxXuanzhong(1)">
-                  </span>
-                </div>
+                <!--<div class="checkBox">-->
+                  <!--<input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">-->
+                  <!--<span class="seled" @click.stop="qxXuanzhong(1)">-->
+                  <!--</span>-->
+                <!--</div>-->
               </div>
               <div><span>{{item.account}}</span></div>
               <div><span>{{item.roles|str}}</span></div>

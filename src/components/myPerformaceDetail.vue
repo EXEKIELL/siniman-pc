@@ -30,71 +30,16 @@
             <span>订单状态</span>
             <span>订单时间</span>
           </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
+          <li v-for="(item,index) in listData" :key="index">
+            <span>{{item.orderNumber}}</span>
+            <span>{{item.orderTypeName}}</span>
+            <span>{{item.crmClient.name}}</span>
+            <span>{{item.crmShop.shortName}}</span>
             <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
-          </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
-            <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
-          </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
-            <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
-          </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
-            <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
-          </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
-            <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
-          </li>
-          <li>
-            <span>0000011A180411006</span>
-            <span>一般订单（橱柜）</span>
-            <span>张若昀</span>
-            <span>测试门店</span>
-            <span>2222.00</span>
-            <span>C（原材料）</span>
-            <span>碧桂园</span>
-            <span>已作废</span>
-            <span>2016.12.08</span>
+            <span>{{item.orderSortName}}</span>
+            <span>{{item.orderAddress}}</span>
+            <span>{{item.orderStatusName}}</span>
+            <span>{{item.modifyDate}}</span>
           </li>
         </ul>
       </div>
@@ -104,7 +49,8 @@
           layout="prev, pager, next"
           prev-text="上一页"
           next-text="下一页"
-          :total="40">
+          @current-change="change"
+          :total="totalPages*10">
         </el-pagination>
       </div>
     </div>
@@ -112,15 +58,56 @@
 </template>
 
 <script>
+  import statusData from '../../static/js/staticData'
     export default {
       name: "MyPerformaceDetail",
       data(){
         return {
-          value1:''
+          value1:'',
+          listData:[],
+          totalPages:null,
+          totalRecords:null,
+          orderType:statusData.orderType,
+          orderSort:statusData.orderSort,
+          orderStatusStart:statusData.orderStatusStart
+        }
+      },
+      methods:{
+        change(val){
+          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
+          let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+          const that = this;
+          this.$api.axiosPost('/person/getOrderList',1,{
+            page:val,
+            pageSize:10,
+            userId:userId,
+            token:token
+          },function (res) {
+            var ress = res.data.data
+            ress = JSON.parse(ress)
+            that.listData = ress.attributes.datas
+            console.log(that.listData)
+          })
         }
       },
       mounted(){
-
+        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
+        let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+        const that = this;
+        this.$api.axiosPost('/person/getOrderList',1,{
+          page:1,
+          pageSize:10,
+          userId:userId,
+          token:token
+        },function (res) {
+          var ress = res.data.data
+          ress = JSON.parse(ress)
+          console.log(ress)
+          that.listData = ress.attributes.datas
+          console.log(that.listData)
+          that.totalPages = ress.attributes.totalPages
+          that.totalRecords = ress.attributes.totalRecords
+        })
       }
     }
 </script>

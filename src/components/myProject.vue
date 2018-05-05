@@ -110,35 +110,19 @@
                 <div class="item-cont">
                   <div>已选择：</div>
                   <div class="shou">
-                    <div>
-                      <label>类型：</label>
+                    <div v-for="(item,index) in tagsels" :key="index">
+                      <label>{{item.class}}</label>
                       <div>
-                        <span>全屋方案<span></span></span>
-                        <span>空间方案<span></span></span>
-                      </div>
-                    </div>
-                    <div>
-                      <label>阶段：</label>
-                      <div>
-                        <span>户型阶段<span></span></span>
-                        <span>装修阶段<span></span></span>
+                        <span v-for="(item3,index3) in item.tag" :key="index3">{{item3}}<span @click="del(item3)"></span></span>
                       </div>
                     </div>
                   </div>
                   <div>请选择：</div>
                   <div class="info">
-                    <div>
-                      <label>类型：</label>
+                    <div v-for="(item,index) in tags" :key="index">
+                      <label>{{item.class}}</label>
                       <div>
-                        <span>全屋方案</span>
-                        <span>空间方案</span>
-                      </div>
-                    </div>
-                    <div>
-                      <label>阶段：</label>
-                      <div>
-                        <span>户型阶段</span>
-                        <span>装修阶段</span>
+                        <span v-for="(item2,index2) in item.tag" :key="index2" @click="changeTag(item2)">{{item2}}</span>
                       </div>
                     </div>
                   </div>
@@ -232,6 +216,18 @@
           bianjiBox:false,
           bianji:false,
           fenxiang:true,
+          tagsels:[
+            {class:'类型：',tag:[]},
+            {class:'阶段：',tag:[]},
+            {class:'户型：',tag:[]},
+            {class:'风格：',tag:[]},
+          ],
+          tags:[
+            {class:'类型：',tag:['全屋方案','空间方案']},
+            {class:'阶段：',tag:['户型阶段','装修阶段']},
+            {class:'户型：',tag:['一室一厅','两室一厅','两室二厅','三室一厅','三室二厅','四室一厅','四室两厅','其他']},
+            {class:'风格：',tag:['北欧','简欧','现代简约','新中式','其他']},
+          ],
           navBtns:[
             {text:"空间详情",ok:true,component:ProjectSpace},
             {text:"兑换详情",ok:false,component:ProjectConvert},
@@ -297,6 +293,43 @@
           $(bigImg).attr({
             src:val
           })
+        },
+        changeTag(val){
+          var e = event.target
+          if($(e).parent('div').siblings('label').text()=='类型：'){
+            if(this.tagsels[0].tag.indexOf(val)==-1){
+              this.tagsels[0].tag.push(val)
+            }
+          }else if($(e).parent('div').siblings('label').text()=='阶段：'){
+            if(this.tagsels[1].tag.indexOf(val)==-1){
+              this.tagsels[1].tag.push(val)
+            }
+          }else if($(e).parent('div').siblings('label').text()=='户型：'){
+            if(this.tagsels[2].tag.indexOf(val)==-1){
+              this.tagsels[2].tag.push(val)
+            }
+          }else{
+            if(this.tagsels[3].tag.indexOf(val)==-1){
+              this.tagsels[3].tag.push(val)
+            }
+          }
+        },
+        del(val){
+          var index = this.tagsels
+          var e = event.target
+          if($(e).parent('span').parent('div').siblings('label').text()=='类型：'){
+              var index = this.tagsels[0].tag.indexOf(val);
+              this.tagsels[0].tag.splice(index,1)
+          }else if($(e).parent('span').parent('div').siblings('label').text()=='阶段：'){
+            var index = this.tagsels[1].tag.indexOf(val);
+            this.tagsels[1].tag.splice(index,1)
+          }else if($(e).parent('span').parent('div').siblings('label').text()=='户型：'){
+            var index = this.tagsels[2].tag.indexOf(val);
+            this.tagsels[2].tag.splice(index,1)
+          }else{
+            var index = this.tagsels[3].tag.indexOf(val);
+            this.tagsels[3].tag.splice(index,1)
+          }
         }
       },
       updated(){

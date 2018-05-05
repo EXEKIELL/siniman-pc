@@ -92,9 +92,9 @@
             text:"个人中心"
           },
           headRight:{
-            headUrl:"../../static/img/head01.png",
+            headUrl:JSON.parse(localStorage.getItem('user-info')).data.img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).data.img,
             message:12,
-            integral:5324
+            integral:JSON.parse(localStorage.getItem('user-info')).data.score
           },
           swiperList:[
             {src:"../../static/img/img01.png"},
@@ -146,6 +146,7 @@
           $('.el-input__inner').focus()
         },
         click1(index){
+          $('#lis2 .shou2>li').removeClass('sel')
           for(var i = 0;i<this.shou2List.length;i++){
             this.shou2List[i].selClass = false;
           }
@@ -158,13 +159,193 @@
       computed:{
 
       },
+      watch:{
+        '$router':function (to, from) {
+          console.log(to,from)
+        }
+      },
+      beforeUpdate(){
+        var to = this.$router.history.current.path
+        if(to == '/indexWrap/shareCommunity'){
+          this.headLeft.text = '分享社区'
+          $('#lis2 .list2').css({
+            "background-color":"#333333"
+          })
+          $('#lis1 .list1').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2').slideUp();
+          $('#lis1 .shou1').slideDown();
+        }else if(to == '/indexWrap/personCenter'){
+          this.headLeft.text = '个人中心'
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .list2 span').css({
+            transform:"rotateZ(90deg)"
+          })
+        }else if(to == '/indexWrap/accountAssignment'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
+        }else if(to == '/indexWrap/myShop'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
+        }else if(to == '/indexWrap/myProjectIndex'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
+        }else if(to == '/indexWrap/myData'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
+        }else if(to == '/indexWrap/integralDetail'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
+        }else if(to == '/indexWrap/myIndent'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
+        }else if(to == '/indexWrap/myCollect'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .shou2>li:nth-child(7)').addClass('sel')
+        }
+      },
       mounted(){
-        $('#lis2 .list2').css({
-          "background-color":"#a51e32"
-        })
-        $('#lis2 .list2 span').css({
-          transform:"rotateZ(90deg)"
-        })
+        var to = this.$router.history.current.path
+        if(to == '/indexWrap/shareCommunity'){
+          this.headLeft.text = '分享社区'
+          $('#lis2 .list2').css({
+            "background-color":"#333333"
+          })
+          $('#lis1 .list1').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2').slideUp();
+          $('#lis1 .shou1').slideDown();
+        }else if(to == '/indexWrap/personCenter'){
+          this.headLeft.text = '个人中心'
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .list2 span').css({
+            transform:"rotateZ(90deg)"
+          })
+        }else if(to == '/indexWrap/accountAssignment'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
+        }else if(to == '/indexWrap/myShop'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
+        }else if(to == '/indexWrap/myProjectIndex'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
+        }else if(to == '/indexWrap/myData'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
+        }else if(to == '/indexWrap/integralDetail'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
+        }else if(to == '/indexWrap/myIndent'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
+        }else if(to == '/indexWrap/myCollect'){
+          $('#lis1 .list1').css({
+            "background-color":"#333333"
+          })
+          $('#lis2 .list2').css({
+            "background-color":"#a51e32"
+          })
+          $('#lis2 .shou2>li:nth-child(7)').addClass('sel')
+        }
         $(window).scroll(function (event) {
           if($(this).scrollTop()>100){
             $('.top').show()

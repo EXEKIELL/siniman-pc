@@ -15,7 +15,7 @@
                   <span>201612-2018.02</span>
                 </div>
                 <div>
-                  <span>￥550.00</span>
+                  <span>￥{{score}}.00</span>
                 </div>
               </div>
               <div>
@@ -64,7 +64,7 @@
       <div class="list2">
         <div class="nav">
           <ul>
-            <li v-for="(item,index) in navBtns1"><span :class="{sel:item.selClass}" @click="clickNav(index)">积分明细</span></li>
+            <li v-for="(item,index) in navBtns1"><span :class="{sel:item.selClass}" @click="clickNav(index)">{{item.text}}</span></li>
           </ul>
         </div>
         <div class="cont">
@@ -101,7 +101,8 @@
             {text:"积分获取",selClass:false},
             {text:"积分消耗",selClass:false}
           ],
-          postList:[]
+          postList:[],
+          score:JSON.parse(localStorage.getItem('user-info')).data.score
         }
       },
       methods:{
@@ -141,6 +142,15 @@
           },function (res) {
             console.log(res)
             that.postList = res.data.attributes.records
+          })
+          that.$api.axiosPost('/person/getUserScore?type=1',1,{
+            token:token,
+            userId:userId,
+            searchDateStart:'2017-12-24',
+            searchDateEnd:'2017-12-28'
+          },function (res) {
+            console.log(res)
+            // that.postList = res.data.attributes.records
           })
         }
         listPost(1)

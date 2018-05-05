@@ -24,8 +24,8 @@
             justify-content: center;
             align-items: center;
             img{
-              width: 150px;
-              height: 150px;
+              width: 160px;
+              height: 160px;
             }
           }
         }
@@ -37,6 +37,51 @@
             span:first-child{
               font-size: 26px;
               margin-right: 5px;
+            }
+            div:nth-child(3){
+              margin-left: 5px;
+              width: 20px;
+              height: 20px;
+              display: inline-block;
+              background: url("../../static/img/icon69.png") no-repeat;
+              background-size: 99% 99%;
+              cursor: pointer;
+              position: relative;
+              .idendity{
+                display: none;
+                position: absolute;
+                border: 1px solid #e4e4e4;
+                padding: 20px 10px;
+                width: 100px;
+                border-radius: 7px;
+                bottom: 25px;
+                left: -51px;
+                ul{
+                  li{
+                    margin-bottom: 15px;
+                    text-align: center;
+                    color: #888888;
+                  }
+                  li:last-child{
+                    margin-bottom: 0;
+                  }
+                }
+              }
+              .idendity::after{
+                content: '';
+                width: 0;
+                height: 0;
+                display: block;
+                padding: 0;
+                border-top: 8px solid #e4e4e4;
+                border-bottom: 8px solid transparent;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                position: absolute;
+                bottom: -17px;
+                left: 50%;
+                margin-left: -8px;
+              }
             }
           }
           div:last-child{
@@ -50,6 +95,7 @@
               background-size: 100% 100%;
               width: 9px;
               height: 14px;
+              margin-right: 5px;
             }
           }
         }
@@ -103,9 +149,10 @@
             position: relative;
             margin-right: 30px;
             span{
+              width: 63px;
               position: absolute;
               top: 15px;
-              left: 50%;
+              left: 25px;
               margin-left: -13px;
               font-size: 14px;
               color: #ff6700;
