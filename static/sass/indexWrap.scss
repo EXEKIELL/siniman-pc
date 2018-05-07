@@ -140,7 +140,8 @@
             }
           }
           >li:nth-child(5){
-            a{
+            >div{
+              cursor: pointer;
               >span:first-child{
                 width: 14px;
                 height: 15px;

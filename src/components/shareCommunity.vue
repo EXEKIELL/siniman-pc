@@ -5,7 +5,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
             <router-link to="#">
-              <img :src="item.src" alt="">
+              <img :src="item.imgurl" alt="">
             </router-link>
           </div>
         </div>
@@ -43,35 +43,11 @@
       </div>
       <div class="w3-nav">
         <ul>
-          <li class="clearFix">
-            <span class="nav-left">类型：</span>
+          <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
+            <span class="nav-left">{{item.catalogname+'：'}}</span>
             <div class="nav-right">
-              <div v-for="(item,index) in leixing" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">阶段：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in jieduan" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">户型：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in huxing" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">风格：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in fengge" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
+              <div v-for="(item1,index1) in item.list" :key="index1">
+                <div @click="navSel" >{{item1.tagname}}</div>
               </div>
             </div>
           </li>
@@ -80,21 +56,7 @@
       <div class="w3-cont">
         <div class="list1" v-for="(item,index) in listData" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
-            <img src="../../static/img/img05.png" alt="">
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-              </div>
-            </div>
+            <img :src="item.simg" alt="">
           </div>
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
@@ -134,48 +96,17 @@
       name: "ShareCommunity",
       data(){
         return {
-          swiperList:[
-            {src:"./static/img/img01.png"},
-            {src:"./static/img/img01.png"},
-            {src:"./static/img/img01.png"}
-          ],
+          swiperList:[],
+          tagsList:[],
           paixus:[
             {text:"价格",isSel:true},
             {text:"销量",isSel:false},
             {text:"点赞量",isSel:false},
             {text:"收藏量",isSel:false}
           ],
-          leixing:[
-            {text:"全部"},
-            {text:"全屋方案"},
-            {text:"空间方案"}
-          ],
-          jieduan:[
-            {text:"全部"},
-            {text:"户型阶段"},
-            {text:"装修阶段"}
-          ],
-          huxing:[
-            {text:"全部"},
-            {text:"一室一厅"},
-            {text:"两室一厅"},
-            {text:"两室二厅"},
-            {text:"三室一厅"},
-            {text:"三室二厅"},
-            {text:"四室一厅"},
-            {text:"四室两厅"},
-            {text:"其他"}
-          ],
-          fengge:[
-            {text:"全部"},
-            {text:"北欧"},
-            {text:"简欧"},
-            {text:"现代简约"},
-            {text:"新中式"},
-            {text:"其他"}
-          ],
           listData:[],
-          tags:['全部','全部','全部','全部']
+          tags:['','','',''],
+          banner:[]
         }
       },
       methods:{
@@ -195,8 +126,8 @@
           }else{
             this.tags[3] = text
           }
-          console.log(this.tags)
           const that = this
+          //标签查询方案库分页查询
           this.$api.axiosPost('/product/productList',1,{
             data:{
               tags:that.tags,
@@ -209,7 +140,7 @@
             }
           },function (res) {
             that.listData = res.data.data
-            console.log(that.listData)
+            console.log(res)
           })
         },
         paixu1(index){
@@ -224,6 +155,7 @@
         },
         change(val){
           const that = this;
+          //分页查询
           this.$api.axiosPost('/product/productList',1,{
             data:{
               orderByCondition:'DESC',
@@ -252,6 +184,12 @@
           nextButton:'.swiper-button-next'
         })
         const that = this;
+        //标签获取
+        this.$api.axiosGet('/tag/getTagList',{},function (res) {
+          console.log(res.data)
+          that.tagsList = res.data
+        })
+        //方案库分页查询
         this.$api.axiosPost('/product/productList',1,{
           data:{
             orderByCondition:'DESC',
@@ -266,6 +204,18 @@
         },function (res) {
           that.listData = res.data.data
           console.log(that.listData)
+        })
+        //  banner图获取
+        this.$api.axiosPost('/img/getImgListByParam',1,{
+          data:{
+            imgType:1
+          },
+          page:{
+            pageNum:0,
+            pageSize:10
+          }
+        },function (res) {
+          that.swiperList = res.data.data
         })
       }
     }

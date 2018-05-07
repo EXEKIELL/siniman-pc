@@ -6,35 +6,11 @@
         </div>
         <div class="w3-nav">
           <ul>
-            <li class="clearFix">
-              <span class="nav-left">类型：</span>
+            <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
+              <span class="nav-left">{{item.catalogname+'：'}}</span>
               <div class="nav-right">
-                <div v-for="(item,index) in leixing" :key="index">
-                  <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-                </div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <span class="nav-left">阶段：</span>
-              <div class="nav-right">
-                <div v-for="(item,index) in jieduan" :key="index">
-                  <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-                </div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <span class="nav-left">户型：</span>
-              <div class="nav-right">
-                <div v-for="(item,index) in huxing" :key="index">
-                  <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-                </div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <span class="nav-left">风格：</span>
-              <div class="nav-right">
-                <div v-for="(item,index) in fengge" :key="index">
-                  <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
+                <div v-for="(item1,index1) in item.list" :key="index1">
+                  <div @click="navSel" >{{item1.tagname}}</div>
                 </div>
               </div>
             </li>
@@ -83,37 +59,9 @@
       name: "MyProjectIndex",
       data(){
         return {
-          leixing:[
-            {text:"全部"},
-            {text:"全屋方案"},
-            {text:"空间方案"}
-          ],
-          jieduan:[
-            {text:"全部"},
-            {text:"户型阶段"},
-            {text:"装修阶段"}
-          ],
-          huxing:[
-            {text:"全部"},
-            {text:"一室一厅"},
-            {text:"两室一厅"},
-            {text:"两室二厅"},
-            {text:"三室一厅"},
-            {text:"三室二厅"},
-            {text:"四室一厅"},
-            {text:"四室两厅"},
-            {text:"其他"}
-          ],
-          fengge:[
-            {text:"全部"},
-            {text:"北欧"},
-            {text:"简欧"},
-            {text:"现代简约"},
-            {text:"新中式"},
-            {text:"其他"}
-          ],
+          tagsList:[],
           productList:[],
-          tags:['全部','全部','全部','全部']
+          tags:['','','','']
         }
       },
       methods:{
@@ -175,6 +123,7 @@
       mounted(){
         const that = this;
         let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
+        //获取方案分页库查询
         this.$api.axiosPost('/product/productList',1,{
           data:{
             orderByCondition:'DESC',
@@ -188,6 +137,11 @@
         },function (res) {
           that.productList = res.data.data
           console.log(that.productList)
+        })
+        //标签获取
+        this.$api.axiosGet('/tag/getTagList',{},function (res) {
+          console.log(res.data)
+          that.tagsList = res.data
         })
       }
     }

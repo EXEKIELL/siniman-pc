@@ -1,12 +1,22 @@
 <template>
-  <div id="app" class="clearFix">
-    <router-view></router-view>
+  <div id="app" class="clearFix" v-if="show">
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  data(){
+    return {
+      show:true,
+      userId:'',
+      token:''
+    }
+  },
+  mounted(){
+    this.show = true
+  }
 }
 </script>
 

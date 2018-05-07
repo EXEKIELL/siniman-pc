@@ -77,35 +77,11 @@
       </div>
       <div class="w3-nav">
         <ul>
-          <li class="clearFix">
-            <span class="nav-left">类型：</span>
+          <li class="clearFix" v-for="(item,index) in tagList" :key="index">
+            <span class="nav-left">{{item.catalogname+'：'}}</span>
             <div class="nav-right">
-              <div v-for="(item,index) in leixing" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">阶段：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in jieduan" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">户型：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in huxing" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
-              </div>
-            </div>
-          </li>
-          <li class="clearFix">
-            <span class="nav-left">风格：</span>
-            <div class="nav-right">
-              <div v-for="(item,index) in fengge" :key="index">
-                <div @click="navSel" :class="{sel:index==0}">{{item.text}}</div>
+              <div v-for="(item1,index1) in item.list" :key="index1">
+                <div @click="navSel" >{{item1.tagname}}</div>
               </div>
             </div>
           </li>
@@ -114,37 +90,36 @@
       <div class="w3-cont">
         <div class="list1" v-for="(item,index) in contList" :key="index">
           <div class="list1-img">
-            <img src="../../static/img/img05.png" alt="">
+            <img :src="item.simg" alt="">
             <div>
-              <button>分享家·赢豪礼</button>
               <button @click="toUrl(item.id)">编辑方案</button>
             </div>
-            <div>
-              <div>
-                <img src="../../static/img/img_sm01.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm02.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm03.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/img_sm04.png" alt="">
-                <div class="maskSm">
-                  <button>设为封面</button>
-                </div>
-              </div>
-            </div>
+            <!--<div>-->
+              <!--<div>-->
+                <!--<img src="../../static/img/img_sm01.png" alt="">-->
+                <!--<div class="maskSm">-->
+                  <!--<button>设为封面</button>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<img src="../../static/img/img_sm02.png" alt="">-->
+                <!--<div class="maskSm">-->
+                  <!--<button>设为封面</button>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<img src="../../static/img/img_sm03.png" alt="">-->
+                <!--<div class="maskSm">-->
+                  <!--<button>设为封面</button>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<img src="../../static/img/img_sm04.png" alt="">-->
+                <!--<div class="maskSm">-->
+                  <!--<button>设为封面</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>

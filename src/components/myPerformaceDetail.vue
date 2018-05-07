@@ -24,7 +24,6 @@
             <span>订单类别</span>
             <span>客户姓名</span>
             <span>销售门店</span>
-            <span>订单价格</span>
             <span>订单类型</span>
             <span>订单地址</span>
             <span>订单状态</span>
@@ -35,7 +34,6 @@
             <span>{{item.orderTypeName}}</span>
             <span>{{item.crmClient.name}}</span>
             <span>{{item.crmShop.shortName}}</span>
-            <span>2222.00</span>
             <span>{{item.orderSortName}}</span>
             <span>{{item.orderAddress}}</span>
             <span>{{item.orderStatusName}}</span>
@@ -91,6 +89,7 @@
         }
       },
       mounted(){
+        console.log(statusData.tags)
         const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
         let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
         const that = this;

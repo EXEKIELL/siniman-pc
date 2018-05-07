@@ -14,6 +14,7 @@ const loginInfo = {
     userData:{},
     userInfo:{},
     token:null,
+    userId:'',
     loginSuccess:null
   },
   mutations:{
@@ -25,6 +26,9 @@ const loginInfo = {
     },
     GETTOKEN(state,token){
       state.token = token
+    },
+    GETUSERID(state,userId){
+      state.userId = userId
     },
     LOGINVIEW(state,data){
       if(data.ok){
@@ -80,6 +84,7 @@ const loginInfo = {
               //将登录请求的数据保存到vuex
               context.commit('LOGINVIEW',data);
               context.commit('GETTOKEN',data.userData.token)
+              context.commit('GETUSERID',data.userData.user.id)
               console.log("用户信息已保存到vuex");
               //保存到本地
               localStorage.setItem('user-data',JSON.stringify(res.data))
@@ -105,6 +110,9 @@ const loginInfo = {
       api.axiosGet('/person/userInfo',userId,function (res) {
         console.log("用户信息：",res)
         context.commit('USERINFO',res.data)
+        context.commit('GETUSERID',res.data.data.userid)
+        // context.commit('GETTOKEN')
+        console.log(context.state.userId)
         console.log("已保存到vux")
         localStorage.setItem('user-info',JSON.stringify(res.data))
         console.log("已保存到本地")

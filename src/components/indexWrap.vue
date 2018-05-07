@@ -62,9 +62,9 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="#">
+                    <div @click="exit">
                       <span></span><span>退出</span>
-                    </router-link>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -92,9 +92,9 @@
             text:"个人中心"
           },
           headRight:{
-            headUrl:JSON.parse(localStorage.getItem('user-info')).data.img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).data.img,
+            // headUrl:JSON.parse(localStorage.getItem('user-info')).data.img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).data.img,
             message:12,
-            integral:JSON.parse(localStorage.getItem('user-info')).data.score
+            // integral:JSON.parse(localStorage.getItem('user-info')).data.score
           },
           swiperList:[
             {src:"../../static/img/img01.png"},
@@ -154,6 +154,27 @@
         },
         toTop(){
           $('html , body').animate({scrollTop: 0},'slow');
+        },
+        exit(){
+          this.$confirm('此操作将退出登录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            localStorage.clear();
+            this.$data.show = false
+            this.$destroy();
+            this.$router.replace('/login')
+            this.$message({
+              type: 'success',
+              message: '成功!'
+            });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
         }
       },
       computed:{

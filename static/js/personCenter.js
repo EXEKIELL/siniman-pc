@@ -3,6 +3,8 @@ export default {
   name: 'PersonCenter',
   data(){
     return {
+      userId:'',
+      token:'',
       screenWidth: $('.w2-left').width(),//获取窗口大小
       show1:true,
       show2:true,
@@ -14,53 +16,52 @@ export default {
         src:"./static/img/hlicon.png",
         text:"个人中心"
       },
-      swiperList:[
-        {src:"./static/img/img01.png"},
-        {src:"./static/img/img01.png"},
-        {src:"./static/img/img01.png"}
-      ],
-      PersonCenterLists:[
-        {}
-      ],
-      leixing:[
-        {text:"全部"},
-        {text:"全屋方案"},
-        {text:"空间方案"}
-      ],
-      jieduan:[
-        {text:"全部"},
-        {text:"户型阶段"},
-        {text:"装修阶段"}
-      ],
-      huxing:[
-        {text:"全部"},
-        {text:"一室一厅"},
-        {text:"两室一厅"},
-        {text:"两室二厅"},
-        {text:"三室一厅"},
-        {text:"三室二厅"},
-        {text:"四室一厅"},
-        {text:"四室两厅"},
-        {text:"其他"}
-      ],
-      fengge:[
-        {text:"全部"},
-        {text:"北欧"},
-        {text:"简欧"},
-        {text:"现代简约"},
-        {text:"新中式"},
-        {text:"其他"}
-      ],
+      swiperList:[],
+      tagList:[],
       aaa:"aaa",
-      tagsList:['全部','全部','全部','全部'],
+      tagsList:['','','',''],
       contList:[]
     }
   },
   methods:{
-    navSel(){
+    navSel(val){
       var e = event.target;
       $(e).addClass("sel");
       $(e).parent('div').siblings('div').find('div').removeClass('sel')
+      var text = val;
+      var str = $(e).parents('.nav-right').siblings('.nav-left').text()
+      str = str.replace(/：/,'')
+      if(text == '全部'){
+        text = ''
+      }
+      if(str=='类型'){
+        this.tagsList[0] = text
+      }else if(str=='阶段'){
+        this.tagsList[1] = text
+      }else if(str=='户型'){
+        this.tagsList[2] = text
+      }else{
+        this.tagsList[3] = text
+      }
+      const that = this
+      const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
+      //标签查询方案库分页查询
+      this.$api.axiosPost('/product/productList',1,{
+        data:{
+          userids:[userId],
+          tags:that.tagsList,
+          orderByCondition:'DESC',
+          orderByField:'productionmark'
+        },
+        page:{
+          pageNum:1,
+          pageSize:9
+        }
+      },function (res) {
+        console.log(res)
+        that.contList = res.data.data
+        console.log(that.contList)
+      })
     },
     dianwo(){
       var e = event.target;
@@ -128,8 +129,17 @@ export default {
       console.log(this.screenWidth)
     }
   },
+  beforeUpdate(){
+
+  },
   mounted(){
-    var swiper1 = new Swiper('#swiper1',{
+    const that = this
+    let token,userId;
+    token = this.$store.state.login.token;
+    userId = this.$store.state.login.userId;
+    let canv = $('#canvas1')[0];
+    let canv1 = $('#canvas2')[0];
+    let swiper1 = new Swiper('#swiper1',{
       pagination: '.swiper-pagination',
       paginationClickable: true,
       loop:true,
@@ -137,17 +147,15 @@ export default {
       nextButton:'.swiper-button-next'
     })
     // this.$store.dispatch('login/getUserInfo')
-    let token = JSON.parse(localStorage.getItem('user-data')).token;
-    let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
     console.log(userId)
     this.$api.axiosPost('/person/getUserAchievement',1, {
         token: token,
         userId: userId
       }
       ,function (res) {
-        console.log(res)
+        console.log(res.data.data)
       })
-    const that = this
+    //canvas监听器
     window.onresize = () => {
       return (() => {
         that.screenWidth = $('.w2-left').width();
@@ -157,13 +165,13 @@ export default {
         Canvas.paintRight(canv1,this.rightData);
       })()
     }
-    var canv = $('#canvas1')[0];
-    var canv1 = $('#canvas2')[0];
+    //canvas操作
     that.screenWidth = $('.w2-left').width();
     canv.width = ($('.w2-left').width()*0.80)
     canv1.width = ($('.w2-left').width()*0.80)
     Canvas.paintLeft(canv,this.leftData);
     Canvas.paintRight(canv1,this.rightData);
+    //方案库分页查询
     this.$api.axiosPost('/product/productList',1,{
       data:{
         userId:userId,
@@ -177,6 +185,23 @@ export default {
     },function (res) {
       that.contList = res.data.data
       console.log(res)
+    })
+    //  banner图获取
+    this.$api.axiosPost('/img/getImgListByParam',1,{
+      data:{
+        imgType:1
+      },
+      page:{
+        pageNum:0,
+        pageSize:10
+      }
+    },function (res) {
+      that.swiperList = res.data.data
+    })
+    //标签获取
+    this.$api.axiosGet('/tag/getTagList',{},function (res) {
+      console.log(res.data)
+      that.tagList = res.data
     })
   }
 }
