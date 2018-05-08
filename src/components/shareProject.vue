@@ -100,7 +100,7 @@
               </div>
               <div>
                 <div>
-                  <textarea placeholder="用户备注" id="textarea1"></textarea>
+                  <textarea placeholder="用户备注" id="textarea1" v-model="beizhu"></textarea>
                 </div>
               </div>
               <div>
@@ -145,6 +145,8 @@
         return {
           text1:"立即兑换",
           detail:ShareSpace,
+          score:null,
+          beizhu:'',
           navBtns:[
             {text:"空间详情",ok:true,component:ShareSpace},
             {text:"兑换详情",ok:false,component:ShareConvert},
@@ -161,7 +163,10 @@
           sucduihuan:true,
           productInfo:{},
           shareSpaceInfo:[],
-          imgInfo:[]
+          imgInfo:[],
+          scoreUserId:null,
+          userId:null,
+          clientId:''
         }
       },
       methods:{
@@ -177,13 +182,34 @@
             this.title = "";
             this.suc = true;
             let userAccount = JSON.parse(localStorage.getItem('user-info')).data.account;
-            let desId = this.productInfo.desid;
+            let desId = this.productInfo.desid+'';
             const that = this;
+            //复制酷乐家接口
             this.$api.axiosPost('/product/exchangeProduct',0,{
               userAccount:userAccount,
-              desId:'3FO4IH6X46RN'
+              desId:desId
             },function (res) {
               console.log(res)
+              var userName = JSON.parse(localStorage.getItem('user-info')).data.username
+              var productName = that.productInfo.productname
+              var client = that.productInfo.customername
+              const token = JSON.parse(localStorage.getItem('user-data')).token
+              if(res.data.successCounts&&res.data.successCounts == 1){
+              //  减少兑换用户积分
+                that.$api.axiosPost('/person/addUserScoreRecord',1,{
+                  scroeUserId:that.scoreUserId,
+                  clientId:2785609,//that.clientId
+                  score:0-that.productInfo.productionmark,
+                  action:'兑换',
+                  description:'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']',
+                  token:token,
+                  userId:that.userId+''
+                },function (res) {
+                  console.log(res)
+                })
+              }else{
+                this.$message.error('兑换失败');
+              }
             })
           }else {
             this.suc1 = true;
@@ -228,23 +254,31 @@
         })
       },
       mounted(){
-        var productId = this.$router.history.current.query.productId
+        console.log(1111)
+        var productId = this.$router.history.current.query.productId;
+        var userId = JSON.parse(localStorage.getItem('user-info')).data.userid;
+        let token = JSON.parse(localStorage.getItem('user-data')).token;
         const that = this;
+        this.userId = userId;
+        //方案详情获取
         this.$api.axiosGet('/product/productDetail',{
           productId:productId
         },function (res) {
-          console.log(JSON.parse(res.data.productInfo))
-          that.productInfo = JSON.parse(res.data.productInfo)
-          var userId = JSON.parse(localStorage.getItem('user-info')).data.userid
-          var res1 = JSON.parse(res.data.productInfo)
-          if(res1.userid==userId){
-            that.text1 = '无需兑换'
-            var btn = that.$refs.duihuanbtn
+          console.log(JSON.parse(res.data.productInfo));
+          that.productInfo = JSON.parse(res.data.productInfo);
+          that.clientId = JSON.parse(res.data.productInfo).customerid
+          var res1 = JSON.parse(res.data.productInfo);
+          console.log(userId,res1.userid);
+          that.scoreUserId = res1.userid;
+          if(res1.userid == userId){
+            that.text1 = '无需兑换';
+            var btn = that.$refs.duihuanbtn;
             $(btn).attr('disabled',true)
           }
           console.log(res1)
           var desid = res1.desid;
           var st = res1.createtime;
+          //渲染图获取
           that.$api.axiosGet('/render/synchro',{
             designId:desid,
             // startTime:st,
@@ -261,6 +295,14 @@
             console.log(that.imgInfo)
             // console.log(JSON.parse(res.data.productInfo))
           })
+        })
+      //用户积分查询
+        this.$api.axiosPost('/person/getUserScore',1,{
+          token:token,
+          userId:userId+''
+        },function (res) {
+          console.log(res)
+          that.score = res.data.attributes.score
         })
       }
     }

@@ -46,6 +46,7 @@
           <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
             <span class="nav-left">{{item.catalogname+'：'}}</span>
             <div class="nav-right">
+              <div>全部</div>
               <div v-for="(item1,index1) in item.list" :key="index1">
                 <div @click="navSel" >{{item1.tagname}}</div>
               </div>

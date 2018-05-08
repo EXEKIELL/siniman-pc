@@ -3,7 +3,7 @@ import store from './store/index'
 import router from './router/index'
 import {Loading,Message} from 'element-ui'
 
-axios.defaults.timeout = 10000 //超时时间
+axios.defaults.timeout = 100000 //超时时间
 
 //http请求拦截器
 var loadinginstace
