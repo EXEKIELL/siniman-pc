@@ -177,6 +177,7 @@
         },
         sucbtn(val){
           var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
+          console.log(userScore)
           if(val<userScore){
             this.duihuan = false;
             this.title = "";
@@ -185,7 +186,7 @@
             let desId = this.productInfo.desid+'';
             const that = this;
             //复制酷乐家接口
-            this.$api.axiosPost('/product/exchangeProduct',0,{
+            this.$api.axiosPost('/product/exchangeProduct'+that.$store.state.login.str1,0,{
               userAccount:userAccount,
               desId:desId
             },function (res) {
@@ -196,14 +197,14 @@
               const token = JSON.parse(localStorage.getItem('user-data')).token
               if(res.data.successCounts&&res.data.successCounts == 1){
               //  减少兑换用户积分
-                that.$api.axiosPost('/person/addUserScoreRecord',1,{
-                  scroeUserId:that.scoreUserId,
+                that.$api.axiosPost('/person/addUserScoreRecord'+that.$store.state.login.str1,1,{
+                  scroeUserId:109740,//that.scoreUserId
                   clientId:2785609,//that.clientId
-                  score:0-that.productInfo.productionmark,
+                  score:10,//that.productInfo.productionmark
                   action:'兑换',
-                  description:'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']',
+                  description:'aaa',//'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']'
                   token:token,
-                  userId:that.userId+''
+                  userId:'2786483'
                 },function (res) {
                   console.log(res)
                 })
@@ -261,25 +262,30 @@
         const that = this;
         this.userId = userId;
         //方案详情获取
-        this.$api.axiosGet('/product/productDetail',{
+        this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
           productId:productId
         },function (res) {
+          console.log(res)
+          console.log('方案详情获取',JSON.parse(res.data.productInfo))
           console.log(JSON.parse(res.data.productInfo));
           that.productInfo = JSON.parse(res.data.productInfo);
           that.clientId = JSON.parse(res.data.productInfo).customerid
           var res1 = JSON.parse(res.data.productInfo);
           console.log(userId,res1.userid);
           that.scoreUserId = res1.userid;
-          if(res1.userid == userId){
-            that.text1 = '无需兑换';
-            var btn = that.$refs.duihuanbtn;
-            $(btn).attr('disabled',true)
-          }
+
+          //判定是否能兑换
+
+          // if(res1.userid == userId){
+          //   that.text1 = '无需兑换';
+          //   var btn = that.$refs.duihuanbtn;
+          //   $(btn).attr('disabled',true)
+          // }
           console.log(res1)
           var desid = res1.desid;
           var st = res1.createtime;
           //渲染图获取
-          that.$api.axiosGet('/render/synchro',{
+          that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
             designId:desid,
             // startTime:st,
             start:0,
@@ -297,7 +303,7 @@
           })
         })
       //用户积分查询
-        this.$api.axiosPost('/person/getUserScore',1,{
+        this.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1,1,{
           token:token,
           userId:userId+''
         },function (res) {

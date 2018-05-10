@@ -27,18 +27,19 @@
           <div>排序：</div>
           <div>
             <ul>
-              <li :class="{sel:item.isSel}" v-for="(item,index) in paixus" :key="index" @click="paixu1(index)">{{item.text}}</li>
+              <li class="sel"  @click="paixu1('默认')" >默认</li>
+              <li :class="{sel:item.isSel}" v-for="(item,index) in paixus" :key="index" @click="paixu1(item.text,index)">{{item.text}}</li>
             </ul>
           </div>
           <div>
-            <input type="text" value="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
+            <input type="text" v-model="scoreStart" value="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
             <span>~</span>
-            <input value="1000" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
+            <input value="1000" v-model="scoreEnd" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
           </div>
         </div>
         <div>
-          <input type="text" placeholder="请输入设计师姓名或文案名称">
-          <button>搜索</button>
+          <input type="text" placeholder="请输入设计师姓名或文案名称" v-model="productName">
+          <button @click="search">搜索</button>
         </div>
       </div>
       <div class="w3-nav">
@@ -46,18 +47,20 @@
           <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
             <span class="nav-left">{{item.catalogname+'：'}}</span>
             <div class="nav-right">
-              <div>全部</div>
+              <div>
+                <div @click="navSel('全部',index)" class="sel" >全部</div>
+              </div>
               <div v-for="(item1,index1) in item.list" :key="index1">
-                <div @click="navSel" >{{item1.tagname}}</div>
+                <div @click="navSel(index,index1)" >{{item1.tagname}}</div>
               </div>
             </div>
           </li>
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in listData" :key="index" @click="toUrl(item.id)">
+        <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
-            <img :src="item.simg" alt="">
+            <img src="../../static/img/img05.png" alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
           </div>
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
@@ -86,7 +89,7 @@
         prev-text="上一页"
         next-text="下一页"
         @current-change="change"
-        :total="1000">
+        :total="postData.total*10">
       </el-pagination>
     </div>
   </div>
@@ -97,58 +100,109 @@
       name: "ShareCommunity",
       data(){
         return {
+          postData:{},
           swiperList:[],
           tagsList:[],
           paixus:[
-            {text:"价格",isSel:true},
+            {text:"价格",isSel:false},
             {text:"销量",isSel:false},
             {text:"点赞量",isSel:false},
             {text:"收藏量",isSel:false}
           ],
+          totalPage:0,
           listData:[],
-          tags:['','','',''],
-          banner:[]
+          tags:[],
+          banner:[],
+          orderByField:'',
+          postTags:[],
+          scoreStart:0,
+          scoreEnd:1000,
+          productName:''
         }
       },
       methods:{
-        navSel(){
+        navSel(val,val1){
+          console.log(val,val1)
           var e = event.target;
           $(e).addClass("sel");
           $(e).parent('div').siblings('div').find('div').removeClass('sel')
-          var text = e.innerText;
-          var str = $(e).parents('.nav-right').siblings('.nav-left').text()
-          str = str.replace(/：/,'')
-          if(str=='类型'){
-            this.tags[0] = text
-          }else if(str=='阶段'){
-            this.tags[1] = text
-          }else if(str=='户型'){
-            this.tags[2] = text
+
+
+          //  标签筛选
+          if(val != '全部'){
+            this.tags[val+''] = val1
           }else{
-            this.tags[3] = text
+            delete this.tags[val1+'']
           }
+          let tags1 = [];
+          this.postTags = []
+          for (var key in this.tags) {
+            var index = key,
+              index1 = this.tags[key]
+            this.postTags.push(this.tagsList[index].list[index1].catalogcode)
+          }
+
           const that = this
+          const userId = this.$store.state.login.userId;
           //标签查询方案库分页查询
-          this.$api.axiosPost('/product/productList',1,{
+          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
             data:{
-              tags:that.tags,
+              userids:[userId],
+              tags:that.postTags,
               orderByCondition:'DESC',
-              orderByField:'productionmark'
+              orderByField:that.orderByField
             },
             page:{
               pageNum:1,
               pageSize:9
             }
           },function (res) {
-            that.listData = res.data.data
-            console.log(res)
+            that.postData = res.data
+            console.log('标签',res)
           })
         },
-        paixu1(index){
-          for(var i = 0;i<this.paixus.length;i++){
-            this.paixus[i].isSel = false;
+        paixu1(val,index){
+          if(val != '默认'){
+            $(event.target).parent('ul').find('li:first-child').removeClass('sel')
+            for(var i = 0;i<this.paixus.length;i++){
+              this.paixus[i].isSel = false;
+            }
+            this.paixus[index].isSel = true;
+
+            if(index == 0){
+              this.orderByField = 'productionmark'
+            }else if(index == 1){
+              this.orderByField = 'salsecount'
+            }else if(index == 2){
+              this.orderByField = 'goodcount'
+            }else{
+              this.orderByField = 'favoritecount'
+            }
+          }else{
+            for(var i = 0;i<this.paixus.length;i++){
+              this.paixus[i].isSel = false;
+            }
+            $(event.target).addClass('sel')
+            this.orderByField = ''
           }
-          this.paixus[index].isSel = true;
+          const that = this;
+          const userId = this.$store.state.login.userId;
+          //排序查询分页
+          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
+            data:{
+              userids:[userId],
+              tags:that.postTags,
+              orderByCondition:'DESC',
+              orderByField:that.orderByField
+            },
+            page:{
+              pageNum:1,
+              pageSize:9
+            }
+          },function (res) {
+            that.postData = res.data
+            console.log('排序',res)
+          })
         },
         toUrl(val){
           console.log(val)
@@ -156,20 +210,47 @@
         },
         change(val){
           const that = this;
+          const userId = this.$store.state.login.userId;
           //分页查询
-          this.$api.axiosPost('/product/productList',1,{
+          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
             data:{
+              userids:[userId],
+              tags:that.postTags,
               orderByCondition:'DESC',
-              orderByField:'productionmark'
+              orderByField:that.orderByField
             },
             page:{
               pageNum:val,
               pageSize:9
             }
           },function (res) {
-            that.listData = res.data.data
-            console.log(that.listData)
+            that.postData = res.data
+            console.log('页码',res)
 
+          })
+        },
+        search(){
+          console.log(parseFloat(this.scoreStart),parseInt(this.scoreEnd),this.productName)
+          //搜索分页查询
+          const that = this;
+          const userId = this.$store.state.login.userId;
+          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
+            data:{
+              userids:[userId],
+              tags:that.postTags,
+              orderByCondition:'DESC',
+              orderByField:that.orderByField,
+              scoreStart:that.scoreStart,
+              scoreEnd:that.scoreEnd,
+              productname:that.productName
+            },
+            page:{
+              pageNum:1,
+              pageSize:9
+            }
+          },function (res) {
+            that.postData = res.data
+            console.log('加载',res)
           })
         }
       },
@@ -185,29 +266,30 @@
           nextButton:'.swiper-button-next'
         })
         const that = this;
+        const userId = this.$store.state.login.userId;
         //标签获取
-        this.$api.axiosGet('/tag/getTagList',{},function (res) {
+        this.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
           console.log(res.data)
           that.tagsList = res.data
         })
         //方案库分页查询
-        this.$api.axiosPost('/product/productList',1,{
+        this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
           data:{
+            userids:[userId],
+            tags:that.postTags,
             orderByCondition:'DESC',
-            orderByField:'productionmark',
-            prostatus:1,
-            productName:'123'
+            orderByField:that.orderByField
           },
           page:{
             pageNum:1,
             pageSize:9
           }
         },function (res) {
-          that.listData = res.data.data
-          console.log(that.listData)
+          that.postData = res.data
+          console.log('加载',res)
         })
         //  banner图获取
-        this.$api.axiosPost('/img/getImgListByParam',1,{
+        this.$api.axiosPost('/img/getImgListByParam'+that.$store.state.login.str1,1,{
           data:{
             imgType:1
           },

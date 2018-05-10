@@ -3,18 +3,19 @@
     <div class="wrap">
       <div class="list1">
         <div>
-          <input type="text">
-          <button>搜索</button>
+          <input type="text" v-model="value1">
+          <button @click="btn">搜索</button>
         </div>
         <div>
           <el-date-picker
-            v-model="value1"
-            type="date"
-            placeholder="选择日期">
+            v-model="value2"
+            @change="change1"
+            type="daterange"
+            value-format="yyyy-MM-dd"
+            start-placeholder="选择日期"
+            end-placeholder="结束日期">
           </el-date-picker>
-          <span>
-              <img src="../../static/img/icon40.png" alt="">
-            </span>
+          <span @click="checked"></span>
         </div>
       </div>
       <div class="list2">
@@ -62,6 +63,7 @@
       data(){
         return {
           value1:'',
+          value2:'',
           listData:[],
           totalPages:null,
           totalRecords:null,
@@ -75,7 +77,10 @@
           const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
           let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
           const that = this;
-          this.$api.axiosPost('/person/getOrderList',1,{
+          this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
+            search:that.value1,
+            searchDateStart:that.value2==null?'':that.value2[0],
+            searchDateEnd:that.value2==null?'':that.value2[1],
             page:val,
             pageSize:10,
             userId:userId,
@@ -86,6 +91,38 @@
             that.listData = ress.attributes.datas
             console.log(that.listData)
           })
+        },
+        change1(val){
+          console.log(val)
+        },
+        checked(){
+          var e = event.target;
+          console.log(1)
+          $(e).siblings('div').find('input').focus()
+        },
+        btn(){
+          console.log(this.value1,this.value2)
+          const that = this
+          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
+          let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+          //搜索查询业绩列表
+          this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
+            search:that.value1,
+            searchDateStart:that.value2==null?'':that.value2[0],
+            searchDateEnd:that.value2==null?'':that.value2[1],
+            page:1,
+            pageSize:10,
+            userId:userId,
+            token:token
+          },function (res) {
+            var ress = res.data.data
+            ress = JSON.parse(ress)
+            console.log(ress)
+            that.listData = ress.attributes.datas
+            console.log(that.listData)
+            that.totalPages = ress.attributes.totalPages
+            that.totalRecords = ress.attributes.totalRecords
+          })
         }
       },
       mounted(){
@@ -93,7 +130,11 @@
         const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
         let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
         const that = this;
-        this.$api.axiosPost('/person/getOrderList',1,{
+        //查询业绩列表
+        this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
+          search:that.value1,
+          searchDateStart:that.value2==null?'':that.value2[0],
+          searchDateEnd:that.value2==null?'':that.value2[1],
           page:1,
           pageSize:10,
           userId:userId,

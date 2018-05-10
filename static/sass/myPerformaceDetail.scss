@@ -13,10 +13,11 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: #fff2ef;
           width: 60px;
           border: 1px solid #ffcac0;
           cursor: pointer;
+          background: url("../../static/img/icon40.png") no-repeat #fff2ef;
+          background-position: 50% 50%;
         }
       }
       >div:nth-child(1){

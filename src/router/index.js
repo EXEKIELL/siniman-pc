@@ -186,6 +186,9 @@ router.beforeEach((to,from,next)=>{
     if(localStorage.getItem('user-data')!=null){
       console.log('登录成功')
       store.dispatch('login/getUserInfo')
+      if(!store.state.login.freshState){
+        store.dispatch('login/changeFreshState')
+      }
       next()
     }else{
       console.log(2)

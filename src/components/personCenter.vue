@@ -80,17 +80,20 @@
           <li class="clearFix" v-for="(item,index) in tagList" :key="index">
             <span class="nav-left">{{item.catalogname+'：'}}</span>
             <div class="nav-right">
+              <div>
+                <div @click="navSel('全部',index)" class="sel" >全部</div>
+              </div>
               <div v-for="(item1,index1) in item.list" :key="index1">
-                <div @click="navSel" >{{item1.tagname}}</div>
+                <div @click="navSel(index,index1)" >{{item1.tagname}}</div>
               </div>
             </div>
           </li>
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in contList" :key="index">
+        <div class="list1" v-for="(item,index) in postData.list" :key="index">
           <div class="list1-img">
-            <img :src="item.simg" alt="">
+            <img src="../../static/img/img05.png"  alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
             <div>
               <button @click="toUrl(item.id)">编辑方案</button>
             </div>
@@ -148,7 +151,7 @@
         prev-text="上一页"
         next-text="下一页"
         @current-change="pageChange"
-        :total="1000">
+        :total="postData.total*10">
       </el-pagination>
     </div>
   </div>

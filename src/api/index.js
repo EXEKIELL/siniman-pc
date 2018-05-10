@@ -8,7 +8,6 @@ var headers = [
   {'Content-Type': 'application/json'},
   {'Content-Type': 'raw'}
 ]
-
 // 自定义判断元素类型JS
 function toType (obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()

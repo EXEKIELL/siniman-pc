@@ -50,7 +50,7 @@
             prev-text="上一页"
             next-text="下一页"
             @current-change="currentChange"
-            :total="40">
+            :total="totalPage*10">
           </el-pagination>
         </div>
       </div>
@@ -63,7 +63,8 @@
       data(){
         return {
           value1: '',
-          listValue:[]
+          listValue:[],
+          totalPage:0
         }
       },
       methods:{
@@ -71,7 +72,7 @@
           let token = JSON.parse(localStorage.getItem('user-data')).token;
           let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
           let that = this
-          this.$api.axiosPost('/person/getClientList',1, {
+          this.$api.axiosPost('/person/getClientList'+that.$store.state.login.str1,1, {
               token: token,
               userId: userId,
               page:val
@@ -79,6 +80,7 @@
             ,function (res) {
               console.log(res.data)
               that.listValue = res.data.attributes.datas
+              that.totalPage = res.data.attributes.totalPages
               console.log(that.listValue)
             })
         }
@@ -89,7 +91,7 @@
           let token = JSON.parse(localStorage.getItem('user-data')).token;
           let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
           console.log(userId)
-          that.$api.axiosPost('/person/getClientList',1, {
+          that.$api.axiosPost('/person/getClientList'+that.$store.state.login.str1,1, {
               token: token,
               userId: userId,
               page:val
@@ -102,6 +104,7 @@
               }else{
                 console.log(res.data)
                 that.listValue = res.data.attributes.datas
+                that.totalPage = res.data.attributes.totalPages
                 console.log(that.listValue)
               }
             })

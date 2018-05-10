@@ -344,7 +344,8 @@
       mounted(){
         let productId = this.$router.history.current.query.productId
         const that = this;
-        this.$api.axiosGet('/product/productDetail',{
+        //方案详情
+        this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
           productId:productId
         },function (res) {
           console.log(JSON.parse(res.data.productInfo))
@@ -353,7 +354,8 @@
           console.log(res1)
           var desid = res1.desid;
           var st = res1.createtime;
-          that.$api.axiosGet('/render/synchro',{
+          //获取渲染图
+          that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
             designId:desid,
             // startTime:st,
             start:0,

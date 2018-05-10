@@ -4,6 +4,7 @@ import router from '../../router/index'
 const loginInfo = {
   namespaced:true,
   state:{
+    freshState:false,
     fL:false,
     loging:true,
     form:{
@@ -15,9 +16,18 @@ const loginInfo = {
     userInfo:{},
     token:null,
     userId:'',
+    str1:'',
     loginSuccess:null
   },
   mutations:{
+    CHANGEFLASH(state){
+      state.freshState = true
+      const userId = JSON.parse(localStorage.getItem('user-data')).user.id+'';
+      const token = JSON.parse(localStorage.getItem('user-data')).token
+      state.userId = userId;
+      state.token = token;
+      state.str1 ='?key='+userId+'&token='+token;
+    },
     GETUSERNAME(state,val){
       state.form.username = val.username
     },
@@ -99,15 +109,21 @@ const loginInfo = {
     },
     //获取用户基本信息
     getUserInfo(context){
-      let userId = {userId:''}
+      let userId,token;
       if(localStorage.getItem('user-data')!=null){
-        userId.userId = JSON.parse(localStorage.getItem('user-data')).user.id+''
+        userId = JSON.parse(localStorage.getItem('user-data')).user.id+'';
+        token = JSON.parse(localStorage.getItem('user-data')).token
       }else if(context.state.userData.length>0){
-        userId.userId = context.state.userData.user.id+''
+        userId = context.state.userData.user.id+''
+        token = context.state.userData.token
       }else{
         router.push('/login')
       }
-      api.axiosGet('/person/userInfo',userId,function (res) {
+      api.axiosGet('/person/userInfo',{
+        key:userId,
+        token: token,
+        userId:userId
+      },function (res) {
         console.log("用户信息：",res)
         context.commit('USERINFO',res.data)
         context.commit('GETUSERID',res.data.data.userid)
@@ -117,6 +133,10 @@ const loginInfo = {
         localStorage.setItem('user-info',JSON.stringify(res.data))
         console.log("已保存到本地")
       })
+    },
+    // 修改页面是否刷新状态
+    changeFreshState(context){
+      context.commit('CHANGEFLASH')
     }
   },
   getters:{
