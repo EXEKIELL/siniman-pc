@@ -142,7 +142,7 @@
     }
     .w3-cont{
       display: flex;
-      justify-content: space-around;
+      justify-content: left;
       flex-wrap: wrap;
       align-content: space-between;
       padding: 0 40px;
@@ -152,6 +152,7 @@
         border: 1px solid #f6f6f6;
         margin-bottom: 80px;
         cursor: pointer;
+        margin-right: 70px;
         .list1-img{
           position: relative;
           overflow: hidden;
@@ -262,7 +263,7 @@
         .list1-tag{
           text-align: left;
           display: flex;
-          justify-content: space-between;
+          justify-content: left;
           padding: 0 30px 30px 30px;
           span{
             width: 20%;
@@ -271,8 +272,12 @@
             padding: 5px 0;
             font-size: 14px;
             color: #555555;
+            margin-right: 20px;
           }
         }
+      }
+      .list1:nth-child(3n){
+        margin-right: 0;
       }
       .list1:hover{
         box-shadow: 1px 1px 35px 10px #ebebeb;

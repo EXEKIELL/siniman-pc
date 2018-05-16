@@ -105,9 +105,11 @@
           const that = this
           const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
           let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+          let value1 = this.value1;
+          value1 = value1.replace(/\s|\xA0/g,'');
           //搜索查询业绩列表
           this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
-            search:that.value1,
+            search:value1,
             searchDateStart:that.value2==null?'':that.value2[0],
             searchDateEnd:that.value2==null?'':that.value2[1],
             page:1,
@@ -115,19 +117,20 @@
             userId:userId,
             token:token
           },function (res) {
-            var ress = res.data.data
-            ress = JSON.parse(ress)
-            console.log(ress)
-            that.listData = ress.attributes.datas
-            console.log(that.listData)
-            that.totalPages = ress.attributes.totalPages
+            console.log(res);
+            var ress = res.data.data;
+            ress = JSON.parse(ress);
+            console.log(ress);
+            that.listData = ress.attributes.datas;
+            console.log(that.listData);
+            that.totalPages = ress.attributes.totalPages;
             that.totalRecords = ress.attributes.totalRecords
           })
         }
       },
       mounted(){
-        console.log(statusData.tags)
-        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
+        console.log(statusData.tags);
+        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
         let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
         const that = this;
         //查询业绩列表
@@ -140,13 +143,13 @@
           userId:userId,
           token:token
         },function (res) {
-          var ress = res.data.data
-          ress = JSON.parse(ress)
-          console.log(ress)
-          that.listData = ress.attributes.datas
-          console.log(that.listData)
-          that.totalPages = ress.attributes.totalPages
-          that.totalRecords = ress.attributes.totalRecords
+          var ress = res.data.data;
+          ress = JSON.parse(ress);
+          console.log(ress);
+          that.listData = ress.attributes.datas;
+          console.log(that.listData);
+          that.totalPages = ress.attributes.totalPages;
+          that.totalRecords = ress.attributes.totalRecords;
         })
       }
     }

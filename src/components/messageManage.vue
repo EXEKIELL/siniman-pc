@@ -78,7 +78,7 @@
       name: "MessageManage",
       methods:{
         navTo(){
-          this.$router.push("/messageXq")
+          this.$router.push("/indexWrap/messageXq")
         }
       }
     }

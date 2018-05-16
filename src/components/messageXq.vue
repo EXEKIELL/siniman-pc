@@ -8,16 +8,16 @@
         </div>
         <div class="content">
           <ul>
-            <li class="clearFix">
+            <li class="clearFix" v-for="(item,index) in postList.list" :key="index">
               <div>
-                <img src="../../static/img/icon41.png" alt="">
+                <img v-for="(item1,index1) in icons" v-if="item1.name == item.msgtype" :key="index1" :src="item1.url" alt="">
               </div>
               <div>
-                <div><span>系统消息</span></div>
-                <div><span>品牌说了，大爷，您已经好久没登录了，赶紧进来设计几个方案吧！</span></div>
+                <div><span>{{item.msgtype}}</span></div>
+                <div><span>{{item.msg}}</span></div>
                 <div class="cont-wrap"></div>
                 <div><a href="#"></a></div>
-                <div><span>2017.12.20  15：00</span></div>
+                <div><span>{{item.createtime|time}}</span></div>
               </div>
             </li>
             <li class="clearFix">
@@ -107,7 +107,17 @@
             {text:"预约设计",selClass:false},
             {text:"积分消息",selClass:false},
             {text:"活动消息",selClass:false},
-          ]
+          ],
+          icons:[
+            {url:'../../static/img/icon41.png',name:'系统消息'},
+            {url:'../../static/img/icon42.png',name:'订单消息'},
+            {url:'../../static/img/icon43.png',name:'客户跟进'},
+            {url:'../../static/img/icon44.png',name:'预约设计'},
+            {url:'../../static/img/icon45.png',name:'积分消息'},
+            {url:'../../static/img/icon46.png',name:'活动消息'}
+          ],
+          msgType:null,
+          postList:[]
         }
       },
       methods:{
@@ -120,6 +130,35 @@
           // $(e).parent('li').siblings('li').find('span').removeClass('sel')
           this.$data.navLists[index].selClass = true;
         }
+      },
+      filters:{
+        time:function (val) {
+          let time = new Date(val);
+          let yyyy = time.getFullYear(),
+              mm = time.getMonth()+1,
+              dd = time.getDay(),
+              h = time.getHours(),
+              min = time.getMinutes();
+          let time1 = yyyy+'.'+mm+'.'+dd+' '+h+':'+min
+          return time1
+        }
+      },
+      mounted(){
+        const that = this;
+        const userId = this.$store.state.login.userId;
+        this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
+          data:{
+            userId:userId,
+            msgType:null
+          },
+          page:{
+            pageNum:1,
+            pageSize:10
+          }
+        },function (res) {
+          console.log(res)
+          that.postList = res.data
+        })
       }
     }
 </script>

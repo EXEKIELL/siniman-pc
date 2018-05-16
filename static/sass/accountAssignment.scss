@@ -110,7 +110,7 @@
           border: 1px solid #b4e6f7;
           border-top: 0;
           >div{
-            width: 10%;
+            width: 15%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -121,7 +121,6 @@
           }
           >div:first-child{
             border-left: 0;
-            width: 7%;
             >div{
               width: 28px;
               height: 28px;
@@ -131,38 +130,12 @@
               justify-content: center;
               align-items: center;
               position: relative;
-              span{
-                display: none;
-                width: 100%;
-                height: 100%;
-                position: relative;
-                background: #0f7ba1 url("../../static/img/icon59.png") no-repeat;
-                background-position: 50%;
-                cursor: pointer;
-                img{
-                  width: 14px;
-                  height: 12px;
-                  position: absolute;
-                  top: 50%;
-                  margin-top: -6px;
-                  left: 50%;
-                  margin-left: -7px;
-                }
-              }
-              input{
-                cursor: pointer;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                opacity: 0;
-              }
             }
           }
           >div:nth-child(4){
 
           }
           >div:nth-child(5){
-            width: 20%;
             >div{
               text-align: left;
               span{
@@ -171,10 +144,8 @@
             }
           }
           >div:nth-child(7){
-            width: 14%;
           }
           >div:last-child{
-            width: 19%;
             >div{
               button{
                 border: 1px solid #b4e6f7;

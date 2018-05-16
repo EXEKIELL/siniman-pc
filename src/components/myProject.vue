@@ -68,20 +68,7 @@
                 <div class="item-cont">
                   <div>
                     <label>客户地址：</label>
-                    <div>
-                      <el-select v-model="add1" placeholder="请选择">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                      <el-select v-model="add2" placeholder="请选择">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                    </div>
-                  </div>
-                  <div>
-                    <label>详细地址：</label>
-                    <input type="text" v-model="add3">
+                    <input type="text" v-model="form1.customeraddr">
                   </div>
                 </div>
               </div>
@@ -90,16 +77,16 @@
                 <div class="item-cont">
                   <div>
                     <label>方案名称：</label>
-                    <input type="text" placeholder="请输入方案名称" v-model="form1.fanganName">
+                    <input type="text" placeholder="请输入方案名称" v-model="form1.productname">
                   </div>
                   <div>
                     <div>
                       <label style="width: 27%">户型/面积：</label>
-                      <input type="text" placeholder="请输入面积" v-model="form1.area">
+                      <input type="text" placeholder="请输入面积" v-model="form1.housetype">
                     </div>
                     <div>
                       <label>面积：</label>
-                      <input type="text" placeholder="请输入数字" v-model="form1.area1">
+                      <input type="text" placeholder="请输入数字" v-model="form1.area">
                       <span>m²</span>
                     </div>
                   </div>
@@ -120,9 +107,9 @@
                   <div>请选择：</div>
                   <div class="info">
                     <div v-for="(item,index) in tags" :key="index">
-                      <label>{{item.class}}</label>
+                      <label>{{item.catalogname}}：</label>
                       <div>
-                        <span v-for="(item2,index2) in item.tag" :key="index2" @click="changeTag(item2)">{{item2}}</span>
+                        <span v-for="(item2,index2) in item.list" :key="index2" @click="changeTag(item2)">{{item2.tagname}}</span>
                       </div>
                     </div>
                   </div>
@@ -131,12 +118,12 @@
               <div class="formItem4">
                 <div class="item-title">需求信息</div>
                 <div class="item-cont">
-                  <textarea id="" cols="30" rows="10" v-model="form1.message1"></textarea>
+                  <textarea id="" cols="30" rows="10" v-model="form1.productdesc"></textarea>
                 </div>
               </div>
               <div class="formItem5">
-                <button @click="bianjiBoxSub">保存</button>
-                <button @click="bianjiBox = false">取消</button>
+                <button type="button" @click="bianjiBoxSub">保存</button>
+                <button type="button" @click="bianjiBox = false">取消</button>
               </div>
             </form>
           </div>
@@ -217,17 +204,12 @@
           bianji:false,
           fenxiang:true,
           tagsels:[
-            {class:'类型：',tag:[]},
-            {class:'阶段：',tag:[]},
-            {class:'户型：',tag:[]},
-            {class:'风格：',tag:[]},
+            {catalogname:'类型：',list:[]},
+            {catalogname:'阶段：',list:[]},
+            {catalogname:'户型：',list:[]},
+            {catalogname:'风格：',list:[]},
           ],
-          tags:[
-            {class:'类型：',tag:['全屋方案','空间方案']},
-            {class:'阶段：',tag:['户型阶段','装修阶段']},
-            {class:'户型：',tag:['一室一厅','两室一厅','两室二厅','三室一厅','三室二厅','四室一厅','四室两厅','其他']},
-            {class:'风格：',tag:['北欧','简欧','现代简约','新中式','其他']},
-          ],
+          tags:[],
           navBtns:[
             {text:"空间详情",ok:true,component:ProjectSpace},
             {text:"兑换详情",ok:false,component:ProjectConvert},
@@ -237,17 +219,7 @@
           add2:'',
           add3:'',
           bianjiBoxTitle:"",
-          form1:{
-            customername:'',
-            customercontact:'',
-            customeraddr:this.add1+this.add2+this.add3,
-            productname:'',
-            housetype:'',
-            area:'',
-            area1:'',
-            style1:'',
-            message1:''
-          },
+          form1:{},
           productInfo:[],
           imgInfo:[],
           projectSpace:[]
@@ -261,6 +233,9 @@
         },
         btn1(index){
           if(index==1){
+            $('body').css({
+              overflow:'hidden'
+            })
             this.$data.fenxiang = true
             this.$data.bianji = false
             this.$data.bianjiBoxTitle = "分享家·赢豪礼，最高可得苹果笔记本电脑"
@@ -295,23 +270,9 @@
           })
         },
         changeTag(val){
-          var e = event.target
-          if($(e).parent('div').siblings('label').text()=='类型：'){
-            if(this.tagsels[0].tag.indexOf(val)==-1){
-              this.tagsels[0].tag.push(val)
-            }
-          }else if($(e).parent('div').siblings('label').text()=='阶段：'){
-            if(this.tagsels[1].tag.indexOf(val)==-1){
-              this.tagsels[1].tag.push(val)
-            }
-          }else if($(e).parent('div').siblings('label').text()=='户型：'){
-            if(this.tagsels[2].tag.indexOf(val)==-1){
-              this.tagsels[2].tag.push(val)
-            }
-          }else{
-            if(this.tagsels[3].tag.indexOf(val)==-1){
-              this.tagsels[3].tag.push(val)
-            }
+          let parentName = val.catalogname;
+          if(parentName == that.tagsels.catalogname){
+
           }
         },
         del(val){
@@ -342,16 +303,19 @@
         })
       },
       mounted(){
-        let productId = this.$router.history.current.query.productId
+        let productId = this.$router.history.current.query.productId;
         const that = this;
         //方案详情
         this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
           productId:productId
         },function (res) {
-          console.log(JSON.parse(res.data.productInfo))
-          that.productInfo = JSON.parse(res.data.productInfo)
-          var res1 = JSON.parse(res.data.productInfo)
-          console.log(res1)
+          console.log(res)
+          console.log(JSON.parse(res.data.productInfo));
+          that.productInfo = JSON.parse(res.data.productInfo);
+          //编辑信息赋值
+          that.form1 = JSON.parse(res.data.productInfo);
+          var res1 = JSON.parse(res.data.productInfo);
+          console.log(res1);
           var desid = res1.desid;
           var st = res1.createtime;
           //获取渲染图
@@ -362,16 +326,21 @@
             num:10
           },function (res){
             console.log(res)
-            that.imgInfo = res.data.renders
-            console.log(that.imgInfo)
-            that.projectSpace = res.data.renders
+            that.imgInfo = res.data.renders;
+            console.log(that.imgInfo);
+            that.projectSpace = res.data.renders;
             // console.log(that.projectSpace)
-            var bigImg = that.$refs.bigImg
+            var bigImg = that.$refs.bigImg;
             $(bigImg).attr({
               src:res.data.renders[0].img
             })
             // console.log(that.imgInfo)
             // console.log(JSON.parse(res.data.productInfo))
+          })
+          // 获取标签
+          that.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
+            console.log(res);
+            that.tags = res.data
           })
         })
       }

@@ -22,6 +22,15 @@ axios.interceptors.request.use(config=>{
 //http响应拦截器
 axios.interceptors.response.use(data=>{
 //  响应成功关闭loading
+  if(data.data.data && typeof data.data.data == 'string'){
+    if(JSON.parse(data.data.data).code && JSON.parse(data.data.data).code == 1003){
+      localStorage.clear();
+      router.replace('/login')
+      Message.error({
+        message: '登录已过期'
+      });
+    }
+  }
   loadinginstace.close()
   return data
 },error => {

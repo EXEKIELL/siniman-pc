@@ -116,12 +116,13 @@
           let that = this;
             let token = JSON.parse(localStorage.getItem('user-data')).token;
             let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-            that.$api.axiosPost('/person/getUserScoreRecords',1,{
+            that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
               token:token,
               userId:userId,
               page:val,
               pageSize:'10'
             },function (res) {
+              console.log(res)
               that.postList = res.data.attributes.records
             })
         }
@@ -134,7 +135,8 @@
         function listPost(val) {
           let token = JSON.parse(localStorage.getItem('user-data')).token;
           let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-          that.$api.axiosPost('/person/getUserScoreRecords',1,{
+          //用户积分记录
+          that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
             token:token,
             userId:userId,
             page:val,
@@ -143,10 +145,11 @@
             console.log(res)
             that.postList = res.data.attributes.records
           })
-          that.$api.axiosPost('/person/getUserScore?type=1',1,{
+          //用户积分统计
+          that.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1+'&type=1',1,{
             token:token,
             userId:userId,
-            searchDateStart:'2017-12-24',
+            searchDateStart:'2017-10-24',
             searchDateEnd:'2017-12-28'
           },function (res) {
             console.log(res)

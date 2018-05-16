@@ -29,6 +29,7 @@
         }
         .el-range-separator{
           color: #ffa897;
+          line-height: 38px;
         }
         .el-range-input{
           background-color: #fff2ef;
@@ -535,6 +536,22 @@
   }
 }
 #myShop{
+  .el-icon-arrow-up:before{
+    color: #d94650;
+  }
+  .el-input__inner{
+    text-align: center;
+    height: 60px;
+    font-size: 16px;
+    color: #d94650;
+    padding:  0 1% ;
+    background-color: #fff1f2;
+    border: 1px solid #ffc7cb;
+    border-radius: 0;
+  }
+  .el-input__inner::placeholder{
+    color: #d94650;
+  }
   .btn-prev,.btn-next{
     font-size: 14px;
     color: #666666;
@@ -571,6 +588,9 @@
   }
 }
 #myShopXq{
+  .el-icon-arrow-up:before{
+    color: #d94650;
+  }
   .el-input__inner{
     text-align: center;
     height: 60px;

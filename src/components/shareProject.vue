@@ -174,6 +174,13 @@
           $(event.target).addClass('sel');
           $(event.target).siblings('li').removeClass('sel')
           this.$data.detail = component
+          console.log(component)
+          const userId = this.$store.state.login.userId;
+          const productId = this.$router.history.current.query.productId;
+          const that = this
+          if(component.name == "ShareConvert"){
+
+          }
         },
         sucbtn(val){
           var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
@@ -196,15 +203,15 @@
               var client = that.productInfo.customername
               const token = JSON.parse(localStorage.getItem('user-data')).token
               if(res.data.successCounts&&res.data.successCounts == 1){
-              //  减少兑换用户积分
+              //  增加兑换用户积分
                 that.$api.axiosPost('/person/addUserScoreRecord'+that.$store.state.login.str1,1,{
-                  scroeUserId:109740,//that.scoreUserId
-                  clientId:2785609,//that.clientId
-                  score:10,//that.productInfo.productionmark
+                  scroeUserId:109740,//that.scoreUserId,
+                  clientId:2785609,//that.clientId,
+                  score:10,//that.productInfo.productionmark,
                   action:'兑换',
                   description:'aaa',//'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']'
                   token:token,
-                  userId:'2786483'
+                  userId:'109740'
                 },function (res) {
                   console.log(res)
                 })

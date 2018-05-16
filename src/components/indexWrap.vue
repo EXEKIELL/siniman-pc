@@ -186,101 +186,69 @@
         }
       },
       beforeUpdate(){
+        //判断当前路由位置
         var to = this.$router.history.current.path
         if(to == '/indexWrap/shareCommunity'){
           this.headLeft.text = '分享社区'
-          $('#lis2 .list2').css({
-            "background-color":"#333333"
-          })
-          $('#lis1 .list1').css({
-            "background-color":"#a51e32"
-          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .list2').removeClass('selBar')
+          $('#lis1 .list1').addClass('selBar')
           $('#lis2 .shou2').slideUp();
           $('#lis1 .shou1').slideDown();
         }else if(to == '/indexWrap/personCenter'){
           this.headLeft.text = '个人中心'
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           $('#lis2 .list2 span').css({
             transform:"rotateZ(90deg)"
           })
         }else if(to == '/indexWrap/accountAssignment'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
         }else if(to == '/indexWrap/myShop'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
         }else if(to == '/indexWrap/myProjectIndex'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
         }else if(to == '/indexWrap/myData'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
         }else if(to == '/indexWrap/integralDetail'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
         }else if(to == '/indexWrap/myIndent'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
           $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
         }else if(to == '/indexWrap/myCollect'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
             $('#lis2 .shou2>li').removeClass('sel')
           }
@@ -288,83 +256,72 @@
         }
       },
       mounted(){
+        //判断当前路由位置
         var to = this.$router.history.current.path
         if(to == '/indexWrap/shareCommunity'){
           this.headLeft.text = '分享社区'
-          $('#lis2 .list2').css({
-            "background-color":"#333333"
-          })
-          $('#lis1 .list1').css({
-            "background-color":"#a51e32"
-          })
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
+          $('#lis2 .list2').removeClass('selBar')
+          $('#lis1 .list1').addClass('selBar')
           $('#lis2 .shou2').slideUp();
           $('#lis1 .shou1').slideDown();
         }else if(to == '/indexWrap/personCenter'){
           this.headLeft.text = '个人中心'
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
           $('#lis2 .list2 span').css({
             transform:"rotateZ(90deg)"
           })
         }else if(to == '/indexWrap/accountAssignment'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
         }else if(to == '/indexWrap/myShop'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
         }else if(to == '/indexWrap/myProjectIndex'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
         }else if(to == '/indexWrap/myData'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
         }else if(to == '/indexWrap/integralDetail'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
         }else if(to == '/indexWrap/myIndent'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
         }else if(to == '/indexWrap/myCollect'){
-          $('#lis1 .list1').css({
-            "background-color":"#333333"
-          })
-          $('#lis2 .list2').css({
-            "background-color":"#a51e32"
-          })
+          $('#lis1 .list1').removeClass('selBar')
+          $('#lis2 .list2').addClass('selBar')
+          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
+            $('#lis2 .shou2>li').removeClass('sel')
+          }
           $('#lis2 .shou2>li:nth-child(7)').addClass('sel')
         }
         $(window).scroll(function (event) {

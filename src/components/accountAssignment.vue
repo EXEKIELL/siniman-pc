@@ -10,64 +10,42 @@
               <!--<span></span><span>添加</span>-->
             <!--</button>-->
           <!--</div>-->
-          <div class="l1-2">
-            <div>
-              <select name="username" id="username">
-                <option value="user">用户名1</option>
-                <option value="user">用户名2</option>
-                <option value="user">用户名3</option>
-              </select>
-              <button @click="la">
-                <img src="../../static/img/icon57.png" alt="">
-              </button>
-            </div>
-            <div>
-              <!--<input type="text" placeholder="请输入搜索内容">-->
-              <button>搜索</button>
-            </div>
-          </div>
+          <!--<div class="l1-2">-->
+            <!--<div>-->
+              <!--<select name="username" id="username">-->
+                <!--<option value="user">用户名1</option>-->
+                <!--<option value="user">用户名2</option>-->
+                <!--<option value="user">用户名3</option>-->
+              <!--</select>-->
+              <!--<button @click="la">-->
+                <!--<img src="../../static/img/icon57.png" alt="">-->
+              <!--</button>-->
+            <!--</div>-->
+            <!--<div>-->
+              <!--&lt;!&ndash;<input type="text" placeholder="请输入搜索内容">&ndash;&gt;-->
+              <!--<button>搜索</button>-->
+            <!--</div>-->
+          <!--</div>-->
         </div>
         <div class="list2">
           <ul>
             <li>
-              <div>
-                <!--<div class="checkBox">-->
-                  <!--<input type="checkbox" @click.stop="selAll" name="name1">-->
-                  <!--<span class="seled" @click.stop="clAll"></span>-->
-                <!--</div>-->
-              </div>
               <div><span>用户名称</span></div>
               <div><span>所属角色</span></div>
               <div><span>姓名</span></div>
               <div><span>联系方式</span></div>
+              <div><span>方案数量</span></div>
               <div><span>登录次数</span></div>
               <div><span>创建时间</span></div>
-              <div><span>操作</span></div>
             </li>
             <li class="contList" v-for="(item,index) in userList" :key="index">
-              <div>
-                <!--<div class="checkBox">-->
-                  <!--<input class="seleBox" type="checkbox" @click.stop="xuanzhong(1)" name="name1">-->
-                  <!--<span class="seled" @click.stop="qxXuanzhong(1)">-->
-                  <!--</span>-->
-                <!--</div>-->
-              </div>
               <div><span>{{item.account}}</span></div>
               <div><span>{{item.roles|str}}</span></div>
               <div><span>{{item.username}}</span></div>
               <div><div><span></span><span>{{'手机：'+item.phone}}</span></div></div>
+              <div><span>{{item.productCount==null?0:item.productCount}}</span></div>
               <div><span>{{item.logincount}}</span></div>
               <div><span>{{item.createtime|time}}</span></div>
-              <div>
-                <div>
-                  <button>
-                    <span></span><span>编辑</span>
-                  </button>
-                  <button>
-                    <span></span><span>删除</span>
-                  </button>
-                </div>
-              </div>
             </li>
           </ul>
         </div>
@@ -78,7 +56,7 @@
             prev-text="上一页"
             next-text="下一页"
             @current-change="change"
-            :total="40">
+            :total="dataList.pages*10">
           </el-pagination>
         </div>
       </div>
@@ -91,6 +69,7 @@
       name: "AccountAssignment",
       data(){
         return {
+          dataList:{},
           userList:[]
         }
       },
@@ -126,7 +105,7 @@
         },
         change(val){
           let that = this;
-          this.$api.axiosPost('./user/getUserList',1,{
+          this.$api.axiosPost('./user/getUserList'+that.$store.state.login.str1,1,{
             data:{
               orderByCondition:'desc',
               orderByField:'score'
@@ -136,7 +115,8 @@
               pageSize:10
             }
           },function (res) {
-            that.userList = res.data.data
+            that.dataList = res.data
+            that.userList = res.data.list
           })
         }
       },
@@ -166,7 +146,8 @@
       },
       mounted(){
         let that = this
-        this.$api.axiosPost('./user/getUserList',1,{
+        //获取账户列表
+        this.$api.axiosPost('./user/getUserList'+that.$store.state.login.str1,1,{
           data:{
             orderByCondition:'desc',
             orderByField:'score'
@@ -176,7 +157,8 @@
             pageSize:10
           }
         },function (res) {
-          that.userList = res.data.data
+          that.dataList = res.data
+          that.userList = res.data.list
           console.log(res)
         })
       }

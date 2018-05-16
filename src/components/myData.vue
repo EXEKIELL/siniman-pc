@@ -26,16 +26,16 @@
           <div>
             <div>
               <div><span></span><span>账号：</span><span>{{userdata.account}}</span></div>
-              <div><span></span><span>门店：</span><span>诗尼曼家居番禺万博体验店</span></div>
+              <div><span></span><span>门店：</span><span>{{shopName}}</span></div>
             </div>
           </div>
           <div>
             <div>
               <div>
-                <span>获赞</span><span>153</span>
+                <span>获赞</span><span>{{userdata.goodcount==null?0:userdata.goodcount}}</span>
               </div>
               <div>
-                <span>作品</span><span>236</span>
+                <span>作品</span><span>{{userdata.productCount==null?0:userdata.productCount}}</span>
               </div>
               <div>
                 <span>预约</span><span>{{userdata.bespeakcount==null?0:userdata.bespeakcount}}</span>
@@ -83,7 +83,8 @@
         return {
           headimg:'../../static/img/head05.png',
           userdata:JSON.parse(localStorage.getItem('user-info')).data,
-          roles:JSON.parse(JSON.parse(localStorage.getItem('user-info')).data.roles)
+          roles:JSON.parse(JSON.parse(localStorage.getItem('user-info')).data.roles),
+          shopName:''
         }
       },
       methods:{
@@ -98,8 +99,15 @@
         }
       },
       mounted(){
-        console.log(this.userdata)
-        console.log(this.roles)
+        const that = this
+        let shopId = this.userdata.shops.split(",");
+        console.log(shopId)
+        this.$api.axiosGet('/shop/shopDetail'+that.$store.state.login.str1,{
+          shopId:shopId[0]
+        },function (res) {
+          console.log(res)
+          that.shopName = res.data.data.shopname
+        })
       }
     }
 </script>
