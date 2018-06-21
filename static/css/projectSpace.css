@@ -1,0 +1,73 @@
+#projectSpace .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 45px; }
+  #projectSpace .wrap .wrap-list {
+    width: 49%;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-bottom: 30px; }
+    #projectSpace .wrap .wrap-list > div:first-child {
+      position: relative;
+      margin: 25px;
+      height: 605px; }
+      #projectSpace .wrap .wrap-list > div:first-child > img {
+        width: 100%; }
+      #projectSpace .wrap .wrap-list > div:first-child .del {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: none;
+        justify-content: center;
+        align-items: center; }
+        #projectSpace .wrap .wrap-list > div:first-child .del img {
+          width: 40%; }
+    #projectSpace .wrap .wrap-list > div:nth-child(2) {
+      margin-top: 10px;
+      padding: 0 25px 25px 25px; }
+      #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji {
+        text-align: left;
+        position: relative;
+        display: flex;
+        justify-content: space-between; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi > div, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji > div {
+          display: flex;
+          align-items: center;
+          width: 85%;
+          margin-right: 15px; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi span, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji span {
+          font-size: 16px;
+          color: #333333;
+          display: inline-block;
+          vertical-align: middle; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi span:nth-child(1), #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji span:nth-child(1) {
+          min-width: 80px; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi button, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji button {
+          font-size: 16px;
+          color: #83b844;
+          background-color: #fff;
+          border: 1px solid #83b844;
+          width: 15%;
+          height: 53px;
+          position: relative;
+          right: 0;
+          min-width: 90px; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi button:hover, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji button:hover {
+          color: #ffffff;
+          background-color: #83b844; }
+        #projectSpace .wrap .wrap-list > div:nth-child(2) .xianshi input, #projectSpace .wrap .wrap-list > div:nth-child(2) .bianji input {
+          width: 81%;
+          height: 51px;
+          border: 1px solid #83b844;
+          padding: 0 10px 0 20px;
+          font-size: 16px; }
+  #projectSpace .wrap .wrap-list:hover {
+    box-shadow: 0 0 35px #e4e4e4; }
+    #projectSpace .wrap .wrap-list:hover > div:first-child .del {
+      display: flex; }
+
+/*# sourceMappingURL=projectSpace.css.map */

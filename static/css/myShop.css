@@ -1,0 +1,88 @@
+#myShop {
+  background-color: #fff;
+  padding: 0 50px; }
+  #myShop .list1 {
+    display: flex;
+    justify-content: left;
+    padding: 40px 0; }
+    #myShop .list1 > div:first-child {
+      display: flex; }
+      #myShop .list1 > div:first-child > div {
+        margin-right: 10px; }
+        #myShop .list1 > div:first-child > div select {
+          border: 1px solid #ffc7cb;
+          background-color: #fff1f2;
+          font-size: 16px;
+          color: #f15e68;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          text-align: center;
+          padding: 15px 55px; }
+    #myShop .list1 > div:last-child {
+      display: flex;
+      width: 620px; }
+      #myShop .list1 > div:last-child input {
+        width: 80%;
+        border: 1px solid #ffc7cb;
+        padding: 0 20px;
+        font-size: 16px;
+        color: #d94650;
+        background-color: #fff1f2;
+        border-right: 0; }
+      #myShop .list1 > div:last-child input::placeholder {
+        color: #d94650; }
+      #myShop .list1 > div:last-child button {
+        width: 20%;
+        border: 1px solid #d94650;
+        background-color: #d94650;
+        color: #ffffff;
+        font-size: 16px; }
+  #myShop .list2 {
+    margin-bottom: 20px; }
+    #myShop .list2 ul li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ffc7cb;
+      height: 90px;
+      font-size: 14px;
+      color: #333333; }
+      #myShop .list2 ul li span {
+        width: 14%; }
+      #myShop .list2 ul li span:nth-child(2) {
+        width: 25%; }
+      #myShop .list2 ul li span:last-child {
+        display: block;
+        background-color: #fff1f2;
+        width: 110px;
+        margin: 0 100px;
+        padding: 10px 0;
+        border: 1px solid #ffc7cb;
+        cursor: pointer; }
+      #myShop .list2 ul li span:last-child:hover {
+        background-color: #d94650;
+        border: 1px solid #d94650;
+        color: #ffffff; }
+    #myShop .list2 ul li:first-child {
+      font-size: 16px;
+      color: #333333;
+      font-weight: bold;
+      border: 1px solid #ffc7cb;
+      background-color: #fff1f2; }
+      #myShop .list2 ul li:first-child span:last-child {
+        display: block;
+        background-color: #fff1f2;
+        width: 110px;
+        margin: 0 100px;
+        padding: 10px 0;
+        border: 0;
+        cursor: initial; }
+      #myShop .list2 ul li:first-child span:last-child:hover {
+        background-color: #fff1f2;
+        color: #333333; }
+  #myShop .pagina {
+    background-color: #fff;
+    padding: 30px 0 50px 0; }
+
+/*# sourceMappingURL=myShop.css.map */

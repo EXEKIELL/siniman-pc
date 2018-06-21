@@ -4,18 +4,18 @@
         <div class="list1">
           <div>
             <div>
-              <div>
+              <div style="overflow: hidden">
                 <img :src="userdata.img==''?headimg:userdata.img" alt="">
               </div>
             </div>
             <div>
               <div>
                 <span>{{userdata.username}}</span>
-                <span>{{roles.roles[0].name}}</span>
+                <span v-for="(item,index) in roles" :key="index" v-if="index==0">{{item.name}}</span>
                 <div @mouseover="onshow" @mouseout="onhide">
                   <div class="idendity">
                     <ul>
-                      <li v-for="(item,index) in roles.roles" :key="index">{{item.name}}</li>
+                      <li v-for="(item,index) in roles" :key="index">{{item.name}}</li>
                     </ul>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
             </div>
             <div>
               <div>设计方案</div>
-              <div>点击进入>></div>
+              <div @click="toUrl">点击进入>></div>
             </div>
           </div>
           <div>
@@ -68,7 +68,7 @@
             </div>
             <div>
               <div>消息管理</div>
-              <div>点击进入>></div>
+              <div @click="toUrl">点击进入>></div>
             </div>
           </div>
         </div>
@@ -82,8 +82,8 @@
       data(){
         return {
           headimg:'../../static/img/head05.png',
-          userdata:JSON.parse(localStorage.getItem('user-info')).data,
-          roles:JSON.parse(JSON.parse(localStorage.getItem('user-info')).data.roles),
+          userdata:'',//JSON.parse(localStorage.getItem('user-info')).data,
+          roles:'',//JSON.parse(JSON.parse(localStorage.getItem('user-info')).data.roles),
           shopName:''
         }
       },
@@ -94,19 +94,34 @@
         onhide(){
           $('.idendity').hide()
         },
-        toUrl(){
-          this.$router.push('/indexWrap/integralDetail')
+        toUrl(event){
+          var text = $(event.target).siblings('div').text();
+          if(text == '积分明细'){
+            this.$router.push('/indexWrap/integralDetail')
+          }else if(text == '设计方案'){
+            this.$router.push('/indexWrap/myProjectIndex')
+          }else{
+            this.$router.push('/indexWrap/messageManage')
+          }
         }
       },
       mounted(){
         const that = this
-        let shopId = this.userdata.shops.split(",");
-        console.log(shopId)
-        this.$api.axiosGet('/shop/shopDetail'+that.$store.state.login.str1,{
-          shopId:shopId[0]
-        },function (res) {
-          console.log(res)
-          that.shopName = res.data.data.shopname
+        // let shopId = this.userdata.shops.split(",");
+        // console.log(shopId)
+        // this.$api.axiosGet('/shop/shopDetail'+that.$store.state.login.str1,{
+        //   shopId:shopId[0]
+        // },function (res) {
+        //   console.log(res)
+        //   that.shopName = res.data.data.shopname
+        // })
+        that.userdata = JSON.parse(localStorage.getItem('user-info'));
+        console.log(that.userData);
+        that.roles = JSON.parse(localStorage.getItem('user-info')).roles;
+        console.log(that.roles);
+        this.$ajax.axiosPost('/user/stores',3,{},function (res) {
+          console.log(res);
+          that.shopName = res.data.data[0].shopname;
         })
       }
     }

@@ -88,7 +88,7 @@
           </ul>
         </div>
         <div>
-          <button>加载更多</button>
+          <button @click="getMore">加载更多</button>
         </div>
       </div>
     </div>
@@ -117,18 +117,54 @@
             {url:'../../static/img/icon46.png',name:'活动消息'}
           ],
           msgType:null,
-          postList:[]
+          postList:[],
+          page:1
         }
       },
       methods:{
         navSel(index){
-          var e = event.target
+          const that = this;
+          const userId = this.$store.state.login.userId;
           for (var i = 0; i < this.$data.navLists.length; i++) {
             this.$data.navLists[i].selClass = false;
           }
-          console.log(2)
-          // $(e).parent('li').siblings('li').find('span').removeClass('sel')
           this.$data.navLists[index].selClass = true;
+          if(index == 0){
+            this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
+              data:{
+                userId:userId,
+                msgType:null
+              },
+              page:{
+                pageNum:1,
+                pageSize:10
+              }
+            },function (res) {
+              console.log(res)
+              that.postList = res.data
+            })
+          }else{
+            this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
+              data:{
+                userId:userId,
+                msgType:this.navLists[index].text
+              },
+              page:{
+                pageNum:1,
+                pageSize:10
+              }
+            },function (res) {
+              console.log(res)
+              that.postList = res.data
+            })
+          }
+        },
+        getMore(){
+          let page = this.page;
+          const that = this;
+          const userId = this.$store.state.login.userId;
+          page++;
+
         }
       },
       filters:{
@@ -144,12 +180,17 @@
         }
       },
       mounted(){
+        let index = this.$router.history.current.query.index;
         const that = this;
         const userId = this.$store.state.login.userId;
+        for (var i = 0; i < this.$data.navLists.length; i++) {
+          this.$data.navLists[i].selClass = false;
+        }
+        this.navLists[index+1].selClass = true;
         this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
           data:{
             userId:userId,
-            msgType:null
+            msgType:this.navLists[index+1].text
           },
           page:{
             pageNum:1,

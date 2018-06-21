@@ -677,6 +677,42 @@
     }
   }
 }
+#myCollect{
+  .btn-prev,.btn-next{
+    font-size: 14px;
+    color: #666666;
+    background-color: #fff;
+    border: 1px solid #bfbfbf;
+    padding: 8px 13px;
+    height: 35px;
+    span{
+      line-height: normal;
+    }
+  }
+  .el-pager{
+    li{
+      height: 35px;
+      min-width: 35px;
+      line-height: 35px;
+      background-color: #fff;
+      border: 1px solid #bfbfbf;
+      font-size: 14px;
+      font-weight: normal;
+      color: #666666;
+    }
+    li.active{
+      background-color: #8892f3;
+      border: 1px solid #8892f3;
+      color: #ffffff;
+    }
+    li.active:hover{
+      color: #ffffff;
+    }
+    li:hover{
+      color: #666666;
+    }
+  }
+}
 .el-select-dropdown__item.selected{
   color: #83b844;
 }

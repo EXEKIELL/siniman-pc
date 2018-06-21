@@ -65,7 +65,16 @@
 
 <script>
     export default {
-        name: "ProjectComment"
+      name: "ProjectComment",
+      mounted(){
+        const productId = this.$router.history.current.query.productId;
+        const that = this;
+        this.$api.axiosGet('/comment/commentList'+that.$store.state.login.str1,{
+          productId:8//productId
+        },function (res) {
+          console.log(res)
+        })
+      }
     }
 </script>
 

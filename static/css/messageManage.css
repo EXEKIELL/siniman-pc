@@ -1,0 +1,47 @@
+#messageManage {
+  background-color: #fff;
+  margin: 30px 0px; }
+  #messageManage .bj {
+    padding: 150px 100px;
+    background: url("../../static/img/bj01.png") no-repeat;
+    background-size: 100% 100%; }
+    #messageManage .bj .wrap {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; }
+      #messageManage .bj .wrap .list {
+        width: 33.1%;
+        border: 1px solid #f1f1f1;
+        border-right: 0;
+        height: 340px;
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+        #messageManage .bj .wrap .list > div {
+          display: flex;
+          align-items: center; }
+          #messageManage .bj .wrap .list > div > div:first-child {
+            width: 140px;
+            height: 140px;
+            overflow: hidden; }
+            #messageManage .bj .wrap .list > div > div:first-child img {
+              width: 100%; }
+          #messageManage .bj .wrap .list > div > div:nth-child(2) {
+            margin-left: 20px;
+            text-align: left; }
+            #messageManage .bj .wrap .list > div > div:nth-child(2) div:first-child {
+              font-size: 20px;
+              color: #333333;
+              margin-bottom: 15px; }
+            #messageManage .bj .wrap .list > div > div:nth-child(2) div:nth-child(2) {
+              font-size: 14px;
+              color: #888888;
+              cursor: pointer; }
+            #messageManage .bj .wrap .list > div > div:nth-child(2) div:nth-child(2):hover {
+              color: #ff0000; }
+      #messageManage .bj .wrap .list:nth-child(3n) {
+        border-right: 1px solid #e4e4e4; }
+      #messageManage .bj .wrap .list:nth-child(1), #messageManage .bj .wrap .list:nth-child(2), #messageManage .bj .wrap .list:nth-child(3) {
+        border-bottom: 0; }
+
+/*# sourceMappingURL=messageManage.css.map */

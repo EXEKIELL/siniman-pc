@@ -39,26 +39,26 @@
               <div><span>创建时间</span></div>
             </li>
             <li class="contList" v-for="(item,index) in userList" :key="index">
-              <div><span>{{item.account}}</span></div>
+              <div><span>{{item.username}}</span></div>
               <div><span>{{item.roles|str}}</span></div>
               <div><span>{{item.username}}</span></div>
               <div><div><span></span><span>{{'手机：'+item.phone}}</span></div></div>
-              <div><span>{{item.productCount==null?0:item.productCount}}</span></div>
+              <div><span>{{item.id.proCount==null?0:item.id.proCount}}</span></div>
               <div><span>{{item.logincount}}</span></div>
-              <div><span>{{item.createtime|time}}</span></div>
+              <div><span>{{item.createTime}}</span></div>
             </li>
           </ul>
         </div>
-        <div class="pagina">
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            prev-text="上一页"
-            next-text="下一页"
-            @current-change="change"
-            :total="dataList.pages*10">
-          </el-pagination>
-        </div>
+        <!--<div class="pagina">-->
+          <!--<el-pagination-->
+            <!--background-->
+            <!--layout="prev, pager, next"-->
+            <!--prev-text="上一页"-->
+            <!--next-text="下一页"-->
+            <!--@current-change="change"-->
+            <!--:total="dataList.pages*10">-->
+          <!--</el-pagination>-->
+        <!--</div>-->
       </div>
     </div>
 </template>
@@ -126,13 +126,10 @@
           return val
         },
         str:function (val) {
-          var val = JSON.parse(val)
-          var role = []
-          console.log(val.roles)
-          for (var i = 0; i < val.roles.length; i++) {
-            role[i] = val.roles[i].code
+          var role = [];
+          for (var i = 0; i < val.length; i++) {
+            role[i] = val[i].code
           }
-          console.log(role)
           if(role.indexOf('DEALER')!=-1){
             return '经销商'
           }else if(role.indexOf('SHOPMANAGER')!=-1){
@@ -147,19 +144,25 @@
       mounted(){
         let that = this
         //获取账户列表
-        this.$api.axiosPost('./user/getUserList'+that.$store.state.login.str1,1,{
-          data:{
-            orderByCondition:'desc',
-            orderByField:'score'
-          },
-          page:{
-            pageNum:0,
-            pageSize:10
-          }
-        },function (res) {
-          that.dataList = res.data
-          that.userList = res.data.list
-          console.log(res)
+        // this.$api.axiosPost('./user/getUserList'+that.$store.state.login.str1,1,{
+        //   data:{
+        //     orderByCondition:'desc',
+        //     orderByField:'score'
+        //   },
+        //   page:{
+        //     pageNum:0,
+        //     pageSize:10
+        //   }
+        // },function (res) {
+        //   that.dataList = res.data
+        //   that.userList = res.data.list
+        //   console.log(res)
+        // })
+        console.log(132)
+        this.$ajax.axiosGet('/user/userinfo/users',3,{},function (res) {
+          console.log(res);
+          let data = res.data.data;
+          that.userList = data;
         })
       }
     }

@@ -1,0 +1,236 @@
+#myProjectIndex {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  width: 100%;
+  height: 100%; }
+  #myProjectIndex .wrap3 {
+    margin-top: 20px;
+    background-color: #fff; }
+    #myProjectIndex .wrap3 .w3-title {
+      text-align: left;
+      border-bottom: 1px solid #e4e4e4;
+      padding: 30px 0; }
+      #myProjectIndex .wrap3 .w3-title span {
+        font-size: 16px;
+        color: #333333;
+        font-weight: bold;
+        padding: 0 0 0 35px; }
+    #myProjectIndex .wrap3 .w3-seek {
+      padding: 0 38px;
+      margin-top: 40px;
+      display: flex; }
+      #myProjectIndex .wrap3 .w3-seek > div:first-child {
+        display: flex;
+        width: 70%; }
+        #myProjectIndex .wrap3 .w3-seek > div:first-child > div:first-child {
+          width: 5%;
+          min-width: 44px;
+          font-size: 14px;
+          color: #333333;
+          font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+        #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(2) {
+          width: 60%; }
+          #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(2) ul {
+            display: flex;
+            justify-content: space-around; }
+            #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(2) ul li {
+              width: 18%;
+              font-size: 14px;
+              color: #333333;
+              border: 1px solid #e4e4e4;
+              margin-right: 20px;
+              padding: 13px 0;
+              cursor: pointer; }
+            #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(2) ul li.sel {
+              color: #8693f3;
+              font-weight: bold;
+              border: 1px solid #8693f3; }
+        #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(3) {
+          display: flex;
+          align-items: center; }
+          #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(3) input {
+            width: 34%;
+            padding: 13px 0;
+            border: 1px solid #d9deff;
+            text-align: center;
+            background-color: #f0f2ff;
+            color: #8693f3; }
+          #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(3) span {
+            margin: 0 10px; }
+          #myProjectIndex .wrap3 .w3-seek > div:first-child > div:nth-child(3) input::placeholder {
+            text-align: center;
+            color: #8693f3; }
+      #myProjectIndex .wrap3 .w3-seek > div:nth-child(2) {
+        display: flex;
+        width: 30%; }
+        #myProjectIndex .wrap3 .w3-seek > div:nth-child(2) input {
+          width: 80%;
+          font-size: 16px;
+          color: #8693f3;
+          border: 1px solid #8693f3;
+          padding: 0 20px;
+          background-color: #f0f2ff; }
+        #myProjectIndex .wrap3 .w3-seek > div:nth-child(2) input::placeholder {
+          color: #8693f3; }
+        #myProjectIndex .wrap3 .w3-seek > div:nth-child(2) button {
+          width: 20%;
+          color: #ffffff;
+          background-color: #8693f3; }
+    #myProjectIndex .wrap3 .w3-nav ul {
+      margin: 40px; }
+      #myProjectIndex .wrap3 .w3-nav ul li {
+        border-top: 1px solid #f2f2f2;
+        font-size: 14px;
+        color: #333333;
+        padding: 20px 0; }
+        #myProjectIndex .wrap3 .w3-nav ul li > span {
+          float: left;
+          font-weight: bold; }
+        #myProjectIndex .wrap3 .w3-nav ul li > div > div {
+          float: left;
+          width: 7%;
+          position: relative; }
+          #myProjectIndex .wrap3 .w3-nav ul li > div > div div {
+            display: inline;
+            padding: 5px 15px;
+            cursor: pointer; }
+          #myProjectIndex .wrap3 .w3-nav ul li > div > div > div.sel {
+            background-color: #8693f3;
+            color: #ffffff; }
+        #myProjectIndex .wrap3 .w3-nav ul li > div > div::after {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 100%;
+          right: 0;
+          top: 0;
+          border-right: 1px solid #e4e7ff; }
+      #myProjectIndex .wrap3 .w3-nav ul li:last-child {
+        border-bottom: 1px solid #e4e4e4; }
+    #myProjectIndex .wrap3 .w3-cont {
+      display: flex;
+      justify-content: left;
+      flex-wrap: wrap;
+      align-content: space-between;
+      padding: 0 40px; }
+      #myProjectIndex .wrap3 .w3-cont .list1 {
+        width: 30%;
+        transition: box-shadow 0.5s;
+        border: 1px solid #f6f6f6;
+        margin-bottom: 80px;
+        cursor: pointer;
+        margin-right: 70px; }
+        #myProjectIndex .wrap3 .w3-cont .list1 .list1-img {
+          position: relative;
+          overflow: hidden; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-img img {
+            width: 100%; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(2) {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 10px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(2) button {
+              padding: 5px 10px;
+              font-size: 14px;
+              color: #ffffff;
+              border: 1px solid #ffffff;
+              background-color: transparent;
+              margin-right: 5px; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 22%;
+            display: none;
+            justify-content: space-around;
+            align-content: space-around; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) > div {
+              width: 23%;
+              height: 100%;
+              position: relative; }
+              #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) > div img {
+                height: 100%; }
+              #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) > div .maskSm {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                background-color: rgba(255, 255, 255, 0.4);
+                display: none;
+                justify-content: center;
+                align-content: center;
+                flex-direction: column; }
+                #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) > div .maskSm button {
+                  display: block;
+                  border-radius: 7px;
+                  background-color: rgba(0, 0, 0, 0.3);
+                  font-size: 14px;
+                  color: #ffffff;
+                  padding: 7px 0;
+                  margin: 0 15px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-img > div:nth-child(3) > div:hover .maskSm {
+              display: flex; }
+        #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont {
+          text-align: left;
+          padding: 30px 20px 0 20px; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-1 {
+            font-size: 20px;
+            color: #333333;
+            margin-bottom: 15px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-1 > span:first-child {
+              margin-right: 20px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-1 > span:last-child {
+              float: right; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-2 {
+            margin-bottom: 15px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-2 > div {
+              float: left;
+              margin-right: 0px;
+              font-size: 14px;
+              color: #333333; }
+              #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-2 > div > span:first-child {
+                display: inline-block;
+                width: 9px;
+                height: 10px;
+                background: url("../../static/img/icon12.png") no-repeat;
+                background-size: 100% 100%;
+                margin: 0 4px; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-2 > div:nth-child(2) > span:first-child {
+              background: url("../../static/img/icon13.png") no-repeat;
+              background-size: 100% 100%; }
+            #myProjectIndex .wrap3 .w3-cont .list1 .list1-cont .l1cont-2 > div:nth-child(3) > span:first-child {
+              background: url("../../static/img/icon14.png") no-repeat;
+              background-size: 100% 100%; }
+        #myProjectIndex .wrap3 .w3-cont .list1 .list1-tag {
+          text-align: left;
+          display: flex;
+          justify-content: left;
+          padding: 0 30px 30px 30px; }
+          #myProjectIndex .wrap3 .w3-cont .list1 .list1-tag span {
+            width: 20%;
+            text-align: center;
+            border: 1px solid #e2e6ff;
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555555;
+            margin-right: 20px; }
+      #myProjectIndex .wrap3 .w3-cont .list1:nth-child(3n) {
+        margin-right: 0; }
+      #myProjectIndex .wrap3 .w3-cont .list1:hover {
+        box-shadow: 1px 1px 35px 10px #ebebeb; }
+        #myProjectIndex .wrap3 .w3-cont .list1:hover .l1cont-1 {
+          font-weight: bold; }
+        #myProjectIndex .wrap3 .w3-cont .list1:hover .list1-img > div:nth-child(2) {
+          display: block; }
+        #myProjectIndex .wrap3 .w3-cont .list1:hover .list1-img > div:nth-child(3) {
+          display: flex; }
+  #myProjectIndex .pagina {
+    background-color: #fff;
+    padding-bottom: 50px; }
+
+/*# sourceMappingURL=myProjectIndex.css.map */

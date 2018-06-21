@@ -11,8 +11,8 @@ export default {
       show2:true,
       value1: '',
       value2:'',
-      leftData:[0,0,0,0,0],
-      rightData:[0,0,0,0,0,0],
+      leftData:[3,0,0,0,0],
+      rightData:[5,3,2,0,0,0],
       headLeft: {
         src:"./static/img/hlicon.png",
         text:"个人中心"
@@ -25,7 +25,17 @@ export default {
       contList:[],
       totalPage:null,
       postTags:[],
-      orderByField:''
+      orderByField:'',
+      list01:[
+        {
+          productname:'方案名称',
+          housetype:'四方一厅',
+          area:121,
+          customername:'客户名称',
+          customercontact:'1380013800',
+          customeraddr:'客户地址'
+        }
+      ]
     }
   },
   methods:{
@@ -80,16 +90,12 @@ export default {
     change(val){
       let that = this
       let canv = $('#canvas1')[0]
-      let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
-      let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      this.$api.axiosPost('/person/orderStats'+that.str1,1,{
+      this.$ajax.axiosPost('/user/getOrderStats',3,{
         searchDateStart:val[0],
-        searchDateEnd:val[1],
-        token:token,
-        userId:userId
+        searchDateEnd:val[1]
       },function (res) {
-        console.log(res)
-        var data = res.data.attributes
+        console.log(res);
+        let data = res.data.data;
         that.leftData = [data.peddingAudit,data.hasReturned,data.hasQuotedPrice,data.hasDeliver,data.hasFinished]
         Canvas.paintLeft(canv,that.leftData);
       })
@@ -97,16 +103,25 @@ export default {
     change1(val){
       let that = this
       var canv1 = $('#canvas2')[0];
-      let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
-      let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      this.$api.axiosPost('/person/getClientStats'+that.str1,1,{
+      // let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+      // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
+      // this.$api.axiosPost('/person/getClientStats'+that.str1,1,{
+      //   searchDateStart:val[0],
+      //   searchDateEnd:val[1],
+      //   token:token,
+      //   userId:userId
+      // },function (res) {
+      //   console.log(res)
+      //   var data = res.data.attributes
+      //   that.rightData = [data.inTouch,data.hasSended,data.hasMeasured,data.hasScheme,data.hasChecked,data.hasOrder]
+      //   Canvas.paintRight(canv1,that.rightData);
+      // })
+      this.$ajax.axiosPost('/user/getClientStats',3,{
         searchDateStart:val[0],
-        searchDateEnd:val[1],
-        token:token,
-        userId:userId
+        searchDateEnd:val[1]
       },function (res) {
-        console.log(res)
-        var data = res.data.attributes
+        console.log(res);
+        let data = res.data.data;
         that.rightData = [data.inTouch,data.hasSended,data.hasMeasured,data.hasScheme,data.hasChecked,data.hasOrder]
         Canvas.paintRight(canv1,that.rightData);
       })
@@ -114,21 +129,31 @@ export default {
     pageChange(val){
       console.log(1)
       const that = this;
-      let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      this.$api.axiosPost('/product/productList'+that.str1,1,{
-        data:{
-          userids:[userId],
-          tags:that.postTags,
-          orderByCondition:'DESC',
-          orderByField:that.orderByField
-        },
-        page:{
-          pageNum:val,
-          pageSize:9
-        }
+      // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
+      // this.$api.axiosPost('/product/productList'+that.str1,1,{
+      //   data:{
+      //     userids:[userId],
+      //     tags:that.postTags,
+      //     orderByCondition:'DESC',
+      //     orderByField:that.orderByField
+      //   },
+      //   page:{
+      //     pageNum:val,
+      //     pageSize:9
+      //   }
+      // },function (res) {
+      //   that.postData = res.data;
+      //   console.log(res)
+      // })
+      //获取方案列表
+      this.$ajax.axiosPost('/pro/prolists',3,{
+        page:val,
+        tag:[]
       },function (res) {
-        that.postData = res.data;
-        console.log(res)
+        console.log('方案列表',res);
+        let data = res.data.data;
+        that.postData = data;
+        console.log(that.postData)
       })
     }
   },
@@ -160,14 +185,14 @@ export default {
       nextButton:'.swiper-button-next'
     })
     // this.$store.dispatch('login/getUserInfo')
-    console.log(userId)
-    this.$api.axiosPost('/person/getUserAchievement'+that.str1,1, {
-        token: token,
-        userId: userId
-      }
-      ,function (res) {
-        console.log(res.data.data)
-      })
+    console.log(userId);
+    // this.$api.axiosPost('/person/getUserAchievement'+that.str1,1, {
+    //     token: token,
+    //     userId: userId
+    //   }
+    //   ,function (res) {
+    //     console.log(res.data.data)
+    //   })
     //canvas监听器
     window.onresize = () => {
       return (() => {
@@ -184,21 +209,16 @@ export default {
     canv1.width = ($('.w2-left').width()*0.80)
     Canvas.paintLeft(canv,this.leftData);
     Canvas.paintRight(canv1,this.rightData);
-    //方案库分页查询
-    this.$api.axiosPost('/product/productList'+that.str1,1,{
-      data:{
-        userids:[userId],
-        tags:that.postTags,
-        orderByCondition:'DESC',
-        orderByField:that.orderByField
-      },
-      page:{
-        pageNum:1,
-        pageSize:9
-      }
+    //获取方案列表
+    this.$ajax.axiosPost('/pro/prolists',3,{
+      page:1,
+      tag:[],
+      pages:1
     },function (res) {
-      that.postData = res.data
-      console.log("方案库分页查询",res)
+      console.log('方案列表',res);
+      let data = res.data.data;
+      that.postData = data;
+      console.log(that.postData)
     })
     //  banner图获取
     this.$api.axiosPost('/img/getImgListByParam'+that.str1,1,{

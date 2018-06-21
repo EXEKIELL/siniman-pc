@@ -19,7 +19,6 @@ import MyShopXq from '@/components/myShopXq'
 import MyIndent from '@/components/myIndent'
 import IndexWrap from '@/components/indexWrap'
 import MyCollect from '@/components/myCollect'
-import Test from '@/components/test'
 
 Vue.use(Router)
 
@@ -171,11 +170,6 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/test',
-      name: 'Test',
-      component: Test
     }
   ]
 })
@@ -183,9 +177,9 @@ const router = new Router({
 router.beforeEach((to,from,next)=>{
   if(to.meta.requireAuth){
     console.log(1)
-    if(localStorage.getItem('user-data')!=null){
+    if(localStorage.getItem('token')!=null){
       console.log('登录成功')
-      store.dispatch('login/getUserInfo')
+      store.dispatch('login/getUserInfo');
       if(!store.state.login.freshState){
         store.dispatch('login/changeFreshState')
       }

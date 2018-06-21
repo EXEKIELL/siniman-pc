@@ -1,0 +1,123 @@
+#shareComment {
+  padding: 80px 50px; }
+  #shareComment .wrap .list {
+    padding: 40px 0;
+    border-top: 1px solid #f6f6f6; }
+    #shareComment .wrap .list > div {
+      float: left; }
+    #shareComment .wrap .list .list-1 {
+      width: 10%; }
+      #shareComment .wrap .list .list-1 > div {
+        width: 105px;
+        height: 105px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 1px solid #e8f2dd; }
+        #shareComment .wrap .list .list-1 > div img {
+          border-radius: 50%;
+          width: 95%; }
+    #shareComment .wrap .list .list-2 {
+      width: 80%;
+      text-align: left; }
+      #shareComment .wrap .list .list-2 > div:nth-child(1) {
+        font-size: 20px;
+        color: #333333;
+        font-weight: bold; }
+        #shareComment .wrap .list .list-2 > div:nth-child(1) span {
+          display: inline-block;
+          vertical-align: middle; }
+        #shareComment .wrap .list .list-2 > div:nth-child(1) span:first-child {
+          background: url("../../static/img/icon21.png") no-repeat;
+          background-size: 100% 100%;
+          width: 18px;
+          height: 18px;
+          margin-right: 8px; }
+      #shareComment .wrap .list .list-2 .huifu {
+        padding: 20px 0 0 25px; }
+        #shareComment .wrap .list .list-2 .huifu p {
+          font-size: 16px;
+          color: #333333;
+          text-align: justify;
+          margin-bottom: 20px; }
+        #shareComment .wrap .list .list-2 .huifu .huifu1 {
+          font-size: 16px;
+          color: #333333;
+          border: 1px solid #e4e4e4;
+          background-color: #f6f6f6;
+          width: 55%;
+          padding: 20px 40px 20px 30px; }
+          #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList {
+            width: 88%; }
+            #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList div {
+              margin: 8px 0; }
+            #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child {
+              display: flex; }
+              #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child span:first-child {
+                width: 8%;
+                min-width: 65px; }
+              #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child span:last-child {
+                width: 92%; }
+            #shareComment .wrap .list .list-2 .huifu .huifu1 .huifuList div:last-child {
+              color: #888888;
+              text-align: right; }
+      #shareComment .wrap .list .list-2 .writeWrap {
+        padding: 20px 0 0 25px; }
+        #shareComment .wrap .list .list-2 .writeWrap .ww1 {
+          font-size: 16px;
+          color: #333333;
+          border: 1px solid #83b844;
+          width: 55%;
+          padding: 20px 40px 20px 30px; }
+          #shareComment .wrap .list .list-2 .writeWrap .ww1 > div {
+            position: relative;
+            width: 100%; }
+            #shareComment .wrap .list .list-2 .writeWrap .ww1 > div > div {
+              font-size: 16px;
+              color: #a51e32; }
+            #shareComment .wrap .list .list-2 .writeWrap .ww1 > div > textarea {
+              font-size: 16px;
+              color: #333333;
+              width: 100%;
+              resize: none;
+              box-sizing: border-box;
+              line-height: 2em;
+              border: 0; }
+        #shareComment .wrap .list .list-2 .writeWrap .ww2 {
+          margin-top: 20px;
+          width: 61%;
+          text-align: right; }
+          #shareComment .wrap .list .list-2 .writeWrap .ww2 button {
+            font-size: 16px;
+            color: #333333;
+            background-color: #e4e4e4;
+            padding: 10px 30px; }
+          #shareComment .wrap .list .list-2 .writeWrap .ww2 button:first-child {
+            margin-right: 20px; }
+          #shareComment .wrap .list .list-2 .writeWrap .ww2 button:hover {
+            background-color: #83b844;
+            color: #ffffff; }
+    #shareComment .wrap .list .list-3, #shareComment .wrap .list .list-4 {
+      width: 10%;
+      padding: 45px 0;
+      font-size: 16px;
+      color: #ff0000; }
+    #shareComment .wrap .list .list-4 {
+      text-align: right;
+      color: #333333; }
+      #shareComment .wrap .list .list-4 div:last-child span {
+        display: inline-block;
+        vertical-align: middle; }
+      #shareComment .wrap .list .list-4 div:last-child span:first-child {
+        background: url("../../static/img/icon23.png") no-repeat;
+        background-size: 100% 100%;
+        width: 18px;
+        height: 16px;
+        margin-right: 5px; }
+      #shareComment .wrap .list .list-4 div:last-child span:last-child {
+        cursor: pointer; }
+  #shareComment .pagina {
+    margin-top: 50px; }
+
+/*# sourceMappingURL=shareComment.css.map */

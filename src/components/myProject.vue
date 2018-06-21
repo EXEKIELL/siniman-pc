@@ -81,7 +81,7 @@
                   </div>
                   <div>
                     <div>
-                      <label style="width: 27%">户型/面积：</label>
+                      <label style="width: 37%">户型/面积：</label>
                       <input type="text" placeholder="请输入面积" v-model="form1.housetype">
                     </div>
                     <div>
@@ -98,9 +98,9 @@
                   <div>已选择：</div>
                   <div class="shou">
                     <div v-for="(item,index) in tagsels" :key="index">
-                      <label>{{item.class}}</label>
+                      <label>{{item.catalogname}}：</label>
                       <div>
-                        <span v-for="(item3,index3) in item.tag" :key="index3">{{item3}}<span @click="del(item3)"></span></span>
+                        <span v-for="(item3,index3) in item.list" :key="index3">{{item3.tagname}}<span @click="del(item3,index3)"></span></span>
                       </div>
                     </div>
                   </div>
@@ -109,7 +109,7 @@
                     <div v-for="(item,index) in tags" :key="index">
                       <label>{{item.catalogname}}：</label>
                       <div>
-                        <span v-for="(item2,index2) in item.list" :key="index2" @click="changeTag(item2)">{{item2.tagname}}</span>
+                        <span v-for="(item2,index2) in item.list" :key="index2" @click="changeTag(index,index2,item2)">{{item2.tagname}}</span>
                       </div>
                     </div>
                   </div>
@@ -123,7 +123,7 @@
               </div>
               <div class="formItem5">
                 <button type="button" @click="bianjiBoxSub">保存</button>
-                <button type="button" @click="bianjiBox = false">取消</button>
+                <button type="button" @click="closeBox">取消</button>
               </div>
             </form>
           </div>
@@ -228,68 +228,72 @@
       methods:{
         navBtn(index,component){
           $(event.target).addClass('sel');
-          $(event.target).siblings('li').removeClass('sel')
+          $(event.target).siblings('li').removeClass('sel');
           this.$data.detail = component
         },
         btn1(index){
           if(index==1){
             $('body').css({
               overflow:'hidden'
-            })
-            this.$data.fenxiang = true
-            this.$data.bianji = false
+            });
+            this.$data.fenxiang = true;
+            this.$data.bianji = false;
             this.$data.bianjiBoxTitle = "分享家·赢豪礼，最高可得苹果笔记本电脑"
             this.$data.bianjiBox = true
           }else if(index==2){
             $('body').css({
               overflow:'hidden'
-            })
-            this.$data.bianji = true
-            this.$data.fenxiang = false
-            this.$data.bianjiBoxTitle = "编辑方案信息"
+            });
+            this.$data.bianji = true;
+            this.$data.fenxiang = false;
+            this.$data.bianjiBoxTitle = "编辑方案信息";
             this.$data.bianjiBox = true
           }
         },
         bianjiBoxSub(){
-          console.log(this.$data.form1)
-          this.$data.bianjiBox = false
-          $('body').css({
-            overflow:'initial'
+          this.form1.producttag = this.tagsels;
+          const that = this;
+          this.$api.axiosPost('/product/update'+that.$store.state.login.str1,1,that.form1,function (res) {
+            console.log(res)
+            that.$data.bianjiBox = false;
+            $('body').css({
+              overflow:'initial'
+            })
           })
         },
         closeBox(){
-          this.bianjiBox = false
+          this.bianjiBox = false;
           $('body').css({
             overflow:'initial'
           })
         },
         check(val){
-          var bigImg = this.$refs.bigImg
+          var bigImg = this.$refs.bigImg;
           $(bigImg).attr({
             src:val
           })
         },
-        changeTag(val){
-          let parentName = val.catalogname;
-          if(parentName == that.tagsels.catalogname){
-
+        changeTag(index,index2,val2){
+          for(var i = 0;i<this.tagsels.length;i++){
+            if(val2.catalogname == this.tagsels[i].catalogname){
+              if(this.tagsels[i].list.find(function (val) {
+                return val.tagname == val2.tagname
+              }) == undefined){
+                console.log(this.tagsels[i].list.find(function (val) {
+                  return val.tagname == val2.tagname
+                }))
+                this.tagsels[i].list.push(val2)
+              }
+            }
           }
+          console.log(this.tagsels)
         },
-        del(val){
-          var index = this.tagsels
-          var e = event.target
-          if($(e).parent('span').parent('div').siblings('label').text()=='类型：'){
-              var index = this.tagsels[0].tag.indexOf(val);
-              this.tagsels[0].tag.splice(index,1)
-          }else if($(e).parent('span').parent('div').siblings('label').text()=='阶段：'){
-            var index = this.tagsels[1].tag.indexOf(val);
-            this.tagsels[1].tag.splice(index,1)
-          }else if($(e).parent('span').parent('div').siblings('label').text()=='户型：'){
-            var index = this.tagsels[2].tag.indexOf(val);
-            this.tagsels[2].tag.splice(index,1)
-          }else{
-            var index = this.tagsels[3].tag.indexOf(val);
-            this.tagsels[3].tag.splice(index,1)
+        del(val,index){
+          for(var i = 0;i<this.tagsels.length;i++){
+            if(val.catalogname == this.tagsels[i].catalogname){
+              this.tagsels[i].list.splice(index,1);
+              console.log(this.tagsels)
+            }
           }
         }
       },
@@ -309,7 +313,7 @@
         this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
           productId:productId
         },function (res) {
-          console.log(res)
+          console.log(res);
           console.log(JSON.parse(res.data.productInfo));
           that.productInfo = JSON.parse(res.data.productInfo);
           //编辑信息赋值
@@ -336,11 +340,15 @@
             })
             // console.log(that.imgInfo)
             // console.log(JSON.parse(res.data.productInfo))
-          })
-          // 获取标签
-          that.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
-            console.log(res);
-            that.tags = res.data
+            // 获取标签
+            let tagsList = that.form1.tags.split(',');
+            that.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
+              console.log(res);
+              that.tags = res.data;
+              for(var i = 0;i<that.tags.length;i++){
+                that.tagsels[i].catalogname = that.tags[i].catalogname
+              }
+            })
           })
         })
       }

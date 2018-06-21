@@ -1,0 +1,326 @@
+#shareProject .mp-top {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #fff;
+  padding: 40px 0px 40px 45px; }
+  #shareProject .mp-top .top-left {
+    width: 38%; }
+    #shareProject .mp-top .top-left .bigImg {
+      width: 100%;
+      height: 510px;
+      overflow: hidden; }
+      #shareProject .mp-top .top-left .bigImg img {
+        width: 100%; }
+    #shareProject .mp-top .top-left #swiper1 {
+      height: 100px;
+      margin: 15px 0; }
+      #shareProject .mp-top .top-left #swiper1 .swiper-wrapper {
+        height: 100%; }
+        #shareProject .mp-top .top-left #swiper1 .swiper-wrapper .swiper-slide {
+          overflow: hidden;
+          margin-right: 20px;
+          cursor: pointer; }
+          #shareProject .mp-top .top-left #swiper1 .swiper-wrapper .swiper-slide img {
+            width: 100%; }
+  #shareProject .mp-top .top-right {
+    width: 65%;
+    max-width: 785px;
+    text-align: left;
+    margin-left: 50px; }
+    #shareProject .mp-top .top-right > div {
+      margin: 25px 75px; }
+    #shareProject .mp-top .top-right .tright-1 {
+      margin-bottom: 30px; }
+      #shareProject .mp-top .top-right .tright-1 span {
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 30px; }
+      #shareProject .mp-top .top-right .tright-1 span:last-child {
+        float: right;
+        margin-right: 0; }
+    #shareProject .mp-top .top-right .tright-2 {
+      display: flex; }
+      #shareProject .mp-top .top-right .tright-2 > span {
+        font-size: 16px;
+        color: #333333; }
+      #shareProject .mp-top .top-right .tright-2 > span {
+        margin-right: 20px;
+        display: flex;
+        align-items: center; }
+        #shareProject .mp-top .top-right .tright-2 > span span:first-child {
+          width: 16px;
+          height: 16px;
+          background: url("../../static/img/icon64.png") no-repeat;
+          background-size: 100% 100%;
+          margin-right: 5px; }
+      #shareProject .mp-top .top-right .tright-2 > span:nth-child(2) span:first-child {
+        background: url("../../static/img/icon63.png") no-repeat; }
+      #shareProject .mp-top .top-right .tright-2 > span:nth-child(3) span:first-child {
+        background: url("../../static/img/icon62.png") no-repeat; }
+      #shareProject .mp-top .top-right .tright-2 > span:nth-child(4) {
+        cursor: pointer; }
+        #shareProject .mp-top .top-right .tright-2 > span:nth-child(4) span:first-child {
+          background: url("../../static/img/icon61.png") no-repeat; }
+      #shareProject .mp-top .top-right .tright-2 > span:nth-child(4):hover {
+        font-weight: bold; }
+        #shareProject .mp-top .top-right .tright-2 > span:nth-child(4):hover span:first-child {
+          background: url("../../static/img/icon61sel.png") no-repeat; }
+    #shareProject .mp-top .top-right .tright-3 {
+      margin-bottom: 30px; }
+      #shareProject .mp-top .top-right .tright-3 span {
+        font-size: 18px;
+        color: #333333;
+        display: inline-block;
+        vertical-align: middle; }
+      #shareProject .mp-top .top-right .tright-3 span:nth-child(2n+1) {
+        width: 16px;
+        height: 17px;
+        background: url("../../static/img/icon15.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 0 5px; }
+      #shareProject .mp-top .top-right .tright-3 span:nth-child(2n) {
+        margin-right: 24px; }
+      #shareProject .mp-top .top-right .tright-3 span:nth-child(3) {
+        background: url("../../static/img/icon16.png") no-repeat;
+        background-size: 100% 100%; }
+      #shareProject .mp-top .top-right .tright-3 span:nth-child(5) {
+        background: url("../../static/img/icon17.png") no-repeat;
+        background-size: 100% 100%; }
+    #shareProject .mp-top .top-right .tright-4 {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 50px;
+      margin-bottom: 50px; }
+      #shareProject .mp-top .top-right .tright-4 span {
+        display: inline-block;
+        vertical-align: middle;
+        width: 22%;
+        padding: 10px 0;
+        text-align: center;
+        border: 1px solid #e4e8ff;
+        font-size: 16px;
+        color: #555555; }
+    #shareProject .mp-top .top-right .tright-5 {
+      margin-bottom: 60px; }
+      #shareProject .mp-top .top-right .tright-5 > div:first-child {
+        margin: 10px 0 25px 0;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333333; }
+      #shareProject .mp-top .top-right .tright-5 > div:nth-child(2) p {
+        font-size: 14px;
+        color: #555555;
+        text-align: justify;
+        line-height: 39px; }
+    #shareProject .mp-top .top-right .tright-6 {
+      display: flex;
+      justify-content: left;
+      align-items: center; }
+      #shareProject .mp-top .top-right .tright-6 > div:first-child {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        height: 40px; }
+        #shareProject .mp-top .top-right .tright-6 > div:first-child img {
+          height: 100%;
+          margin-right: 15px; }
+        #shareProject .mp-top .top-right .tright-6 > div:first-child span {
+          font-size: 14px;
+          color: #333333; }
+      #shareProject .mp-top .top-right .tright-6 > div:last-child {
+        width: 60%; }
+        #shareProject .mp-top .top-right .tright-6 > div:last-child button {
+          font-size: 16px;
+          color: #ffffff;
+          background-color: #199ed8;
+          width: 100%;
+          height: 55px; }
+        #shareProject .mp-top .top-right .tright-6 > div:last-child button[disabled] {
+          background-color: #888888; }
+#shareProject .mp-cont {
+  background-color: #fff;
+  margin-top: 30px; }
+  #shareProject .mp-cont .nav {
+    border-bottom: 1px solid #e4e4e4; }
+    #shareProject .mp-cont .nav ul {
+      display: flex;
+      justify-content: center; }
+      #shareProject .mp-cont .nav ul li {
+        font-size: 16px;
+        color: #333333;
+        cursor: pointer;
+        margin: 30px 0;
+        width: 15%;
+        position: relative; }
+      #shareProject .mp-cont .nav ul li::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        border-right: 1px solid #e4e4e4; }
+      #shareProject .mp-cont .nav ul li:last-child::after {
+        display: none; }
+      #shareProject .mp-cont .nav ul li.sel {
+        color: #a51e32;
+        font-weight: bold; }
+#shareProject .duihuan {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; }
+  #shareProject .duihuan .wrap {
+    background-color: #fff;
+    padding: 20px;
+    position: absolute;
+    z-index: 100; }
+    #shareProject .duihuan .wrap .biankuang {
+      border: 1px solid #e4e4e4; }
+      #shareProject .duihuan .wrap .biankuang .cont1-title {
+        position: relative;
+        margin: 30px 0 50px 0; }
+        #shareProject .duihuan .wrap .biankuang .cont1-title span:first-child {
+          font-size: 20px;
+          color: #333333;
+          font-weight: bold; }
+        #shareProject .duihuan .wrap .biankuang .cont1-title span:last-child {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          right: 15px;
+          top: -15px;
+          background: url("../../static/img/icon24.png") no-repeat;
+          background-size: 100% 100%;
+          cursor: pointer; }
+      #shareProject .duihuan .wrap .biankuang .cont1 .listWrap {
+        margin: 20px 40px 50px 40px; }
+        #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list {
+          display: flex;
+          justify-content: space-between;
+          border: 1px solid #e4e4e4;
+          padding: 20px; }
+          #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(1) {
+            width: 280px;
+            height: 210px;
+            overflow: hidden; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(1) img {
+              width: 100%; }
+          #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) {
+            margin-left: 40px; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div {
+              margin: 20px 0; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(1) {
+              font-size: 20px;
+              color: #333333;
+              font-weight: bold; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(1) span {
+                margin-right: 30px; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(1) span:nth-child(2) {
+                margin-right: 80px; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(2) {
+              font-size: 18px;
+              color: #ff0000;
+              text-align: left; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) {
+              display: flex;
+              font-size: 14px;
+              color: #333333; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) > div {
+                margin-right: 15px; }
+                #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) > div span {
+                  display: inline-block;
+                  vertical-align: middle; }
+                #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) > div span:first-child {
+                  width: 10px;
+                  height: 10px;
+                  background: url("../../static/img/icon26.png") no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 5px; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) span:first-child {
+                background: url("../../static/img/icon27.png") no-repeat;
+                background-size: 100% 100%; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(3) > div:nth-child(3) span:first-child {
+                background: url("../../static/img/icon28.png") no-repeat; }
+            #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(4) {
+              display: flex;
+              justify-content: space-between; }
+              #shareProject .duihuan .wrap .biankuang .cont1 .listWrap .list > div:nth-child(2) > div:nth-child(4) span {
+                border: 1px solid #e2e6ff;
+                font-size: 14px;
+                color: #555555;
+                width: 23%;
+                padding: 8px 0; }
+      #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(2) {
+        font-size: 14px;
+        color: #555555;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px; }
+        #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(2) > div:first-child {
+          margin-right: 30px; }
+          #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(2) > div:first-child span:last-child {
+            color: #ff0000; }
+      #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(3) {
+        margin: 20px 40px 50px 40px; }
+        #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(3) > div {
+          border: 1px solid #e4e4e4;
+          height: 100px;
+          padding: 20px; }
+          #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(3) > div textarea {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            font-size: 14px;
+            color: #555555;
+            resize: none; }
+      #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(4) {
+        margin-bottom: 50px; }
+        #shareProject .duihuan .wrap .biankuang .cont1 > div:nth-child(4) button {
+          display: inline-block;
+          font-size: 18px;
+          color: #ffffff;
+          background-color: #83b844;
+          padding: 20px 0;
+          width: 35%; }
+      #shareProject .duihuan .wrap .biankuang .cont2 {
+        width: 775px; }
+        #shareProject .duihuan .wrap .biankuang .cont2 > div:first-child {
+          margin: 0 0 50px 0;
+          padding: 1px; }
+          #shareProject .duihuan .wrap .biankuang .cont2 > div:first-child div:first-child {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px; }
+          #shareProject .duihuan .wrap .biankuang .cont2 > div:first-child div:last-child {
+            font-size: 18px;
+            color: #83b844; }
+        #shareProject .duihuan .wrap .biankuang .cont2 > div:nth-child(2) {
+          margin-bottom: 70px; }
+          #shareProject .duihuan .wrap .biankuang .cont2 > div:nth-child(2) > div:first-child {
+            font-size: 20px;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 20px; }
+          #shareProject .duihuan .wrap .biankuang .cont2 > div:nth-child(2) > div:nth-child(2) span {
+            font-size: 16px;
+            color: #333333;
+            margin-right: 10px; }
+        #shareProject .duihuan .wrap .biankuang .cont2 > div:nth-child(3) {
+          margin-bottom: 80px; }
+          #shareProject .duihuan .wrap .biankuang .cont2 > div:nth-child(3) button {
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #83b844;
+            padding: 15px 0;
+            width: 300px; }
+
+/*# sourceMappingURL=shareProject.css.map */

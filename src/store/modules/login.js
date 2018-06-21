@@ -1,9 +1,14 @@
 import axios from 'axios'
 import api from '../../api/index'
 import router from '../../router/index'
+import md5 from 'js-md5'
+import store from "../index"
+import qs from 'qs'
+let Base64 = require('js-base64').Base64;
 const loginInfo = {
   namespaced:true,
   state:{
+    baseUrl:'http://share.hengdikeji.com/pc',
     freshState:false,
     fL:false,
     loging:true,
@@ -15,18 +20,22 @@ const loginInfo = {
     userData:{},
     userInfo:{},
     token:null,
+    sign:'',
+    time:'',
+    sign_1:'',//授权信息
     userId:'',
     str1:'',
-    loginSuccess:null
+    loginSuccess:null,
+    headers:{}
   },
   mutations:{
     CHANGEFLASH(state){
       state.freshState = true
-      const userId = JSON.parse(localStorage.getItem('user-data')).user.id+'';
-      const token = JSON.parse(localStorage.getItem('user-data')).token
-      state.userId = userId;
-      state.token = token;
-      state.str1 ='?key='+userId+'&token='+token;
+      // const userId = JSON.parse(localStorage.getItem('user-data')).user.id+'';
+      // const token = JSON.parse(localStorage.getItem('user-data')).token
+      // state.userId = userId;
+      // state.token = token;
+      // state.str1 ='?key='+userId+'&token='+token;
     },
     GETUSERNAME(state,val){
       state.form.username = val.username
@@ -35,7 +44,26 @@ const loginInfo = {
       state.form.pswd = val.pswd
     },
     GETTOKEN(state,token){
-      state.token = token
+      state.token = token;
+      localStorage.setItem('token',JSON.stringify(token))
+    },
+    GETSIGN(state){
+      let date = Date.parse( new Date() ).toString();
+      state.time = date;
+      let sign01 = md5(md5(state.token+date));
+      state.sign = sign01;
+      let signData = {
+        time:date,
+        sign:sign01
+      }
+      localStorage.setItem('sign',JSON.stringify(signData));
+      console.log(state.sign);
+    },
+    GETSIGN_1(state){
+      let token = state.token;
+      let sign = Base64.encode(JSON.stringify({access_token:token}));
+      state.sign_1 = sign;
+      localStorage.setItem('sign_1',JSON.stringify(sign));
     },
     GETUSERID(state,userId){
       state.userId = userId
@@ -77,61 +105,52 @@ const loginInfo = {
   actions:{
     //用户登录请求
     LoginPost(context){
-      api.axiosPost('/user/checkLogin',0,context.state.form,function (res) {
-        console.log(res)
-        if(res.data.success!=null&&res.data.success==false){
-          console.log(1)
-        }else if(res.data.status!=null&&res.data.status==200){
-          var data = res.data.data
-          if(data.firstLogin==true){
-            context.commit('PHONEYZ',true)
-          }else{
-            api.axiosPost('/user/userLogin',0,context.state.form,function (res) {
-              var data = {
-                ok:true,
-                userData:res.data
-              }
-              //将登录请求的数据保存到vuex
-              context.commit('LOGINVIEW',data);
-              context.commit('GETTOKEN',data.userData.token)
-              context.commit('GETUSERID',data.userData.user.id)
-              console.log("用户信息已保存到vuex");
-              //保存到本地
-              localStorage.setItem('user-data',JSON.stringify(res.data))
-              console.log("已保存到本地")
-              router.push('/indexWrap/personCenter')
-            })
-          }
-        }else{
-          console.log(3)
+      api.axiosPost('/login',0,{
+        username:$.trim(context.state.form.username),
+        password:$.trim(context.state.form.pswd)
+      },function (res) {
+        console.log(res);
+        if(!res.data.data.verify_key){
+          //保存token
+          context.commit('GETTOKEN',res.data.data.access_token);
+          console.log(context.state.token);
+          //保存授权信息
+          context.commit('GETSIGN_1');
+          console.log(context.state.sign_1);
+          context.commit('GETSIGN');
+          console.log(context.state.sign);
+          context.dispatch('getUserInfo');
+          router.push('/indexWrap/personCenter');
         }
       })
     },
     //获取用户基本信息
     getUserInfo(context){
-      let userId,token;
-      if(localStorage.getItem('user-data')!=null){
-        userId = JSON.parse(localStorage.getItem('user-data')).user.id+'';
-        token = JSON.parse(localStorage.getItem('user-data')).token
-      }else if(context.state.userData.length>0){
-        userId = context.state.userData.user.id+''
-        token = context.state.userData.token
-      }else{
-        router.push('/login')
-      }
-      api.axiosGet('/person/userInfo',{
-        key:userId,
-        token: token,
-        userId:userId
-      },function (res) {
-        console.log("用户信息：",res)
-        context.commit('USERINFO',res.data)
-        context.commit('GETUSERID',res.data.data.userid)
-        // context.commit('GETTOKEN')
-        console.log(context.state.userId)
-        console.log("已保存到vux")
-        localStorage.setItem('user-info',JSON.stringify(res.data))
-        console.log("已保存到本地")
+      axios({
+        method:'post',
+        url:'http://share.hengdikeji.com/pc/user/userdata',
+        headers:{'Authorization':'Basic '+context.state.sign_1},
+        data:{
+          sign:context.state.sign,
+          time:parseInt(context.state.time)
+        },
+        transformRequest: [function (data) {
+          Object.keys(data).forEach((key) => {
+            if ((typeof data[key]) === 'object') {
+              data[key] = JSON.stringify(data[key]) // 这里必须使用内置JSON对象转换
+            }
+          })
+          data = qs.stringify(data) // 这里必须使用qs库进行转换
+          return data
+        }]
+      }).then(res=>{
+        console.log(res);
+        if(res.data.status == 200){
+          //保存用户信息到本地
+          localStorage.setItem('user-info',JSON.stringify(res.data.data))
+          //保存用户到仓库
+          context.state.userInfo = res.data.data;
+        }
       })
     },
     // 修改页面是否刷新状态
@@ -143,4 +162,5 @@ const loginInfo = {
 
   }
 }
+console.log($)
 export default loginInfo

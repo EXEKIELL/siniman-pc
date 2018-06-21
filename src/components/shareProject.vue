@@ -2,63 +2,65 @@
     <div id="shareProject">
       <div class="mp-top clearFix">
         <div class="top-left">
-          <div class="bigImg">
-            <img src="" alt="" ref="bigImg">
+          <div class="bigImg" style="display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center;">
+            <img :src="imgInfo[0].img" alt="" ref="bigImg">
           </div>
           <div id="swiper1" class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+              <div style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
                 <img :src="item.img" alt="">
               </div>
             </div>
           </div>
         </div>
-        <div class="top-right">
-          <div class="tright-1">
-            <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
-          </div>
-          <div class="tright-2">
-            <span>
-              <span></span>
-              <span>{{productInfo.productionmark}}积分</span>
-            </span>
-            <span>
-              <span></span>
-              <span>{{productInfo.salsecount}}</span>
-            </span>
-            <span>
-              <span></span>
-              <span>浏览</span>
-            </span>
-            <span>
-              <span></span>
-              <span>收藏</span>
-            </span>
-          </div>
-          <div class="tright-3">
-            <span></span><span>{{productInfo.customername}}</span>
-            <span></span><span>{{productInfo.customercontact}}</span>
-            <span></span><span>{{productInfo.customeraddr}}</span>
-          </div>
-          <div class="tright-4">
-            <span v-for="(item,index) in productInfo.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>
-          </div>
-          <div class="tright-5">
-            <div>需求描述</div>
-            <div>
-              <p>{{productInfo.productdesc}}</p>
-            </div>
-          </div>
-          <div class="tright-6">
-            <div>
-              <img src="../../static/img/head01.png" alt="">
-              <span>彭于晏</span>
-            </div>
-            <div>
-              <button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>
-            </div>
-          </div>
-        </div>
+        <!--<div class="top-right">-->
+          <!--<div class="tright-1">-->
+            <!--<span>{{productInfo.data.productname}}</span><span>{{productInfo.data.housetype}}</span><span>{{productInfo.data.area}}m²</span>-->
+          <!--</div>-->
+          <!--<div class="tright-2">-->
+            <!--<span>-->
+              <!--<span></span>-->
+              <!--<span>{{productInfo.data.productionmark}}积分</span>-->
+            <!--</span>-->
+            <!--<span>-->
+              <!--<span></span>-->
+              <!--<span>{{productInfo.data.salsecount}}</span>-->
+            <!--</span>-->
+            <!--<span>-->
+              <!--<span></span>-->
+              <!--<span>浏览</span>-->
+            <!--</span>-->
+            <!--<span>-->
+              <!--<span></span>-->
+              <!--<span>收藏</span>-->
+            <!--</span>-->
+          <!--</div>-->
+          <!--<div class="tright-3">-->
+            <!--<span></span><span>{{productInfo.data.customername}}</span>-->
+            <!--<span></span><span>{{productInfo.data.customercontact}}</span>-->
+            <!--<span></span><span>{{productInfo.data.customeraddr}}</span>-->
+          <!--</div>-->
+          <!--<div class="tright-4">-->
+            <!--<span v-for="(item,index) in productInfo.data.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>-->
+          <!--</div>-->
+          <!--<div class="tright-5">-->
+            <!--<div>需求描述</div>-->
+            <!--<div>-->
+              <!--<p>{{productInfo.data.productdesc}}</p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="tright-6">-->
+            <!--<div>-->
+              <!--<div style="width: 40px;height: 40px;border-radius:50%;overflow: hidden;margin-right: 10px;">-->
+                <!--<img style="width: 100%;height: 100%;" :src="productInfo.data.user.img" alt="">-->
+              <!--</div>-->
+              <!--<span>{{productInfo.data.user.username}}</span>-->
+            <!--</div>-->
+            <!--<div>-->
+              <!--<button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <div class="mp-cont">
         <div class="nav">
@@ -154,10 +156,10 @@
           ],
           tan1:false,
           //弹窗
-          duihuan:true,
+          duihuan:false,
           suc:false,
           suc1:false,
-          userInfo:localStorage.getItem('user-info'),
+          userInfo:'',
           title:"您即将获得",
           enought:true,
           sucduihuan:true,
@@ -173,62 +175,60 @@
         navBtn(index,component){
           $(event.target).addClass('sel');
           $(event.target).siblings('li').removeClass('sel')
-          this.$data.detail = component
-          console.log(component)
-          const userId = this.$store.state.login.userId;
-          const productId = this.$router.history.current.query.productId;
-          const that = this
+          this.$data.detail = component;
+          console.log(component);
+          const that = this;
           if(component.name == "ShareConvert"){
 
           }
         },
         sucbtn(val){
-          var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
-          console.log(userScore)
-          if(val<userScore){
-            this.duihuan = false;
-            this.title = "";
-            this.suc = true;
-            let userAccount = JSON.parse(localStorage.getItem('user-info')).data.account;
-            let desId = this.productInfo.desid+'';
-            const that = this;
-            //复制酷乐家接口
-            this.$api.axiosPost('/product/exchangeProduct'+that.$store.state.login.str1,0,{
-              userAccount:userAccount,
-              desId:desId
-            },function (res) {
-              console.log(res)
-              var userName = JSON.parse(localStorage.getItem('user-info')).data.username
-              var productName = that.productInfo.productname
-              var client = that.productInfo.customername
-              const token = JSON.parse(localStorage.getItem('user-data')).token
-              if(res.data.successCounts&&res.data.successCounts == 1){
-              //  增加兑换用户积分
-                that.$api.axiosPost('/person/addUserScoreRecord'+that.$store.state.login.str1,1,{
-                  scroeUserId:109740,//that.scoreUserId,
-                  clientId:2785609,//that.clientId,
-                  score:10,//that.productInfo.productionmark,
-                  action:'兑换',
-                  description:'aaa',//'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']'
-                  token:token,
-                  userId:'109740'
-                },function (res) {
-                  console.log(res)
-                })
-              }else{
-                this.$message.error('兑换失败');
-              }
-            })
-          }else {
-            this.suc1 = true;
-            this.duihuan = false;
-            this.title = "";
-          }
+          // var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
+          // console.log(userScore);
+          // if(val<userScore){
+          //   this.duihuan = false;
+          //   this.title = "";
+          //   this.suc = true;
+          //   let userAccount = JSON.parse(localStorage.getItem('user-info')).data.account;
+          //   let desId = this.productInfo.desid+'';
+          //   const that = this;
+          //   //复制酷乐家接口
+          //   this.$api.axiosPost('/product/exchangeProduct'+that.$store.state.login.str1,0,{
+          //     userAccount:userAccount,
+          //     desId:desId
+          //   },function (res) {
+          //     console.log(res)
+          //     var userName = JSON.parse(localStorage.getItem('user-info')).data.username
+          //     var productName = that.productInfo.productname
+          //     var client = that.productInfo.customername
+          //     const token = JSON.parse(localStorage.getItem('user-data')).token
+          //     if(res.data.successCounts&&res.data.successCounts == 1){
+          //     //  增加兑换用户积分
+          //       that.$api.axiosPost('/person/addUserScoreRecord'+that.$store.state.login.str1,1,{
+          //         scroeUserId:109740,//that.scoreUserId,
+          //         clientId:2785609,//that.clientId,
+          //         score:10,//that.productInfo.productionmark,
+          //         action:'兑换',
+          //         description:'aaa',//'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']'
+          //         token:token,
+          //         userId:'109740'
+          //       },function (res) {
+          //         console.log(res)
+          //       })
+          //     }else{
+          //       this.$message.error('兑换失败');
+          //     }
+          //   })
+          // }else {
+          //   this.suc1 = true;
+          //   this.duihuan = false;
+          //   this.title = "";
+          // }
         },
         lijiduihuan(){
           $('body').css({
             overflow:'hidden'
-          })
+          });
           this.tan1 = true
         },
         closetan(){
@@ -262,61 +262,68 @@
         })
       },
       mounted(){
-        console.log(1111)
         var productId = this.$router.history.current.query.productId;
-        var userId = JSON.parse(localStorage.getItem('user-info')).data.userid;
-        let token = JSON.parse(localStorage.getItem('user-data')).token;
+        console.log(productId);
         const that = this;
-        this.userId = userId;
         //方案详情获取
-        this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
-          productId:productId
-        },function (res) {
-          console.log(res)
-          console.log('方案详情获取',JSON.parse(res.data.productInfo))
-          console.log(JSON.parse(res.data.productInfo));
-          that.productInfo = JSON.parse(res.data.productInfo);
-          that.clientId = JSON.parse(res.data.productInfo).customerid
-          var res1 = JSON.parse(res.data.productInfo);
-          console.log(userId,res1.userid);
-          that.scoreUserId = res1.userid;
-
-          //判定是否能兑换
-
-          // if(res1.userid == userId){
-          //   that.text1 = '无需兑换';
-          //   var btn = that.$refs.duihuanbtn;
-          //   $(btn).attr('disabled',true)
-          // }
-          console.log(res1)
-          var desid = res1.desid;
-          var st = res1.createtime;
-          //渲染图获取
-          that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
-            designId:desid,
-            // startTime:st,
-            start:0,
-            num:10
-          },function (res){
-            console.log(res)
-            that.imgInfo = res.data.renders
-            that.shareSpaceInfo = res.data.renders
-            var bigImg = that.$refs.bigImg
-            $(bigImg).attr({
-              src:res.data.renders[0].img
-            })
-            console.log(that.imgInfo)
-            // console.log(JSON.parse(res.data.productInfo))
-          })
+        this.$ajax.axiosGet('/pro/desc/'+productId,3,{},function (res) {
+          console.log(res);
+          let data = res.data;
+          that.productInfo = data;
+          that.shareSpaceInfo = data.data.desid;
+          that.imgInfo = data.data.desid;
+          console.log(that.productInfo);
+          console.log(that.shareSpaceInfo);
         })
+        //方案详情获取
+        // this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
+        //   productId:productId
+        // },function (res) {
+        //   console.log(res)
+        //   console.log('方案详情获取',JSON.parse(res.data.productInfo))
+        //   console.log(JSON.parse(res.data.productInfo));
+        //   that.productInfo = JSON.parse(res.data.productInfo);
+        //   that.clientId = JSON.parse(res.data.productInfo).customerid
+        //   var res1 = JSON.parse(res.data.productInfo);
+        //   console.log(userId,res1.userid);
+        //   that.scoreUserId = res1.userid;
+        //
+        //   //判定是否能兑换
+        //
+        //   // if(res1.userid == userId){
+        //   //   that.text1 = '无需兑换';
+        //   //   var btn = that.$refs.duihuanbtn;
+        //   //   $(btn).attr('disabled',true)
+        //   // }
+        //   console.log(res1)
+        //   var desid = res1.desid;
+        //   var st = res1.createtime;
+        //   //渲染图获取
+        //   that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
+        //     designId:desid,
+        //     // startTime:st,
+        //     start:0,
+        //     num:10
+        //   },function (res){
+        //     console.log(res)
+        //     that.imgInfo = res.data.renders
+        //     that.shareSpaceInfo = res.data.renders
+        //     var bigImg = that.$refs.bigImg
+        //     $(bigImg).attr({
+        //       src:res.data.renders[0].img
+        //     })
+        //     console.log(that.imgInfo)
+        //     // console.log(JSON.parse(res.data.productInfo))
+        //   })
+        // })
       //用户积分查询
-        this.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1,1,{
-          token:token,
-          userId:userId+''
-        },function (res) {
-          console.log(res)
-          that.score = res.data.attributes.score
-        })
+      //   this.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1,1,{
+      //     token:token,
+      //     userId:userId+''
+      //   },function (res) {
+      //     console.log(res)
+      //     that.score = res.data.attributes.score
+      //   })
       }
     }
 </script>

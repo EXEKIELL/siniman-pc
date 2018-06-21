@@ -74,26 +74,18 @@
       },
       methods:{
         change(val){
-          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
-          let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
           const that = this;
-          this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
-            search:that.value1,
-            searchDateStart:that.value2==null?'':that.value2[0],
-            searchDateEnd:that.value2==null?'':that.value2[1],
-            page:val,
-            pageSize:10,
-            userId:userId,
-            token:token
+          this.$ajax.axiosGet('/user/sales',3,{
+            page:val
           },function (res) {
-            var ress = res.data.data
-            ress = JSON.parse(ress)
-            that.listData = ress.attributes.datas
-            console.log(that.listData)
+            console.log(res);
+            let data = res.data.orderlist.attributes;
+            that.listData = data.datas;
+            that.totalPages = data.totalPages;
           })
         },
         change1(val){
-          console.log(val)
+          console.log(val);
         },
         checked(){
           var e = event.target;
@@ -101,55 +93,32 @@
           $(e).siblings('div').find('input').focus()
         },
         btn(){
-          console.log(this.value1,this.value2)
-          const that = this
-          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
-          let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
+          console.log(this.value1,this.value2);
+          const that = this;
           let value1 = this.value1;
           value1 = value1.replace(/\s|\xA0/g,'');
-          //搜索查询业绩列表
-          this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
-            search:value1,
-            searchDateStart:that.value2==null?'':that.value2[0],
-            searchDateEnd:that.value2==null?'':that.value2[1],
+          this.$ajax.axiosGet('/user/sales',3,{
             page:1,
-            pageSize:10,
-            userId:userId,
-            token:token
+            orderStatusStart:that.value2==null?'':that.value2[0],
+            searchDateEnd:that.value2==null?'':that.value2[1],
+            search:value1
           },function (res) {
             console.log(res);
-            var ress = res.data.data;
-            ress = JSON.parse(ress);
-            console.log(ress);
-            that.listData = ress.attributes.datas;
-            console.log(that.listData);
-            that.totalPages = ress.attributes.totalPages;
-            that.totalRecords = ress.attributes.totalRecords
+            let data = res.data.orderlist.attributes;
+            that.listData = data.datas;
+            that.totalPages = data.totalPages;
           })
         }
       },
       mounted(){
-        console.log(statusData.tags);
-        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-        let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
         const that = this;
-        //查询业绩列表
-        this.$api.axiosPost('/person/getOrderList'+that.$store.state.login.str1,1,{
-          search:that.value1,
-          searchDateStart:that.value2==null?'':that.value2[0],
-          searchDateEnd:that.value2==null?'':that.value2[1],
-          page:1,
-          pageSize:10,
-          userId:userId,
-          token:token
+        this.$ajax.axiosGet('/user/sales',3,{
+          page:1
         },function (res) {
-          var ress = res.data.data;
-          ress = JSON.parse(ress);
-          console.log(ress);
-          that.listData = ress.attributes.datas;
-          console.log(that.listData);
-          that.totalPages = ress.attributes.totalPages;
-          that.totalRecords = ress.attributes.totalRecords;
+          console.log(res);
+          let data = res.data.orderlist.attributes;
+          that.listData = data.datas;
+          that.totalPages = data.totalPages;
         })
       }
     }

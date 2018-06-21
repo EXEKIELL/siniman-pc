@@ -45,12 +45,12 @@
       <div class="w3-nav">
         <ul>
           <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
-            <span class="nav-left">{{item.catalogname+'：'}}</span>
+            <span class="nav-left">{{item.cat_name+'：'}}</span>
             <div class="nav-right">
               <div>
                 <div @click="navSel('全部',index)" class="sel" >全部</div>
               </div>
-              <div v-for="(item1,index1) in item.list" :key="index1">
+              <div v-for="(item1,index1) in item.taglist" :key="index1">
                 <div @click="navSel(index,index1)" >{{item1.tagname}}</div>
               </div>
             </div>
@@ -58,9 +58,9 @@
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+        <div class="list1" v-for="(item,index) in postData.data" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
-            <img src="../../static/img/img05.png" alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
+            <img :src="item.desid[0].img" alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
           </div>
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div class="list1-tag" >
-            <span v-for="(item1,index1) in item.producttag" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+            <span v-for="(item1,index1) in item.tags" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
           </div>
         </div>
       </div>
@@ -135,30 +135,27 @@
             delete this.tags[val1+'']
           }
           let tags1 = [];
-          this.postTags = []
+          this.postTags = [];
+          console.log(this.tagsList);
           for (var key in this.tags) {
             var index = key,
-              index1 = this.tags[key]
-            this.postTags.push(this.tagsList[index].list[index1].catalogcode)
+              index1 = this.tags[key];
+            this.postTags.push(this.tagsList[index].taglist[index1].catalogcode)
           }
-
-          const that = this
-          const userId = this.$store.state.login.userId;
-          //标签查询方案库分页查询
-          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
-            data:{
-              userids:[userId],
-              tags:that.postTags,
-              orderByCondition:'DESC',
-              orderByField:that.orderByField
-            },
-            page:{
-              pageNum:1,
-              pageSize:9
-            }
+          console.log(this.postTags);
+          const that = this;
+          //获取方案列表
+          this.$ajax.axiosPost('/pro/prolists',3,{
+            page:1,
+            tag:that.postTags,
+            pages:1,
+            order:that.orderByField,
+            search:that.productName
           },function (res) {
-            that.postData = res.data
-            console.log('标签',res)
+            console.log('方案列表',res);
+            let data = res.data.data;
+            that.postData = data;
+            console.log(that.postData)
           })
         },
         paixu1(val,index){
@@ -186,22 +183,18 @@
             this.orderByField = ''
           }
           const that = this;
-          const userId = this.$store.state.login.userId;
-          //排序查询分页
-          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
-            data:{
-              userids:[userId],
-              tags:that.postTags,
-              orderByCondition:'DESC',
-              orderByField:that.orderByField
-            },
-            page:{
-              pageNum:1,
-              pageSize:9
-            }
+          //获取方案列表
+          this.$ajax.axiosPost('/pro/prolists',3,{
+            page:1,
+            pages:1,
+            order:that.orderByField,
+            search:that.productName,
+            tag:that.postTags
           },function (res) {
-            that.postData = res.data
-            console.log('排序',res)
+            console.log('方案列表',res);
+            let data = res.data.data;
+            that.postData = data;
+            console.log(that.postData)
           })
         },
         toUrl(val){
@@ -210,47 +203,36 @@
         },
         change(val){
           const that = this;
-          const userId = this.$store.state.login.userId;
-          //分页查询
-          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
-            data:{
-              userids:[userId],
-              tags:that.postTags,
-              orderByCondition:'DESC',
-              orderByField:that.orderByField
-            },
-            page:{
-              pageNum:val,
-              pageSize:9
-            }
+          //获取方案列表
+          this.$ajax.axiosPost('/pro/prolists',3,{
+            page:val,
+            pages:1,
+            order:that.orderByField,
+            search:that.productName,
+            tag:that.postTags
           },function (res) {
-            that.postData = res.data
-            console.log('页码',res)
-
+            console.log('方案列表',res);
+            let data = res.data.data;
+            that.postData = data;
+            console.log(that.postData)
           })
         },
         search(){
           console.log(parseFloat(this.scoreStart),parseInt(this.scoreEnd),this.productName)
           //搜索分页查询
           const that = this;
-          const userId = this.$store.state.login.userId;
-          this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
-            data:{
-              userids:[userId],
-              tags:that.postTags,
-              orderByCondition:'DESC',
-              orderByField:that.orderByField,
-              scoreStart:that.scoreStart,
-              scoreEnd:that.scoreEnd,
-              productname:that.productName
-            },
-            page:{
-              pageNum:1,
-              pageSize:9
-            }
+          //获取方案列表
+          this.$ajax.axiosPost('/pro/prolists',3,{
+            page:1,
+            tag:that.postTags,
+            pages:1,
+            order:that.orderByField,
+            search:that.productName
           },function (res) {
-            that.postData = res.data
-            console.log('加载',res)
+            console.log('方案列表',res);
+            let data = res.data.data;
+            that.postData = data;
+            console.log(that.postData)
           })
         }
       },
@@ -264,42 +246,40 @@
           loop:true,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next'
-        })
+        });
         const that = this;
-        const userId = this.$store.state.login.userId;
         //标签获取
-        this.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
-          console.log(res.data)
-          that.tagsList = res.data
-        })
-        //方案库分页查询
-        this.$api.axiosPost('/product/productList'+that.$store.state.login.str1,1,{
-          data:{
-            userids:[userId],
-            tags:that.postTags,
-            orderByCondition:'DESC',
-            orderByField:that.orderByField
-          },
-          page:{
-            pageNum:1,
-            pageSize:9
-          }
+        this.$ajax.axiosGet('/tag/tagcatlist',3,{},function (res) {
+          console.log(res);
+          let data = res.data.data;
+          that.tagsList = data;
+          console.log(that.tagsList);
+        });
+        //获取方案列表
+        this.$ajax.axiosPost('/pro/prolists',3,{
+          page:1,
+          pages:1,
+          order:that.orderByField,
+          search:that.productName,
+          tag:that.postTags
         },function (res) {
-          that.postData = res.data
-          console.log('加载',res)
-        })
+          console.log('方案列表',res);
+          let data = res.data.data;
+          that.postData = data;
+          console.log(that.postData);
+        });
         //  banner图获取
-        this.$api.axiosPost('/img/getImgListByParam'+that.$store.state.login.str1,1,{
-          data:{
-            imgType:1
-          },
-          page:{
-            pageNum:0,
-            pageSize:10
-          }
-        },function (res) {
-          that.swiperList = res.data.data
-        })
+        // this.$api.axiosPost('/img/getImgListByParam'+that.$store.state.login.str1,1,{
+        //   data:{
+        //     imgType:1
+        //   },
+        //   page:{
+        //     pageNum:0,
+        //     pageSize:10
+        //   }
+        // },function (res) {
+        //   that.swiperList = res.data.data
+        // })
       }
     }
 </script>

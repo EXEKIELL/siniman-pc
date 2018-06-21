@@ -1,0 +1,115 @@
+#projectConvert {
+  padding: 80px 50px; }
+  #projectConvert .wrap .list {
+    padding: 40px 0;
+    border-top: 1px solid #f6f6f6; }
+    #projectConvert .wrap .list > div {
+      float: left; }
+    #projectConvert .wrap .list .list-1 {
+      width: 10%; }
+      #projectConvert .wrap .list .list-1 > div {
+        width: 105px;
+        height: 105px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 1px solid #e8f2dd; }
+        #projectConvert .wrap .list .list-1 > div img {
+          width: 95%; }
+    #projectConvert .wrap .list .list-2 {
+      width: 70%;
+      text-align: left; }
+      #projectConvert .wrap .list .list-2 > div {
+        margin-bottom: 15px; }
+      #projectConvert .wrap .list .list-2 > div:nth-child(1) {
+        display: flex; }
+        #projectConvert .wrap .list .list-2 > div:nth-child(1) div:first-child {
+          font-size: 20px;
+          color: #333333;
+          font-weight: bold;
+          margin-right: 30px; }
+          #projectConvert .wrap .list .list-2 > div:nth-child(1) div:first-child span {
+            display: inline-block;
+            vertical-align: middle; }
+          #projectConvert .wrap .list .list-2 > div:nth-child(1) div:first-child span:first-child {
+            background: url("../../static/img/icon21.png") no-repeat;
+            background-size: 100% 100%;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px; }
+        #projectConvert .wrap .list .list-2 > div:nth-child(1) div:last-child {
+          font-size: 16px;
+          color: #333333; }
+          #projectConvert .wrap .list .list-2 > div:nth-child(1) div:last-child span {
+            display: inline-block;
+            vertical-align: middle; }
+          #projectConvert .wrap .list .list-2 > div:nth-child(1) div:last-child span:first-child {
+            background: url("../../static/img/icon22.png") no-repeat;
+            background-size: 100%;
+            background-position: 0 4px;
+            width: 16px;
+            height: 21px;
+            margin-right: 10px; }
+      #projectConvert .wrap .list .list-2 > div:nth-child(2) {
+        display: flex;
+        padding-left: 25px; }
+        #projectConvert .wrap .list .list-2 > div:nth-child(2) div {
+          font-size: 14px;
+          color: #333333;
+          margin-right: 25px; }
+      #projectConvert .wrap .list .list-2 > div:nth-child(3) {
+        font-size: 14px;
+        color: #a51e32;
+        padding-left: 25px; }
+      #projectConvert .wrap .list .list-2 .huifu {
+        padding: 20px 0 0 25px; }
+        #projectConvert .wrap .list .list-2 .huifu p {
+          font-size: 16px;
+          color: #333333;
+          text-align: justify;
+          margin-bottom: 20px; }
+        #projectConvert .wrap .list .list-2 .huifu .huifu1 {
+          font-size: 16px;
+          color: #333333;
+          border: 1px solid #e4e4e4;
+          background-color: #f6f6f6;
+          width: 60%;
+          padding: 20px 40px 20px 30px; }
+          #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList {
+            width: 93%; }
+            #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList div {
+              margin: 8px 0; }
+            #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child {
+              display: flex; }
+              #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child span:first-child {
+                width: 8%;
+                min-width: 65px; }
+              #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList div:first-child span:last-child {
+                width: 92%; }
+            #projectConvert .wrap .list .list-2 .huifu .huifu1 .huifuList div:last-child {
+              color: #888888;
+              text-align: right; }
+    #projectConvert .wrap .list .list-3, #projectConvert .wrap .list .list-4 {
+      width: 10%;
+      padding: 45px 0;
+      font-size: 16px;
+      color: #ff0000; }
+    #projectConvert .wrap .list .list-4 {
+      text-align: right;
+      color: #333333; }
+      #projectConvert .wrap .list .list-4 div:last-child span {
+        display: inline-block;
+        vertical-align: middle; }
+      #projectConvert .wrap .list .list-4 div:last-child span:first-child {
+        background: url("../../static/img/icon23.png") no-repeat;
+        background-size: 100% 100%;
+        width: 18px;
+        height: 16px;
+        margin-right: 5px; }
+  #projectConvert .wrap .list:last-child {
+    border-bottom: 1px solid #f6f6f6; }
+  #projectConvert .pagina {
+    margin-top: 50px; }
+
+/*# sourceMappingURL=projectConvert.css.map */

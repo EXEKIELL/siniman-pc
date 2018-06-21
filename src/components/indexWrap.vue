@@ -56,7 +56,7 @@
                       <span></span><span>积分：</span><span>{{headRight.integral}}</span>
                     </router-link>
                   </li>
-                  <li>
+                  <li v-if="false">
                     <router-link to="#">
                       <span></span><span>修改密码</span>
                     </router-link>
@@ -92,9 +92,9 @@
             text:"个人中心"
           },
           headRight:{
-            // headUrl:JSON.parse(localStorage.getItem('user-info')).data.img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).data.img,
+            headUrl:'',
             message:12,
-            // integral:JSON.parse(localStorage.getItem('user-info')).data.score
+            integral:''
           },
           swiperList:[
             {src:"../../static/img/img01.png"},
@@ -256,6 +256,8 @@
         }
       },
       mounted(){
+        this.headRight.headUrl = JSON.parse(localStorage.getItem('user-info')).img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).img;
+        this.headRight.integral = JSON.parse(localStorage.getItem('user-info')).score;
         //判断当前路由位置
         var to = this.$router.history.current.path
         if(to == '/indexWrap/shareCommunity'){

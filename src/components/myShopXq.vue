@@ -8,18 +8,17 @@
           <div class="l1-cont">
             <div>
               <span>门店图片：</span>
-              <ul class="clearFix">
-                <li v-for='(item ,index ) in imgs'>
-                  <img :src="item" alt="" />
-                  <span @click='delete_img(index)'></span>
-                </li>
-              </ul>
-              <div>
-                <div>
-                  <input type="file" @change='add_img'>
-                  <span></span><span></span>
-                </div>
-              </div>
+              <el-upload
+                action=""
+                list-type="picture-card"
+                :auto-upload="false"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
             </div>
             <div>
               <div>
@@ -98,6 +97,8 @@
       name: "MyShopXq",
       data(){
         return {
+          dialogImageUrl: '',
+          dialogVisible: false,
           showBtn:true,
           inputShow:true,
           type1:'广东省',
@@ -142,6 +143,13 @@
         delete_img(item){
           this.imgs.splice(item,1);
         },
+        handleRemove(file, fileList) {
+          console.log(file, fileList);
+        },
+        handlePictureCardPreview(file) {
+          this.dialogImageUrl = file.url;
+          this.dialogVisible = true;
+        },
         xiugai(){
           this.inputShow = false;
           this.showBtn = false
@@ -151,7 +159,7 @@
           this.inputShow = true
           const that = this
           let id = this.$router.history.current.query.shopId;
-          this.$api.axiosPost('/shop/updataShop'+that.$store.state.login.str1,1,{
+          this.$api.axiosPost('/shop/updateShop'+that.$store.state.login.str1,1,{
             id:id,
             shopname:this.detailData.shopname,
             province:this.value,
@@ -159,7 +167,9 @@
             region:this.value2,
             detailaddress:this.detailData.detailaddress,
             shopcontact:this.detailData.shopcontact,
-            coverphoto:JSON.stringify(this.imgs)
+            coverphoto:this.imgs.join()
+          },function (res) {
+            console.log(res)
           })
           this.showBtn = true
         }

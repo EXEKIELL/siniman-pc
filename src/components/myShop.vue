@@ -58,13 +58,13 @@
           <span>方案数量</span>
           <span>备注</span>
         </li>
-        <li v-for="(item,index) in postList.list" :key="index">
+        <li v-for="(item,index) in postList" :key="index">
           <span>{{item.shopname}}</span>
           <span>{{item.detailaddress}}</span>
           <span>{{item.shopcontact}}</span>
-          <span>{{JSON.parse(userInfo).data.username}}</span>
+          <span>{{item.contacts}}</span>
           <span>{{item.shopsales == null?0:item.shopsales}}</span>
-          <span>{{item.shopCount}}</span>
+          <span>{{item.id.pro == null?0:item.id.pro}}</span>
           <span @click="NavTo(item.id)">查看详情</span>
         </li>
       </ul>
@@ -182,27 +182,33 @@
       mounted(){
         console.log(addr)
         const that = this
-        const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
         //地区查询
-        this.$api.axiosGet('/area/getByParentId'+that.$store.state.login.str1,{
-          parentId:''
-        },function (res) {
-          console.log(res.data)
-          that.province = res.data
-          that.$api.axiosPost('/shop/getShopList'+that.$store.state.login.str1,1,{
-            data:{
-              userId:userId,
-              orderByCondition:'desc',
-              orderByField:'score'
-            },
-            page:{
-              pageNum:0,
-              pageSize:10
-            }
-          },function (res) {
-            console.log(res)
-            that.postList = res.data
-          })
+        // this.$api.axiosGet('/area/getByParentId'+that.$store.state.login.str1,{
+        //   parentId:''
+        // },function (res) {
+        //   console.log(res.data)
+        //   that.province = res.data
+        //   that.$api.axiosPost('/shop/getShopList'+that.$store.state.login.str1,1,{
+        //     data:{
+        //       userId:userId,
+        //       orderByCondition:'desc',
+        //       orderByField:'score'
+        //     },
+        //     page:{
+        //       pageNum:0,
+        //       pageSize:10
+        //     }
+        //   },function (res) {
+        //     console.log(res)
+        //     that.postList = res.data
+        //   })
+        // })
+        //获取门店列表
+        this.$ajax.axiosPost('/user/stores',3,{},function (res) {
+          console.log(res);
+          let data = res.data.data;
+          that.postList = data;
+          console.log(that.postList)
         })
 
       }

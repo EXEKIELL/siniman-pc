@@ -1,0 +1,408 @@
+#myProject .mp-top {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #fff;
+  padding: 40px 0px 40px 45px; }
+  #myProject .mp-top .top-left {
+    width: 38%; }
+    #myProject .mp-top .top-left .bigImg {
+      width: 100%;
+      overflow: hidden;
+      height: 510px; }
+      #myProject .mp-top .top-left .bigImg img {
+        width: 100%; }
+    #myProject .mp-top .top-left #swiper1 {
+      height: 100px;
+      margin: 15px 0; }
+      #myProject .mp-top .top-left #swiper1 .swiper-wrapper {
+        height: 100%; }
+        #myProject .mp-top .top-left #swiper1 .swiper-wrapper .swiper-slide {
+          overflow: hidden;
+          cursor: pointer; }
+          #myProject .mp-top .top-left #swiper1 .swiper-wrapper .swiper-slide img {
+            width: 100%; }
+  #myProject .mp-top .top-right {
+    width: 65%;
+    max-width: 785px;
+    text-align: left;
+    margin-left: 50px; }
+    #myProject .mp-top .top-right > div {
+      margin: 25px 75px; }
+    #myProject .mp-top .top-right .tright-1 {
+      margin-bottom: 30px; }
+      #myProject .mp-top .top-right .tright-1 span {
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 30px; }
+      #myProject .mp-top .top-right .tright-1 span:last-child {
+        float: right;
+        margin-right: 0; }
+    #myProject .mp-top .top-right .tright-2 {
+      margin-bottom: 30px; }
+      #myProject .mp-top .top-right .tright-2 span {
+        font-size: 18px;
+        color: #333333;
+        display: inline-block;
+        vertical-align: middle; }
+      #myProject .mp-top .top-right .tright-2 span:nth-child(2n+1) {
+        width: 16px;
+        height: 17px;
+        background: url("../../static/img/icon15.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 0 5px; }
+      #myProject .mp-top .top-right .tright-2 span:nth-child(2n) {
+        margin-right: 24px; }
+      #myProject .mp-top .top-right .tright-2 span:nth-child(3) {
+        background: url("../../static/img/icon16.png") no-repeat;
+        background-size: 100% 100%; }
+      #myProject .mp-top .top-right .tright-2 span:nth-child(5) {
+        background: url("../../static/img/icon17.png") no-repeat;
+        background-size: 100% 100%; }
+    #myProject .mp-top .top-right .tright-3 {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 50px;
+      margin-bottom: 50px; }
+      #myProject .mp-top .top-right .tright-3 span {
+        display: inline-block;
+        vertical-align: middle;
+        width: 22%;
+        padding: 10px 0;
+        text-align: center;
+        border: 1px solid #e4e8ff;
+        font-size: 16px;
+        color: #555555; }
+    #myProject .mp-top .top-right .tright-4 {
+      margin-bottom: 60px; }
+      #myProject .mp-top .top-right .tright-4 > div:first-child {
+        margin: 10px 0 25px 0;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333333; }
+      #myProject .mp-top .top-right .tright-4 > div:nth-child(2) p {
+        font-size: 14px;
+        color: #555555;
+        text-align: justify;
+        line-height: 39px; }
+    #myProject .mp-top .top-right .tright-5 button {
+      font-size: 16px;
+      color: #ffffff;
+      padding: 13px 25px;
+      background-color: #83b844; }
+      #myProject .mp-top .top-right .tright-5 button span {
+        display: inline-block;
+        vertical-align: middle; }
+      #myProject .mp-top .top-right .tright-5 button span:first-child {
+        background: url("../../static/img/icon19.png") no-repeat;
+        background-size: 100% 100%;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px; }
+    #myProject .mp-top .top-right .tright-5 > button:first-child {
+      background-color: #dd1c5d;
+      margin-right: 20px; }
+      #myProject .mp-top .top-right .tright-5 > button:first-child span:first-child {
+        background: url("../../static/img/icon18.png") no-repeat;
+        background-size: 100% 100%; }
+#myProject .mp-cont {
+  background-color: #fff;
+  margin-top: 30px; }
+  #myProject .mp-cont .nav {
+    border-bottom: 1px solid #e4e4e4; }
+    #myProject .mp-cont .nav ul {
+      display: flex;
+      justify-content: center; }
+      #myProject .mp-cont .nav ul li {
+        font-size: 16px;
+        color: #333333;
+        cursor: pointer;
+        margin: 30px 0;
+        width: 15%;
+        position: relative; }
+      #myProject .mp-cont .nav ul li::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        border-right: 1px solid #e4e4e4; }
+      #myProject .mp-cont .nav ul li:last-child::after {
+        display: none; }
+      #myProject .mp-cont .nav ul li.sel {
+        color: #a51e32;
+        font-weight: bold; }
+#myProject .mp-bianjiBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #myProject .mp-bianjiBox .bianjiBoxWrap {
+    background-color: #fff;
+    padding: 30px;
+    max-width: 800px;
+    height: 600px;
+    position: relative;
+    overflow-y: scroll; }
+    #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang {
+      border: 1px solid #e4e4e4;
+      position: relative;
+      padding: 0 40px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianjiBoxTitle {
+        font-size: 20px;
+        color: #333333;
+        font-weight: bold;
+        margin: 30px 0; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianjiBoxTitle span {
+          position: absolute;
+          background: url("../../static/img/icon24.png") no-repeat;
+          background-size: 100% 100%;
+          width: 23px;
+          height: 24px;
+          right: 30px;
+          top: 20px;
+          cursor: pointer; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .item-title {
+        font-size: 18px;
+        color: #83b844;
+        font-weight: bold;
+        text-align: left;
+        margin: 40px 0; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .item-cont {
+        display: flex; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form label {
+        font-size: 14px;
+        color: #333333;
+        text-align: right;
+        min-width: 71px;
+        position: relative; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form label::before {
+        content: '*';
+        width: 5px;
+        color: #ff0000;
+        display: inline-block;
+        position: absolute;
+        margin-left: -8px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form input {
+        height: 45px;
+        border: 1px solid #e4e4e4;
+        font-size: 14px;
+        color: #333333;
+        padding: 0 10px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(2), #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) {
+        margin-bottom: 30px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(2) > div, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          margin-right: 20px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(2) > div label, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div label {
+            width: 20%; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(2) > div input, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div input {
+            width: 80%;
+            font-size: 14px;
+            padding: 0 10px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div {
+        width: 100%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div label {
+          width: 10%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div > div {
+          width: 81%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div > div .el-select {
+            width: 47%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem1 > div:nth-child(3) > div input {
+          width: 100%; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont {
+        display: block; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(1) {
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(1) label {
+            width: 10%; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(1) input {
+            width: 90%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2), #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) {
+          margin-bottom: 30px;
+          display: flex;
+          align-items: center;
+          text-align: left; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-right: 20px; }
+            #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div label, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div label {
+              width: 20%; }
+            #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div .el-select, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div .el-select {
+              width: 80%; }
+            #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div input, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div input {
+              width: 80%; }
+            #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div > span, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div > span {
+              position: absolute;
+              right: -22px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(2) > div:nth-child(2) label, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem2 .item-cont > div:nth-child(3) > div:nth-child(2) label {
+            width: 22%;
+            min-width: 78px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 {
+        text-align: left; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont {
+          display: block; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont > div:nth-child(2n+1) {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info {
+            padding: 20px 0;
+            border: 1px solid #e4e4e4; }
+            #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div {
+              display: flex;
+              align-items: baseline;
+              margin-bottom: 10px; }
+              #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div label, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div label {
+                width: 9%; }
+              #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div > div, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div > div {
+                width: 91%;
+                display: flex;
+                justify-content: left;
+                flex-wrap: wrap; }
+                #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div > div > span, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div > div > span {
+                  cursor: pointer;
+                  text-align: center;
+                  width: 10%;
+                  margin: 0 10px 10px 0;
+                  background-color: #8693f3;
+                  color: #ffffff;
+                  padding: 8px 20px;
+                  position: relative; }
+                  #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div > div > span span, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div > div > span span {
+                    display: none;
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    background: url("../../static/img/icon68.png") no-repeat;
+                    background-size: 100% 100%;
+                    top: 3px;
+                    right: 3px; }
+                #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .shou > div > div > span:hover span, #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem3 .item-cont .info > div > div > span:hover span {
+                  display: block; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem4 .item-cont {
+        margin-bottom: 30px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem4 .item-cont textarea {
+          width: 100%;
+          height: 100px;
+          font-size: 14px;
+          resize: none;
+          padding: 10px;
+          border: 1px solid #e4e4e4; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem5 {
+        margin-bottom: 30px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem5 button {
+          font-size: 18px;
+          color: #83b844;
+          border: 1px solid #83b844;
+          background-color: #fff;
+          padding: 10px 50px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .bianji > form .formItem5 button:hover {
+          background-color: #83b844;
+          color: #ffffff; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) .list2 > div {
+          margin-bottom: 10px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) .list2 > div:nth-child(1) {
+          position: relative;
+          margin-bottom: 30px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) .list2 > div:nth-child(1) span {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #ffffff; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) .list2 > div:nth-child(2) {
+          font-size: 16px;
+          color: #333333; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(1) .list2 > div:nth-child(3) {
+          font-size: 14px;
+          color: #ff0000; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div {
+          cursor: pointer;
+          border-radius: 50%;
+          position: relative;
+          margin: 0 20px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div img {
+            width: 100%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div:nth-child(1) div {
+          display: none;
+          position: absolute;
+          width: 160px;
+          height: 160px;
+          padding: 15px;
+          background-color: #fff;
+          top: 70px;
+          left: -70px;
+          box-shadow: 0 0 30px #ececec;
+          z-index: 100; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div:nth-child(1) div img {
+            width: 100%; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div:nth-child(1) div::before {
+          content: '';
+          display: block;
+          position: absolute;
+          padding: 0;
+          margin: 0;
+          border-bottom: 10px solid #ffffff;
+          border-top: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-left: 10px solid transparent;
+          top: -19px;
+          left: 50%;
+          margin-left: -10px; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(2) > div:nth-child(1):hover div {
+          display: block; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(3) {
+        position: relative;
+        border: 1px solid #e4e4e4;
+        width: 81%;
+        margin: auto; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(3) div:first-child {
+          font-size: 18px;
+          color: #a51e32;
+          border: 1px solid #e4e4e4;
+          position: absolute;
+          padding: 15px 70px;
+          left: 50%;
+          margin-left: -115px;
+          top: -27px;
+          background-color: #fff; }
+        #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(3) div:nth-child(2) ul {
+          margin-top: 70px;
+          margin-bottom: 30px; }
+          #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(3) div:nth-child(2) ul li {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 25px; }
+      #myProject .mp-bianjiBox .bianjiBoxWrap .biankuang .fenxiang > div:nth-child(4) {
+        margin: 20px 0;
+        font-size: 12px;
+        color: #dd1c5d; }
+
+/*# sourceMappingURL=myProject.css.map */

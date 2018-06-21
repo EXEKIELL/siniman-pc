@@ -91,7 +91,7 @@
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in postData.list" :key="index">
+        <div class="list1" v-for="(item,index) in postData.data" :key="index">
           <div class="list1-img">
             <img src="../../static/img/img05.png"  alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
             <div>
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div class="list1-tag">
-            <span v-for="(item1,index1) in item.producttag" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+            <span v-for="(item1,index1) in item.tags" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@
         prev-text="上一页"
         next-text="下一页"
         @current-change="pageChange"
-        :total="postData.total*10">
+        :total="postData.last_page*10">
       </el-pagination>
     </div>
   </div>

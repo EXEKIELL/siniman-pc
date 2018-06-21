@@ -1,0 +1,148 @@
+#myShopXq .wrap .list1 {
+  width: 100%;
+  background-color: #fff;
+  text-align: left;
+  border: 1px solid #e4e4e4; }
+  #myShopXq .wrap .list1 .l1-title {
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    padding: 30px 0;
+    border-bottom: 1px solid #e4e4e4; }
+    #myShopXq .wrap .list1 .l1-title span {
+      margin-left: 30px; }
+  #myShopXq .wrap .list1 .l1-cont {
+    padding: 60px 30px; }
+    #myShopXq .wrap .list1 .l1-cont > div {
+      font-size: 14px;
+      color: #333333;
+      margin-bottom: 50px; }
+    #myShopXq .wrap .list1 .l1-cont > div:first-child {
+      display: flex;
+      align-items: center;
+      position: relative; }
+      #myShopXq .wrap .list1 .l1-cont > div:first-child > span:first-child {
+        margin-right: 10px;
+        width: 4%;
+        min-width: 73px; }
+      #myShopXq .wrap .list1 .l1-cont > div:first-child ul li {
+        float: left;
+        position: relative;
+        margin-right: 10px;
+        margin-bottom: 10px; }
+        #myShopXq .wrap .list1 .l1-cont > div:first-child ul li img {
+          width: 250px; }
+        #myShopXq .wrap .list1 .l1-cont > div:first-child ul li span {
+          display: none;
+          cursor: pointer;
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          background: url("../../static/img/icon24.png") no-repeat;
+          top: 0;
+          right: 0; }
+      #myShopXq .wrap .list1 .l1-cont > div:first-child ul li:hover span {
+        display: block; }
+      #myShopXq .wrap .list1 .l1-cont > div:first-child > div:last-child {
+        border: 1px dashed #e4e4e4;
+        height: 185px;
+        width: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; }
+        #myShopXq .wrap .list1 .l1-cont > div:first-child > div:last-child div input[type="file"] {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          cursor: pointer; }
+        #myShopXq .wrap .list1 .l1-cont > div:first-child > div:last-child div span {
+          position: absolute;
+          display: inline-block;
+          width: 70px;
+          height: 3px;
+          margin-left: -35px;
+          background-color: #e4e4e4; }
+        #myShopXq .wrap .list1 .l1-cont > div:first-child > div:last-child div span:last-child {
+          transform: rotateZ(90deg); }
+    #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) {
+      display: flex; }
+      #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div {
+        display: flex;
+        align-items: center;
+        margin-right: 30px; }
+        #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div span {
+          margin-right: 10px;
+          width: 4%;
+          min-width: 73px; }
+        #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div input {
+          height: 60px;
+          width: 100%;
+          font-size: 16px;
+          color: #d94650;
+          padding: 0 5%;
+          background-color: #fff1f2;
+          border: 1px solid #ffc7cb; }
+      #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div:first-child {
+        width: 20%; }
+      #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div:nth-child(2) {
+        width: 20%; }
+      #myShopXq .wrap .list1 .l1-cont > div:nth-child(2) > div:nth-child(3) {
+        width: 40%; }
+    #myShopXq .wrap .list1 .l1-cont > div:nth-child(3) > div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px; }
+      #myShopXq .wrap .list1 .l1-cont > div:nth-child(3) > div > span:first-child {
+        margin-right: 10px;
+        width: 4%;
+        min-width: 73px;
+        text-align: right; }
+    #myShopXq .wrap .list1 .l1-cont > div:nth-child(3) > div:first-child .el-select {
+      margin-right: 35px; }
+    #myShopXq .wrap .list1 .l1-cont > div:nth-child(3) > div:nth-child(2) input {
+      height: 60px;
+      width: 40%;
+      font-size: 16px;
+      color: #d94650;
+      padding: 0 1%;
+      background-color: #fff1f2;
+      border: 1px solid #ffc7cb; }
+    #myShopXq .wrap .list1 .l1-cont > div:last-child {
+      margin-left: 80px;
+      margin-bottom: 10px; }
+      #myShopXq .wrap .list1 .l1-cont > div:last-child button {
+        width: 120px;
+        height: 60px;
+        border: 1px solid #ffc7cb;
+        color: #d94650;
+        background-color: #fff1f2;
+        font-size: 16px;
+        margin-right: 30px; }
+      #myShopXq .wrap .list1 .l1-cont > div:last-child button:hover {
+        background-color: #d94650;
+        border: 1px solid #d94650;
+        color: #ffffff; }
+#myShopXq .wrap .list2 {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #fff;
+  text-align: left;
+  border: 1px solid #e4e4e4; }
+  #myShopXq .wrap .list2 .l2-title {
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    padding: 30px 0;
+    border-bottom: 1px solid #e4e4e4; }
+    #myShopXq .wrap .list2 .l2-title span {
+      margin-left: 30px; }
+  #myShopXq .wrap .list2 .l2-cont {
+    padding: 50px; }
+    #myShopXq .wrap .list2 .l2-cont #container {
+      height: 500px; }
+
+/*# sourceMappingURL=myShopXq.css.map */

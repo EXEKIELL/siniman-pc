@@ -15,7 +15,7 @@
                   <span>201612-2018.02</span>
                 </div>
                 <div>
-                  <span>￥{{score}}.00</span>
+                  <span>￥{{list1.total}}</span>
                 </div>
               </div>
               <div>
@@ -33,7 +33,7 @@
                   <span>201612-2018.02</span>
                 </div>
                 <div>
-                  <span>￥1000.00</span>
+                  <span>￥{{list1.obtain}}</span>
                 </div>
               </div>
               <div class="list-right">
@@ -51,7 +51,7 @@
                   <span>201612-2018.02</span>
                 </div>
                 <div>
-                  <span>￥450.00</span>
+                  <span>￥{{list1.consume}}</span>
                 </div>
               </div>
               <div>
@@ -84,7 +84,7 @@
             prev-text="上一页"
             next-text="下一页"
             @current-change="change"
-            :total="40">
+            :total="totalPage*10">
           </el-pagination>
         </div>
       </div>
@@ -102,29 +102,61 @@
             {text:"积分消耗",selClass:false}
           ],
           postList:[],
-          score:JSON.parse(localStorage.getItem('user-info')).data.score
+          score:'',//JSON.parse(localStorage.getItem('user-info')).data.score,
+          list1:{},
+          totalPage:1,
+          type:2
         }
       },
       methods:{
         clickNav(index){
+          const that = this;
           for(var i = 0;i<this.navBtns1.length;i++){
             this.navBtns1[i].selClass = false;
           }
-          this.navBtns1[index].selClass = true
+          this.navBtns1[index].selClass = true;
+
+          if(index == 0){
+            this.type = 2;
+          }else if(index == 1){
+            this.type = 0;
+          }else{
+            this.type = 1;
+          }
+          //用户积分明细列表
+          this.$ajax.axiosGet('/user/userinfo/integralList',3,{
+            type:that.type,
+            page:1
+          },function (res) {
+            console.log(res);
+            that.postList = res.data.data;
+            that.totalPage = res.data.page;
+            console.log(that.postList);
+          })
         },
         change(val){
           let that = this;
-            let token = JSON.parse(localStorage.getItem('user-data')).token;
-            let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-            that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
-              token:token,
-              userId:userId,
-              page:val,
-              pageSize:'10'
-            },function (res) {
-              console.log(res)
-              that.postList = res.data.attributes.records
-            })
+            // let token = JSON.parse(localStorage.getItem('user-data')).token;
+            // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
+            // that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
+            //   token:token,
+            //   userId:userId,
+            //   page:val,
+            //   pageSize:'10'
+            // },function (res) {
+            //   console.log(res)
+            //   that.postList = res.data.attributes.records
+            // })
+          //用户积分明细列表
+          this.$ajax.axiosGet('/user/userinfo/integralList',3,{
+            type:that.type,
+            page:val
+          },function (res) {
+            console.log(res);
+            that.postList = res.data.data;
+            that.totalPage = res.data.page;
+            console.log(that.postList);
+          })
         }
       },
       filters:{
@@ -132,31 +164,22 @@
       },
       mounted(){
         let that = this;
-        function listPost(val) {
-          let token = JSON.parse(localStorage.getItem('user-data')).token;
-          let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-          //用户积分记录
-          that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
-            token:token,
-            userId:userId,
-            page:val,
-            pageSize:'10'
-          },function (res) {
-            console.log(res)
-            that.postList = res.data.attributes.records
-          })
-          //用户积分统计
-          that.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1+'&type=1',1,{
-            token:token,
-            userId:userId,
-            searchDateStart:'2017-10-24',
-            searchDateEnd:'2017-12-28'
-          },function (res) {
-            console.log(res)
-            // that.postList = res.data.attributes.records
-          })
-        }
-        listPost(1)
+        //用户积分统计
+        this.$ajax.axiosGet('/user/userinfo/integralCount',3,{},function (res) {
+          console.log(res);
+          that.list1 = res.data.data;
+          console.log(that.list1);
+        });
+        //用户积分明细列表
+        this.$ajax.axiosGet('/user/userinfo/integralList',3,{
+          type:2,
+          page:1
+        },function (res) {
+          console.log(res);
+          that.postList = res.data.data;
+          that.totalPage = res.data.page;
+          console.log(that.postList);
+        })
       }
     }
 </script>

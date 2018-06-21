@@ -69,49 +69,28 @@
       },
       methods:{
         currentChange(val){
-          let token = JSON.parse(localStorage.getItem('user-data')).token;
-          let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-          let that = this
-          this.$api.axiosPost('/person/getClientList'+that.$store.state.login.str1,1, {
-              token: token,
-              userId: userId,
-              page:val
-            }
-            ,function (res) {
-              console.log(res.data)
-              that.listValue = res.data.attributes.datas
-              that.totalPage = res.data.attributes.totalPages
-              console.log(that.listValue)
-            })
+          let that = this;
+          this.$ajax.axiosGet('/user/client',3,{
+            page:val
+          },function (res) {
+            console.log(res);
+            let data = res.data.clientlist.attributes;
+            that.listValue = data.datas;
+            that.totalPage = data.totalPages;
+          })
         }
       },
       mounted(){
         let that = this
-        function listPost(val) {
-          let token = JSON.parse(localStorage.getItem('user-data')).token;
-          let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-          console.log(userId)
-          that.$api.axiosPost('/person/getClientList'+that.$store.state.login.str1,1, {
-              token: token,
-              userId: userId,
-              page:val
-            }
-            ,function (res) {
-              if(res.data.code!=null&&res.data.code==1003){
-                localStorage.removeItem('user-data')
-                localStorage.removeItem('user-info')
-                this.$router.push('/login')
-              }else{
-                console.log(res.data)
-                that.listValue = res.data.attributes.datas
-                that.totalPage = res.data.attributes.totalPages
-                console.log(that.listValue)
-              }
-            })
-        }
-        listPost(1)
+        this.$ajax.axiosGet('/user/client',3,{
+          page:1
+        },function (res) {
+          console.log(res);
+          let data = res.data.clientlist.attributes;
+          that.listValue = data.datas;
+          that.totalPage = data.totalPages;
+        })
       },
-
     }
 </script>
 

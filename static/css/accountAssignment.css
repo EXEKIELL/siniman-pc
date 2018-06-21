@@ -1,0 +1,151 @@
+#accountAssignment .wrap {
+  background-color: #ffffff;
+  padding: 0 30px; }
+  #accountAssignment .wrap .list1 {
+    display: flex;
+    padding: 40px 0; }
+    #accountAssignment .wrap .list1 .l1-1 {
+      width: 40%;
+      text-align: left; }
+      #accountAssignment .wrap .list1 .l1-1 button {
+        font-size: 16px;
+        color: #0f7ba1;
+        background-color: #e5f5fb;
+        border: 1px solid #b4e6f7;
+        padding: 15px 40px;
+        margin-right: 15px; }
+      #accountAssignment .wrap .list1 .l1-1 button:first-child span {
+        display: inline-block;
+        vertical-align: middle; }
+      #accountAssignment .wrap .list1 .l1-1 button:first-child span:first-child {
+        background: url("../../static/img/icon55.png") no-repeat;
+        background-size: 100% 100%;
+        width: 15px;
+        height: 15px;
+        margin-right: 5px; }
+      #accountAssignment .wrap .list1 .l1-1 button:last-child span {
+        display: inline-block;
+        vertical-align: middle; }
+      #accountAssignment .wrap .list1 .l1-1 button:last-child span:first-child {
+        background: url("../../static/img/icon56.png") no-repeat;
+        background-size: 100% 100%;
+        width: 15px;
+        height: 15px;
+        margin-right: 5px; }
+    #accountAssignment .wrap .list1 .l1-2 {
+      width: 60%;
+      height: 55px;
+      display: flex;
+      justify-content: space-between; }
+      #accountAssignment .wrap .list1 .l1-2 > div:first-child {
+        width: 20%;
+        text-align: center;
+        display: flex;
+        margin-right: 20px; }
+        #accountAssignment .wrap .list1 .l1-2 > div:first-child select {
+          display: inline-block;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          text-align: center;
+          background-color: #e5f5fb;
+          padding: 0 25%;
+          border: 1px solid #b4e6f7;
+          font-size: 16px;
+          color: #0f7ba1; }
+        #accountAssignment .wrap .list1 .l1-2 > div:first-child button {
+          display: flex;
+          width: 53px;
+          background-color: #e5f5fb;
+          border: 1px solid #b4e6f7;
+          justify-content: center;
+          align-items: center; }
+      #accountAssignment .wrap .list1 .l1-2 > div:last-child {
+        width: 80%;
+        text-align: left;
+        display: flex; }
+        #accountAssignment .wrap .list1 .l1-2 > div:last-child input {
+          width: 85%;
+          padding: 0 2%;
+          font-size: 16px;
+          color: #0f7ba1;
+          background-color: #e5f5fb;
+          border: 1px solid #b4e6f7; }
+        #accountAssignment .wrap .list1 .l1-2 > div:last-child input::placeholder {
+          font-size: 16px;
+          color: #0f7ba1; }
+        #accountAssignment .wrap .list1 .l1-2 > div:last-child button {
+          width: 15%;
+          background-color: #0f7ba1;
+          border: 1px solid #b4e6f7;
+          font-size: 16px;
+          color: #ffffff; }
+  #accountAssignment .wrap .list2 {
+    margin-bottom: 50px; }
+    #accountAssignment .wrap .list2 ul li {
+      display: flex;
+      justify-content: left;
+      height: 90px;
+      border: 1px solid #b4e6f7;
+      border-top: 0; }
+      #accountAssignment .wrap .list2 ul li > div {
+        width: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #b4e6f7;
+        border-right: 0;
+        border-top: 0;
+        border-bottom: 0; }
+      #accountAssignment .wrap .list2 ul li > div:first-child {
+        border-left: 0; }
+        #accountAssignment .wrap .list2 ul li > div:first-child > div {
+          width: 28px;
+          height: 28px;
+          background-color: #e5f5fb;
+          border: 1px solid #b4e6f7;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative; }
+      #accountAssignment .wrap .list2 ul li > div:nth-child(5) > div {
+        text-align: left; }
+        #accountAssignment .wrap .list2 ul li > div:nth-child(5) > div span {
+          display: block; }
+      #accountAssignment .wrap .list2 ul li > div:last-child > div button {
+        border: 1px solid #b4e6f7;
+        background-color: #fff;
+        color: #0f7ba1;
+        font-size: 14px;
+        padding: 10px 25px; }
+        #accountAssignment .wrap .list2 ul li > div:last-child > div button span {
+          display: inline-block;
+          vertical-align: middle; }
+        #accountAssignment .wrap .list2 ul li > div:last-child > div button span:first-child {
+          background: url("../../static/img/icon58.png") no-repeat;
+          width: 14px;
+          height: 14px;
+          margin-right: 5px; }
+      #accountAssignment .wrap .list2 ul li > div:last-child > div button:hover {
+        background-color: #0f7ba1;
+        color: #ffffff; }
+        #accountAssignment .wrap .list2 ul li > div:last-child > div button:hover span:first-child {
+          background: url("../../static/img/icon58_h.png") no-repeat; }
+      #accountAssignment .wrap .list2 ul li > div:last-child > div button:last-child {
+        margin-left: 20px; }
+        #accountAssignment .wrap .list2 ul li > div:last-child > div button:last-child span:first-child {
+          background: url("../../static/img/icon55.png") no-repeat; }
+      #accountAssignment .wrap .list2 ul li > div:last-child > div button:last-child:hover span:first-child {
+        background: url("../../static/img/icon55_h.png") no-repeat; }
+    #accountAssignment .wrap .list2 ul li:first-child {
+      border: 1px solid #b4e6f7;
+      background-color: #e5f5fb;
+      font-size: 16px;
+      color: #333333;
+      font-weight: bold; }
+      #accountAssignment .wrap .list2 ul li:first-child > div:first-child > div {
+        background-color: #fff; }
+  #accountAssignment .wrap .pagina {
+    padding-bottom: 50px; }
+
+/*# sourceMappingURL=accountAssignment.css.map */

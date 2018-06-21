@@ -1,13 +1,24 @@
 import axios from 'axios'
 import qs from 'qs'
-import router from '../router/index'
+import md5 from 'js-md5'
+import store01 from '../store/index'
+let Base64 = require('js-base64').Base64;
+// let store = require('../store/index');
+let router = require('../router/index');
+
+
 //url
-var root = 'http://118.24.62.151:8080/snimay_sharing';
+var json01 = JSON.stringify({access_token:'2313'});
+var sign_1 = Base64.encode(json01);
+var root = 'http://share.hengdikeji.com/pc';
 var headers = [
   {'Content-Type':'application/x-www-form-urlencoded'},
   {'Content-Type': 'application/json'},
-  {'Content-Type': 'raw'}
+  {'Content-Type': 'raw'},
+  {'Authorization': 'Basic '+sign_1}
 ]
+
+console.log(store01);
 // 自定义判断元素类型JS
 function toType (obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -33,12 +44,13 @@ function filterNull (o) {
 //   if (params) {
 //     params = filterNull(params)
 //   }
+
 //   axios({
 //     method: method,
 //     url: url,
 //     params: method === 'POST' || method === 'DELETE' ? params : null,
 //     baseURL: root,
-//     headers:method === 'POST'?headers[0]:null,
+//     headers:"Authorization:Basic ",
 //     withCredentials: false
 //   })
 //     .then(function (res) {
@@ -96,9 +108,11 @@ function axiosGet(url,params,fun) {
   })
 }
 
+
 // 返回在vue模板中的调用接口
 export default {
   axiosPost:axiosPost,
-  axiosGet:axiosGet
+  axiosGet:axiosGet,
+  baseUrl:root
 }
 
