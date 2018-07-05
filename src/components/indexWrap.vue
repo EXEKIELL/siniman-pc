@@ -22,7 +22,7 @@
                 </router-link>
               </li>
               <ul class="shou2">
-                <li v-for="(item,index) in shou2List" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
+                <li v-for="(item,index) in shou2List" v-show="item.show" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
                   <router-link :to="item.path">
                     <span></span>{{item.text}}
                   </router-link>
@@ -35,7 +35,7 @@
           <el-header>
             <div class="clearFix head">
               <div class="head-left">
-                <span><img :src="headLeft.src"></span><span>{{headLeft.text}}</span>
+                <span><img :src="headLeft.src" onerror="'../../static/img/head05.png'"></span><span>{{headLeft.text}}</span>
               </div>
               <div class="head-right">
                 <ul class="clearFix">
@@ -48,7 +48,7 @@
                   </li>
                   <li>
                     <router-link to="/indexWrap/messageManage">
-                      <span></span><span>消息</span><span>{{headRight.message}}</span>
+                      <span></span><span>消息</span><span v-show="headRight.message">{{headRight.message}}</span>
                     </router-link>
                   </li>
                   <li>
@@ -93,7 +93,7 @@
           },
           headRight:{
             headUrl:'',
-            message:12,
+            message:0,
             integral:''
           },
           swiperList:[
@@ -102,13 +102,14 @@
             {src:"../../static/img/img01.png"}
           ],
           shou2List:[
-            {text:"帐号分配",path:"/indexWrap/accountAssignment",selClass:false},
-            {text:"我的门店",path:"/indexWrap/myShop",selClass:false},
-            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false},
-            {text:"我的资料",path:"/indexWrap/myData",selClass:false},
-            {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false},
-            {text:"我的订单",path:"/indexWrap/myIndent",selClass:false},
-            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false}
+            {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false},
+            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false},
+            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true},
+            {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true},
+            {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true},
+            {text:"我的订单",path:"/indexWrap/myIndent",selClass:false,show:true},
+            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true},
+            {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true},
           ]
         }
       },
@@ -143,7 +144,7 @@
           }
         },
         dianwo(){
-          $('.el-input__inner').focus()
+          // $('.el-input__inner').focus()
         },
         click1(index){
           $('#lis2 .shou2>li').removeClass('sel')
@@ -182,7 +183,6 @@
       },
       watch:{
         '$router':function (to, from) {
-          console.log(to,from)
         }
       },
       beforeUpdate(){
@@ -256,8 +256,29 @@
         }
       },
       mounted(){
+
         this.headRight.headUrl = JSON.parse(localStorage.getItem('user-info')).img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).img;
         this.headRight.integral = JSON.parse(localStorage.getItem('user-info')).score;
+        let unread= JSON.parse(localStorage.getItem('user-info')).unread;
+        if(unread>=99){
+          this.headRight.message="99+"
+        }else{
+          this.headRight.message=unread
+        }
+        console.log("我的未读消息："+unread);
+        let roles=JSON.parse(localStorage.getItem('user-info')).roles
+        let thas=this
+
+        let rolesArray=JSON.parse(roles)
+
+        for(let i=0;i<rolesArray.length;i++){
+          if(rolesArray[i].code=="DEALER"){
+            thas.shou2List[0].show=true
+          }else if(rolesArray[i].code=="SHOPMANAGER"){
+            thas.shou2List[1].show=true
+          }
+        }
+
         //判断当前路由位置
         var to = this.$router.history.current.path
         if(to == '/indexWrap/shareCommunity'){

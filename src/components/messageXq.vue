@@ -3,161 +3,78 @@
       <div class="wrap">
         <div class="nav">
           <ul>
-            <li v-for="(item,index) in navLists" :key="index"><span @click="navSel(index)" :class="{sel:item.selClass}">{{item.text}}</span></li>
+            <li v-for="(item,index) in navLists" :key="index"><span @click="navSel(item.type)" :class="{sel:item.type==msgType}">{{item.text}}</span></li>
           </ul>
         </div>
         <div class="content">
           <ul>
-            <li class="clearFix" v-for="(item,index) in postList.list" :key="index">
+            <li class="clearFix" v-for="(item,index) in msgList" :key="index">
               <div>
-                <img v-for="(item1,index1) in icons" v-if="item1.name == item.msgtype" :key="index1" :src="item1.url" alt="">
+                <img v-for="(item1,index1) in icons" v-if="item1.type == item.typeCode" :key="index1" :src="item1.url" alt="">
               </div>
               <div>
-                <div><span>{{item.msgtype}}</span></div>
+                <div><span :class="{news:updateStatus(item.status,item.id,index)}">{{item.msgtype}}</span></div>
                 <div><span>{{item.msg}}</span></div>
-                <div class="cont-wrap"></div>
-                <div><a href="#"></a></div>
-                <div><span>{{item.createtime|time}}</span></div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <div>
-                <img src="../../static/img/icon42.png" alt="">
-              </div>
-              <div>
-                <div><span>订单消息</span></div>
-                <div><span>您的订单：10018662564   被驳回，请及时查看并处理。</span></div>
+                <div></div>
                 <div>
-                  <div>
-                    <div><span>诗尼曼华东区接单-张敏</span><span>2017.12.20   15：00</span></div>
-                    <div><span>订单处理说明：</span><span>合同报价有问题，橱柜柜体每增加一公分，每公分需增加￥500.00，请进入对应订单重新修改订单合同金额后提交 。</span></div>
-                  </div>
+                  <a v-if="item.openType==1" :href="item.link">点击查看</a>
+                  <a v-if="item.openType==2" href="javascript:;" @click="receive(item.link,item.id,index)">点击领取</a>
+
+                  <a v-if="item.openType==3 && item.link" href="javascript:;" style="color: #333">已领取</a>
                 </div>
-                <div><a href="#">查看订单信息：https://www.baidu.com</a></div>
-                <div><span>2017.12.20  15：00</span></div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <div>
-                <img src="../../static/img/icon43.png" alt="">
-              </div>
-              <div>
-                <div><span>客户跟进</span></div>
-                <div><span>客户（张小姐）已经确认图纸三天了，赶紧去下单吧~</span></div>
-                <div></div>
-                <div><a href="#">查看订单信息：https://www.baidu.com</a></div>
-                <div><span>2017.12.20  15：00</span></div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <div>
-                <img src="../../static/img/icon44.png" alt="">
-              </div>
-              <div>
-                <div><span>预约设计</span></div>
-                <div><span>有客户（2017.12.28  15：00）预约了您进行量房、效果图设计，请尽快跟进。</span></div>
-                <div></div>
-                <div><a href="#">查看订单信息：https://www.baidu.com</a></div>
-                <div><span>2017.12.20  15：00</span></div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <div>
-                <img src="../../static/img/icon45.png" alt="">
-              </div>
-              <div>
-                <div><span>积分消息</span></div>
-                <div><span>诗尼曼高级设计师-张敏，向您支付了50积分，兑换了您的设计方案《广州恒大御府02户型》</span></div>
-                <div></div>
-                <div><a href="#">查看订单信息：https://www.baidu.com</a></div>
-                <div><span>2017.12.20  15：00</span></div>
-              </div>
-            </li>
-            <li class="clearFix">
-              <div>
-                <img src="../../static/img/icon46.png" alt="">
-              </div>
-              <div>
-                <div><span>活动消息</span></div>
-                <div><span>诗尼曼全国门店设计周，获奖用户前十名可获得由诗尼曼总部送出的精美礼品，最高可获得￥1000.00现金奖励，猛搓下主链接报名~</span></div>
-                <div></div>
-                <div><a href="#">查看订单信息：https://www.baidu.com</a></div>
-                <div><span>2017.12.20  15：00</span></div>
+                <div><span>{{ newtime(item.createtime)}}</span></div>
               </div>
             </li>
           </ul>
         </div>
-        <div>
-          <button @click="getMore">加载更多</button>
+        <div class="pagina" v-if="page===1">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            prev-text="上一页"
+            next-text="下一页"
+            :current-page="currentpage"
+            @current-change="pageChange"
+            :total="last_page*10">
+          </el-pagination>
         </div>
+
       </div>
     </div>
 </template>
 
 <script>
+    import {Message} from "element-ui"
     export default {
       name: "MessageXq",
       data(){
         return {
           navLists:[
-            {text:"全部",selClass:true},
-            {text:"系统消息",selClass:false},
-            {text:"订单消息",selClass:false},
-            {text:"客户跟进",selClass:false},
-            {text:"预约设计",selClass:false},
-            {text:"积分消息",selClass:false},
-            {text:"活动消息",selClass:false},
+            {text:"全部",selClass:true,type:null},
+            {text:"系统消息",selClass:false,type:"system"},
+            {text:"预约设计",selClass:false,type:"reservation"},
+            {text:"积分消息",selClass:false,type:"integral"},
+            {text:"活动消息",selClass:false,type:"activity"},
           ],
           icons:[
-            {url:'../../static/img/icon41.png',name:'系统消息'},
-            {url:'../../static/img/icon42.png',name:'订单消息'},
-            {url:'../../static/img/icon43.png',name:'客户跟进'},
-            {url:'../../static/img/icon44.png',name:'预约设计'},
-            {url:'../../static/img/icon45.png',name:'积分消息'},
-            {url:'../../static/img/icon46.png',name:'活动消息'}
+            {url:'../../static/img/icon41.png',name:'系统消息',type:"system"},
+            {url:'../../static/img/icon44.png',name:'预约设计',type:"reservation"},
+            {url:'../../static/img/icon45.png',name:'积分消息',type:"integral"},
+            {url:'../../static/img/icon46.png',name:'活动消息',type:"activity"}
           ],
           msgType:null,
-          postList:[],
-          page:1
+          msgList:[],
+          page:1,
+          last_page:1,
+          currentpage:1
         }
       },
       methods:{
         navSel(index){
-          const that = this;
-          const userId = this.$store.state.login.userId;
-          for (var i = 0; i < this.$data.navLists.length; i++) {
-            this.$data.navLists[i].selClass = false;
-          }
-          this.$data.navLists[index].selClass = true;
-          if(index == 0){
-            this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
-              data:{
-                userId:userId,
-                msgType:null
-              },
-              page:{
-                pageNum:1,
-                pageSize:10
-              }
-            },function (res) {
-              console.log(res)
-              that.postList = res.data
-            })
-          }else{
-            this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
-              data:{
-                userId:userId,
-                msgType:this.navLists[index].text
-              },
-              page:{
-                pageNum:1,
-                pageSize:10
-              }
-            },function (res) {
-              console.log(res)
-              that.postList = res.data
-            })
-          }
+          let that = this
+          that.msgType=index
+          this.page=0
+          this.pageChange(1)
         },
         getMore(){
           let page = this.page;
@@ -165,11 +82,66 @@
           const userId = this.$store.state.login.userId;
           page++;
 
+        },
+        pageChange(val){
+          let that = this
+          that.$api.axiosPost('/msg/msgList',1,{
+              data:{
+                type_code:that.msgType
+              },
+              page:{
+                pageNum:val,
+                pageSize:10
+              }
+          },function(res){
+            let data=res.data.data
+            that.page=1
+            that.last_page=data.last_page
+
+            that.msgList=data.list
+          })
+        },
+        newtime(val){
+          let date=new Date(val)
+          return this.$api.formatDate(date,'yyyy-MM-dd hh:mm')
+        },
+        updateStatus(val,id,index){
+            let that=this
+            if(val==0){
+              /**去改变消息状态**/
+              setTimeout(function(){
+                that.$api.axiosPost('/msg/updateStatus',1,{
+                  id: id
+                },function(res){
+                  that.msgList[index].status=1
+                })
+              },1000)
+              return true
+            }else{
+              return false
+            }
+        },
+        receive(link,msgId,index){
+          let that=this
+          let links=link.split("/")
+          let ids=links[5].split(".")
+          let id=ids[0]
+          that.$api.axiosPost('/msg/receive',1,{
+            id: id,
+            msgId:msgId
+          },function(res){
+            Message.success("领取成功")
+
+            that.msgList[index].openType=3
+          })
+
         }
       },
       filters:{
         time:function (val) {
-          let time = new Date(val);
+
+          let time = new Date(val)
+
           let yyyy = time.getFullYear(),
               mm = time.getMonth()+1,
               dd = time.getDay(),
@@ -180,30 +152,24 @@
         }
       },
       mounted(){
-        let index = this.$router.history.current.query.index;
-        const that = this;
-        const userId = this.$store.state.login.userId;
-        for (var i = 0; i < this.$data.navLists.length; i++) {
-          this.$data.navLists[i].selClass = false;
-        }
-        this.navLists[index+1].selClass = true;
-        this.$api.axiosPost('/msg/msgList'+that.$store.state.login.str1,1,{
-          data:{
-            userId:userId,
-            msgType:this.navLists[index+1].text
-          },
-          page:{
-            pageNum:1,
-            pageSize:10
-          }
-        },function (res) {
-          console.log(res)
-          that.postList = res.data
-        })
+        let that = this;
+        let type = this.$router.history.current.query.type;
+
+        this.msgType=type
+        this.pageChange(1)
+
       }
     }
 </script>
 
 <style lang="scss" scoped>
 @import "../../static/sass/messageXq";
+  #messageXq{
+    font-size: 14px;
+  }
+  .msgtype{
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+  }
 </style>

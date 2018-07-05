@@ -12,7 +12,9 @@
       >div:first-child{
         position: relative;
         margin: 25px;
-        height: 605px;
+        height: 350px;
+        display: flex;
+        //height: auto;
         >img{
           width: 100%;
         }
@@ -41,7 +43,7 @@
           justify-content: space-between;
           >div{
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             width: 85%;
             margin-right: 15px;
           }

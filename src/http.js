@@ -34,10 +34,11 @@ axios.interceptors.response.use(data=>{
   loadinginstace.close()
   return data
 },error => {
+
   loadinginstace.close()
-  Message.error({
-    message: '加载失败'
-  })
+  // Message.error({
+  //   message: '加载失败'
+  // })
   return Promise.reject(error)
 })
 

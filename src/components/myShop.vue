@@ -44,7 +44,7 @@
       </div>
       <div>
         <!--<input type="text" placeholder="请输入搜索内容">-->
-        <button @click="search">搜索</button>
+        <button @click="search(1)">搜索</button>
       </div>
     </div>
     <div class="list2">
@@ -64,7 +64,7 @@
           <span>{{item.shopcontact}}</span>
           <span>{{item.contacts}}</span>
           <span>{{item.shopsales == null?0:item.shopsales}}</span>
-          <span>{{item.id.pro == null?0:item.id.pro}}</span>
+          <span>{{item.shopCount == null?0:item.shopCount}}</span>
           <span @click="NavTo(item.id)">查看详情</span>
         </li>
       </ul>
@@ -75,8 +75,8 @@
         layout="prev, pager, next"
         prev-text="上一页"
         next-text="下一页"
-        @current-change="change"
-        :total="postList.pages*10">
+        @current-change="search"
+        :total="last_page*10">
       </el-pagination>
     </div>
   </div>
@@ -95,40 +95,22 @@
           city:[],
           region:[],
           postList:[],
-          userInfo:localStorage.getItem('user-info')
+          userInfo:localStorage.getItem('user-info'),
+          last_page:1
         }
       },
       methods:{
         NavTo(shopId){
           this.$router.push({path:"/indexWrap/myShopXq",query:{shopId:shopId}})
         },
-        change(val){
-          console.log(val)
-          const that = this;
-          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
-          this.$api.axiosPost('/shop/getShopList'+that.$store.state.login.str1,1,{
-            data:{
-              userId:userId,
-              orderByCondition:'desc',
-              orderByField:'score'
-            },
-            page:{
-              pageNum:val-1,
-              pageSize:10
-            }
-          },function (res) {
-            console.log(res)
-            that.postList = res.data
-          })
-        },
         selPro(val){
-          console.log(val)
+
           //选择省查询子集
           const that = this;
-          this.$api.axiosGet('/area/getByParentId'+that.$store.state.login.str1,{
+          this.$api.axiosPost('/area/getByParentId',1,{
             parentId:val
           },function (res) {
-            that.city = res.data
+            that.city = res.data.data
             if(val == ''){
               that.city = [];
               that.value2 = '';
@@ -140,10 +122,10 @@
         selCity(val){
           //选择省查询子集
           const that = this;
-          this.$api.axiosGet('/area/getByParentId'+that.$store.state.login.str1,{
+          this.$api.axiosPost('/area/getByParentId',1,{
             parentId:val
           },function (res) {
-            that.region = res.data
+            that.region = res.data.data
             if(val == ''){
               that.region = []
               that.value3 = ''
@@ -153,64 +135,44 @@
         selRegion(val){
 
         },
-        search(){
-          console.log(this.value1,this.value2,this.value3)
+        search(val){
           let province = parseInt(this.value1);
           let city = parseInt(this.value2);
           let region = parseInt(this.value3);
           const that = this
-          const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+''
-          that.$api.axiosPost('/shop/getShopList'+that.$store.state.login.str1,1,{
+
+          that.$api.axiosPost('/shop/getShopList',1,{
             data:{
-              userId:userId,
               orderByCondition:'desc',
-              orderByField:'score',
+              orderByField:'shopsales',
               province:province,
               city:city,
               region:region
             },
             page:{
-              pageNum:0,
+              pageNum:val,
               pageSize:10
             }
           },function (res) {
-            console.log(res)
-            that.postList = res.data
+
+            that.postList = res.data.data.list
+            that.last_page = res.data.data.last_page
           })
         }
       },
       mounted(){
-        console.log(addr)
-        const that = this
+
+        let that = this
         //地区查询
-        // this.$api.axiosGet('/area/getByParentId'+that.$store.state.login.str1,{
-        //   parentId:''
-        // },function (res) {
-        //   console.log(res.data)
-        //   that.province = res.data
-        //   that.$api.axiosPost('/shop/getShopList'+that.$store.state.login.str1,1,{
-        //     data:{
-        //       userId:userId,
-        //       orderByCondition:'desc',
-        //       orderByField:'score'
-        //     },
-        //     page:{
-        //       pageNum:0,
-        //       pageSize:10
-        //     }
-        //   },function (res) {
-        //     console.log(res)
-        //     that.postList = res.data
-        //   })
-        // })
-        //获取门店列表
-        this.$ajax.axiosPost('/user/stores',3,{},function (res) {
-          console.log(res);
-          let data = res.data.data;
-          that.postList = data;
-          console.log(that.postList)
+        this.$api.axiosPost('/area/getByParentId',1,{
+          parentId:''
+        },function (res) {
+          that.province = res.data.data
+
+          that.$forceUpdate()
         })
 
+        that.search(1)
       }
     }
 </script>

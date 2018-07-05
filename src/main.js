@@ -11,7 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/reset.css'
 import './assets/css/swiper-3.4.2.min.css'
 import './assets/js/swiper-3.4.2.min.js'
-import ajax from './../static/js/ajax'
+import ajax from '../static/js/ajax'
 import api from './api/index'
 import axios from './http'
 import qs from 'qs'
@@ -20,7 +20,7 @@ let Base64 = require('js-base64').Base64;
 
 
 Vue.prototype.$qs = qs;
-// Vue.prototype.$api = api;
+Vue.prototype.$api = api;
 Vue.prototype.$axios = axios;
 Vue.prototype.$ajax = ajax;
 Vue.prototype.$md5 = md5;

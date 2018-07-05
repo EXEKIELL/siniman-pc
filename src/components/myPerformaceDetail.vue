@@ -3,7 +3,7 @@
     <div class="wrap">
       <div class="list1">
         <div>
-          <input type="text" v-model="value1">
+          <input type="text" v-model="value1" placeholder="关键字搜索">
           <button @click="btn">搜索</button>
         </div>
         <div>
@@ -12,8 +12,8 @@
             @change="change1"
             type="daterange"
             value-format="yyyy-MM-dd"
-            start-placeholder="选择日期"
-            end-placeholder="结束日期">
+            :start-placeholder="firstDay"
+            :end-placeholder="today">
           </el-date-picker>
           <span @click="checked"></span>
         </div>
@@ -69,23 +69,34 @@
           totalRecords:null,
           orderType:statusData.orderType,
           orderSort:statusData.orderSort,
-          orderStatusStart:statusData.orderStatusStart
+          orderStatusStart:statusData.orderStatusStart,
+          today:'开始日期',
+          firstDay:'结束日期',
         }
       },
       methods:{
         change(val){
+          this.getList(val)
+        },
+        getList(val){
           const that = this;
-          this.$ajax.axiosGet('/user/sales',3,{
-            page:val
+          this.$api.axiosPost('/person/getOrderList',1,{
+            page:val,
+            pageSize:10,
+            searchDateStart:that.firstDay,
+            searchDateEnd:that.today,
+            search:that.value1,
           },function (res) {
             console.log(res);
-            let data = res.data.orderlist.attributes;
+            let data = res.data.data;
             that.listData = data.datas;
             that.totalPages = data.totalPages;
           })
         },
         change1(val){
-          console.log(val);
+          this.firstDay=val[0]
+          this.today=val[1]
+          this.getList(1)
         },
         checked(){
           var e = event.target;
@@ -93,33 +104,21 @@
           $(e).siblings('div').find('input').focus()
         },
         btn(){
-          console.log(this.value1,this.value2);
-          const that = this;
-          let value1 = this.value1;
-          value1 = value1.replace(/\s|\xA0/g,'');
-          this.$ajax.axiosGet('/user/sales',3,{
-            page:1,
-            orderStatusStart:that.value2==null?'':that.value2[0],
-            searchDateEnd:that.value2==null?'':that.value2[1],
-            search:value1
-          },function (res) {
-            console.log(res);
-            let data = res.data.orderlist.attributes;
-            that.listData = data.datas;
-            that.totalPages = data.totalPages;
-          })
+            this.getList(1)
         }
       },
       mounted(){
-        const that = this;
-        this.$ajax.axiosGet('/user/sales',3,{
-          page:1
-        },function (res) {
-          console.log(res);
-          let data = res.data.orderlist.attributes;
-          that.listData = data.datas;
-          that.totalPages = data.totalPages;
-        })
+        let that = this
+        let date=new Date()
+
+        let today=this.$api.formatDate(date,'yyyy-MM-dd')
+        this.today=today
+        date.setDate(1)
+        let firstDay=this.$api.formatDate(date,'yyyy-MM-dd')
+        this.firstDay=firstDay
+
+        this.getList(1)
+
       }
     }
 </script>

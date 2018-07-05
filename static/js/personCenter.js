@@ -1,4 +1,6 @@
-import Canvas from './canvasPub'
+import echarts from 'echarts'
+require('echarts/theme/macarons') // echarts theme
+
 export default {
   name: 'PersonCenter',
   data(){
@@ -14,7 +16,7 @@ export default {
       leftData:[3,0,0,0,0],
       rightData:[5,3,2,0,0,0],
       headLeft: {
-        src:"./static/img/hlicon.png",
+        src:"../../static/img/hlicon.png",
         text:"个人中心"
       },
       swiperList:[],
@@ -25,7 +27,7 @@ export default {
       contList:[],
       totalPage:null,
       postTags:[],
-      orderByField:'',
+      orderByField:'salsecount',
       list01:[
         {
           productname:'方案名称',
@@ -35,14 +37,27 @@ export default {
           customercontact:'1380013800',
           customeraddr:'客户地址'
         }
-      ]
+      ],
+      today:'选择日期',
+      firstDay:'结束日期',
+      orderStats:{
+        list:{},
+        lastList:{}
+      },
+      clientStats:{
+        list:{},
+        lastList:{}
+      }
     }
   },
   methods:{
+
     navSel(val,val1){
-      var e = event.target;
-      $(e).addClass("sel");
-      $(e).parent('div').siblings('div').find('div').removeClass('sel')
+      $('.clearFix').find('.nav-right div').on("click",function(){
+        $(this).parent().find('div').removeClass("sel")
+        $(this).children('div').addClass("sel")
+      })
+
 
       //  标签筛选
       if(val != '全部'){
@@ -50,37 +65,21 @@ export default {
       }else{
         delete this.tags[val1+'']
       }
+      let that = this
       let tags1 = [];
       this.postTags = []
       for (var key in this.tags) {
         var index = key,
           index1 = this.tags[key]
-        this.postTags.push(this.tagList[index].list[index1].catalogcode)
+        this.postTags.push(that.tagList[index].lists[index1].id)
       }
-      console.log(this.tags)
-      console.log(this.postTags)
 
-      const that = this
-      const userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      //标签查询方案库分页查询
-      this.$api.axiosPost('/product/productList'+this.str1,1,{
-        data:{
-          userids:[userId],
-          tags:that.postTags,
-          orderByCondition:'DESC',
-          orderByField:that.orderByField
-        },
-        page:{
-          pageNum:1,
-          pageSize:9
-        }
-      },function (res) {
-        console.log('标签',res)
-        that.postData = res.data
-      })
+      // //标签查询方案库分页查询
+
+      this.pageChange(1)
     },
     dianwo(){
-      var e = event.target;
+      var e = window.event.target;
       console.log(1)
       $(e).siblings('div').find('input').focus()
     },
@@ -89,78 +88,227 @@ export default {
     },
     change(val){
       let that = this
-      let canv = $('#canvas1')[0]
-      this.$ajax.axiosPost('/user/getOrderStats',3,{
+      /*当月*/
+      this.$api.axiosPost('/userinfo/getOrderStats',1,{
         searchDateStart:val[0],
         searchDateEnd:val[1]
       },function (res) {
-        console.log(res);
-        let data = res.data.data;
-        that.leftData = [data.peddingAudit,data.hasReturned,data.hasQuotedPrice,data.hasDeliver,data.hasFinished]
-        Canvas.paintLeft(canv,that.leftData);
+        let data = res.data.data
+        that.orderStats.list=data;
+
+        /*上月*/
+        that.$api.axiosPost('/userinfo/getOrderStats',1,{
+          searchDateStart:that.$api.getPreMonth(val[0]),
+          searchDateEnd:that.$api.getPreMonth(val[1])
+        },function (res) {
+          let data = res.data.data
+          that.orderStats.lastList=data;
+          that.setOption()
+        })
+
       })
+
+
     },
     change1(val){
       let that = this
-      var canv1 = $('#canvas2')[0];
-      // let token = localStorage.getItem('user-data')?JSON.parse(localStorage.getItem('user-data')).token:this.$store.state.login.token
-      // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      // this.$api.axiosPost('/person/getClientStats'+that.str1,1,{
-      //   searchDateStart:val[0],
-      //   searchDateEnd:val[1],
-      //   token:token,
-      //   userId:userId
-      // },function (res) {
-      //   console.log(res)
-      //   var data = res.data.attributes
-      //   that.rightData = [data.inTouch,data.hasSended,data.hasMeasured,data.hasScheme,data.hasChecked,data.hasOrder]
-      //   Canvas.paintRight(canv1,that.rightData);
-      // })
-      this.$ajax.axiosPost('/user/getClientStats',3,{
+      /*当月*/
+      this.$api.axiosPost('/userinfo/getClientStats',1,{
         searchDateStart:val[0],
         searchDateEnd:val[1]
       },function (res) {
-        console.log(res);
-        let data = res.data.data;
-        that.rightData = [data.inTouch,data.hasSended,data.hasMeasured,data.hasScheme,data.hasChecked,data.hasOrder]
-        Canvas.paintRight(canv1,that.rightData);
+        let data = res.data.data
+        that.clientStats.list=data
+        /*上月*/
+        that.$api.axiosPost('/userinfo/getClientStats',1,{
+          searchDateStart:that.$api.getPreMonth(val[0]),
+          searchDateEnd:that.$api.getPreMonth(val[1])
+        },function (res) {
+          let data = res.data.data
+          that.clientStats.lastList=data
+          that.setOption2()
+
+        })
+
       })
+
+
     },
     pageChange(val){
-      console.log(1)
       const that = this;
-      // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-      // this.$api.axiosPost('/product/productList'+that.str1,1,{
-      //   data:{
-      //     userids:[userId],
-      //     tags:that.postTags,
-      //     orderByCondition:'DESC',
-      //     orderByField:that.orderByField
-      //   },
-      //   page:{
-      //     pageNum:val,
-      //     pageSize:9
-      //   }
-      // },function (res) {
-      //   that.postData = res.data;
-      //   console.log(res)
-      // })
-      //获取方案列表
-      this.$ajax.axiosPost('/pro/prolists',3,{
-        page:val,
-        tag:[]
+      // //获取方案列表
+
+      this.$api.axiosPost('/product/productList',1,{
+        data:{
+          prostatus:1,
+          orderByCondition:'DESC',
+          orderByField:that.orderByField,
+          tags:that.postTags,
+        },
+        page:{
+          pageNum:val,
+          pageSize:9
+        }
       },function (res) {
-        console.log('方案列表',res);
+
         let data = res.data.data;
         that.postData = data;
-        console.log(that.postData)
+
       })
+
+
+    },
+    setOption:function(){
+
+      let chart = document.getElementById('canvas1');
+
+      let echart = echarts.init(chart);
+      let OrderStats=this.orderStats.list
+      let LastStats=this.orderStats.lastList
+
+      let option = {
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {
+            type : 'shadow'
+          }
+        },
+        toolbox: {
+          show : true,
+          feature : {
+            saveAsImage : {show: true}
+          }
+        },
+        legend: {
+          data:['当月','上月']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis : [
+          {
+            min:0,
+            type : 'category',
+            data : ['待审核','审核中','生产中','已发货','已收货','已安装','已完成','已退回']
+          }
+        ],
+        yAxis : [
+          {
+            min:0,
+            type : 'value'
+          }
+        ],
+        series : [
+          {
+            name: '当月',
+            type: 'bar',
+            data: [
+              OrderStats.peddingAudit,
+              OrderStats.auditing,
+              OrderStats.producing,
+              OrderStats.hasDeliver,
+              OrderStats.hasReceived,
+              OrderStats.hasInstalled,
+              OrderStats.hasFinished,
+              OrderStats.hasReturned
+            ]
+          },
+          {
+            name: '上月',
+            type: 'bar',
+            data: [
+              LastStats.peddingAudit,
+              LastStats.auditing,
+              LastStats.producing,
+              LastStats.hasDeliver,
+              LastStats.hasReceived,
+              LastStats.hasInstalled,
+              LastStats.hasFinished,
+              LastStats.hasReturned
+            ]
+          }
+        ]
+      }
+      echart.setOption(option)
+    },
+    setOption2:function(){
+      let chart = document.getElementById('canvas2');
+      let echart = echarts.init(chart);
+      let clientStats=this.clientStats.list
+      let LastStats=this.clientStats.lastList
+      let option = {
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {
+            type : 'shadow'
+          }
+        },
+        toolbox: {
+          show : true,
+          feature : {
+            saveAsImage : {show: true}
+          }
+        },
+        legend: {
+          data:['当月','上月']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis : [
+          {
+            min:0,
+            type : 'category',
+            data : ['新建','已派尺','已测量','已方案','已查房','已下单','已完成']
+          }
+        ],
+        yAxis : [
+          {
+            min:0,
+            type : 'value'
+          }
+        ],
+        series : [
+          {
+            name: '当月',
+            type: 'bar',
+            data: [
+              clientStats.inTouch,
+              clientStats.hasSended,
+              clientStats.hasMeasured,
+              clientStats.hasScheme,
+              clientStats.hasChecked,
+              clientStats.hasOrder,
+              clientStats.hasFinished,
+            ]
+          },
+          {
+            name: '上月',
+            type: 'bar',
+            data: [
+              LastStats.inTouch,
+              LastStats.hasSended,
+              LastStats.hasMeasured,
+              clientStats.hasScheme,
+              LastStats.hasChecked,
+              LastStats.hasOrder,
+              LastStats.hasFinished,
+            ]
+          }
+        ]
+      }
+      echart.setOption(option)
     }
   },
   watch:{
     screenWidth (val) {
       this.screenWidth = val
-      console.log(this.screenWidth)
     }
   },
   beforeUpdate(){
@@ -168,15 +316,8 @@ export default {
   },
   mounted(){
     const that = this
-    let token,userId;
-    token = this.$store.state.login.token;
-    userId = this.$store.state.login.userId;
-    console.log(token,userId)
-    this.userId = userId;
-    this.token = token;
+
     this.str1 = this.$store.state.login.str1;
-    let canv = $('#canvas1')[0];
-    let canv1 = $('#canvas2')[0];
     let swiper1 = new Swiper('#swiper1',{
       pagination: '.swiper-pagination',
       paginationClickable: true,
@@ -184,58 +325,35 @@ export default {
       prevButton:'.swiper-button-prev',
       nextButton:'.swiper-button-next'
     })
-    // this.$store.dispatch('login/getUserInfo')
-    console.log(userId);
-    // this.$api.axiosPost('/person/getUserAchievement'+that.str1,1, {
-    //     token: token,
-    //     userId: userId
-    //   }
-    //   ,function (res) {
-    //     console.log(res.data.data)
-    //   })
-    //canvas监听器
-    window.onresize = () => {
-      return (() => {
-        that.screenWidth = $('.w2-left').width();
-        canv.width = ($('.w2-left').width()*0.80);
-        canv1.width = ($('.w2-left').width()*0.80)
-        Canvas.paintLeft(canv,this.leftData);
-        Canvas.paintRight(canv1,this.rightData);
-      })()
-    }
-    //canvas操作
-    that.screenWidth = $('.w2-left').width();
-    canv.width = ($('.w2-left').width()*0.80)
-    canv1.width = ($('.w2-left').width()*0.80)
-    Canvas.paintLeft(canv,this.leftData);
-    Canvas.paintRight(canv1,this.rightData);
-    //获取方案列表
-    this.$ajax.axiosPost('/pro/prolists',3,{
-      page:1,
-      tag:[],
-      pages:1
-    },function (res) {
-      console.log('方案列表',res);
-      let data = res.data.data;
-      that.postData = data;
-      console.log(that.postData)
-    })
+
+    let date=new Date()
+    let today=this.$api.formatDate(date,'yyyy-MM-dd')
+    this.today=today
+    date.setDate(1)
+    let firstDay=this.$api.formatDate(date,'yyyy-MM-dd')
+    this.firstDay=firstDay
+    //获取业绩统计
+    this.change([firstDay,today])
+    this.change1([firstDay,today])
+    this.pageChange(1)
+
     //  banner图获取
-    this.$api.axiosPost('/img/getImgListByParam'+that.str1,1,{
+    this.$api.axiosPost('/img/getImgListByParam',1,{
       data:{
         imgType:1
       },
       page:{
-        pageNum:0,
-        pageSize:10
+        pageNum:1,
+        pageSize:1
       }
     },function (res) {
       that.swiperList = res.data.data
     })
-    //标签获取
-    this.$api.axiosGet('/tag/getTagList'+that.str1,{},function (res) {
-      console.log(res.data)
-      that.tagList = res.data
+
+    // //标签获取
+    this.$api.axiosPost('/tag/getTagList',1,{},function (res) {
+
+      that.tagList = res.data.data
     })
   }
 }

@@ -20,6 +20,8 @@ import MyIndent from '@/components/myIndent'
 import IndexWrap from '@/components/indexWrap'
 import MyCollect from '@/components/myCollect'
 
+import MyReport from '@/components/MyReport'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -163,6 +165,14 @@ const router = new Router({
           meta:{
             requireAuth:true //是否登录验证
           },
+        },
+        {
+          path: '/indexWrap/myReport',
+          name: 'MyReport',
+          component: MyReport,
+          meta:{
+            requireAuth:true //是否登录验证
+          },
         }
       ]
     },
@@ -175,17 +185,28 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next)=>{
+  let code=to.query.code
+
+  if(code){
+
+    localStorage.setItem('token',code)
+    if(localStorage.getItem('sysconfig')==null){
+      store.dispatch('login/getSystem');
+    }
+    store.dispatch('login/getUserInfo');
+    next({
+      path: '/indexWrap/personCenter',
+    })
+
+  }
   if(to.meta.requireAuth){
-    console.log(1)
     if(localStorage.getItem('token')!=null){
-      console.log('登录成功')
       store.dispatch('login/getUserInfo');
       if(!store.state.login.freshState){
-        store.dispatch('login/changeFreshState')
+        // store.dispatch('login/changeFreshState')
       }
       next()
     }else{
-      console.log(2)
       next({
         path: '/login',
         query:{redirect:to.fullPath}

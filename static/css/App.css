@@ -80,7 +80,7 @@
         #app .el-header .head .head-right ul > li:nth-child(2) a > span:first-child {
           width: 13px;
           height: 15px;
-          background: url("../static/img/icon07.png") no-repeat;
+          background: url("../../static/img/icon07.png") no-repeat;
           background-size: 100% 100%;
           margin-right: 5px; }
         #app .el-header .head .head-right ul > li:nth-child(2) a > span:last-child {
@@ -94,19 +94,19 @@
         #app .el-header .head .head-right ul > li:nth-child(3) a > span:first-child {
           width: 16px;
           height: 15px;
-          background: url("../static/img/icon08.png") no-repeat;
+          background: url("../../static/img/icon08.png") no-repeat;
           background-size: 100% 100%;
           margin-right: 5px; }
         #app .el-header .head .head-right ul > li:nth-child(4) a > span:first-child {
           width: 10px;
           height: 14px;
-          background: url("../static/img/icon09.png") no-repeat;
+          background: url("../../static/img/icon09.png") no-repeat;
           background-size: 100% 100%;
           margin-right: 5px; }
         #app .el-header .head .head-right ul > li:nth-child(5) a > span:first-child {
           width: 14px;
           height: 15px;
-          background: url("../static/img/icon10.png") no-repeat;
+          background: url("../../static/img/icon10.png") no-repeat;
           background-size: 100% 100%;
           margin-right: 5px; }
   #app .el-aside {
@@ -138,7 +138,7 @@
           width: 15px;
           height: 15px;
           vertical-align: middle;
-          background: url("../static/img/icon01.png") no-repeat;
+          background: url("../../static/img/icon01.png") no-repeat;
           background-position: 6px 2px;
           margin-right: 5px;
           transition: transform 0.5s; }
@@ -156,7 +156,7 @@
               width: 20px;
               height: 20px;
               margin-right: 5px;
-              background: url("../static/img/icon02.png") no-repeat; }
+              background: url("../../static/img/icon02.png") no-repeat; }
         #app .el-aside .list > ul > ul > li.sel {
           background-color: #222222;
           position: relative; }
@@ -170,14 +170,14 @@
           top: 0;
           left: 0; }
         #app .el-aside .list > ul > ul > li:first-child a span {
-          background: url("../static/img/icon60.png") no-repeat;
+          background: url("../../static/img/icon60.png") no-repeat;
           background-size: 100% 80%; }
         #app .el-aside .list > ul > ul > li:nth-child(3) a span {
-          background: url("../static/img/icon03.png") no-repeat; }
+          background: url("../../static/img/icon03.png") no-repeat; }
         #app .el-aside .list > ul > ul > li:nth-child(4) a span {
-          background: url("../static/img/icon04.png") no-repeat; }
+          background: url("../../static/img/icon04.png") no-repeat; }
         #app .el-aside .list > ul > ul > li:nth-child(5) a span {
-          background: url("../static/img/icon05.png") no-repeat; }
+          background: url("../../static/img/icon05.png") no-repeat; }
       #app .el-aside .list > ul > li:hover {
         background-color: #a51e32; }
   #app .el-main {
@@ -192,7 +192,7 @@
     right: 25px;
     width: 50px;
     height: 50px;
-    background: url("../static/img/toTop.png") no-repeat;
+    background: url("../../static/img/toTop.png") no-repeat;
     background-size: 100% 100%;
     box-shadow: 0 0 10px #e4e4e4;
     border-radius: 50%;

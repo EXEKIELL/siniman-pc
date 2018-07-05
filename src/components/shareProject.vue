@@ -3,7 +3,7 @@
       <div class="mp-top clearFix">
         <div class="top-left">
           <div class="bigImg" style="display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center;">
-            <img :src="imgInfo[0].img" alt="" ref="bigImg">
+            <img v-if="imgInfo.length>=1" :src="imgInfo[0].img" alt="" ref="bigImg">
           </div>
           <div id="swiper1" class="swiper-container">
             <div class="swiper-wrapper">
@@ -13,59 +13,69 @@
             </div>
           </div>
         </div>
-        <!--<div class="top-right">-->
-          <!--<div class="tright-1">-->
-            <!--<span>{{productInfo.data.productname}}</span><span>{{productInfo.data.housetype}}</span><span>{{productInfo.data.area}}m²</span>-->
-          <!--</div>-->
-          <!--<div class="tright-2">-->
-            <!--<span>-->
-              <!--<span></span>-->
-              <!--<span>{{productInfo.data.productionmark}}积分</span>-->
-            <!--</span>-->
-            <!--<span>-->
-              <!--<span></span>-->
-              <!--<span>{{productInfo.data.salsecount}}</span>-->
-            <!--</span>-->
-            <!--<span>-->
-              <!--<span></span>-->
-              <!--<span>浏览</span>-->
-            <!--</span>-->
-            <!--<span>-->
-              <!--<span></span>-->
-              <!--<span>收藏</span>-->
-            <!--</span>-->
-          <!--</div>-->
-          <!--<div class="tright-3">-->
-            <!--<span></span><span>{{productInfo.data.customername}}</span>-->
-            <!--<span></span><span>{{productInfo.data.customercontact}}</span>-->
-            <!--<span></span><span>{{productInfo.data.customeraddr}}</span>-->
-          <!--</div>-->
-          <!--<div class="tright-4">-->
-            <!--<span v-for="(item,index) in productInfo.data.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>-->
-          <!--</div>-->
-          <!--<div class="tright-5">-->
-            <!--<div>需求描述</div>-->
-            <!--<div>-->
-              <!--<p>{{productInfo.data.productdesc}}</p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="tright-6">-->
-            <!--<div>-->
-              <!--<div style="width: 40px;height: 40px;border-radius:50%;overflow: hidden;margin-right: 10px;">-->
-                <!--<img style="width: 100%;height: 100%;" :src="productInfo.data.user.img" alt="">-->
-              <!--</div>-->
-              <!--<span>{{productInfo.data.user.username}}</span>-->
-            <!--</div>-->
-            <!--<div>-->
-              <!--<button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="top-right">
+          <div class="tright-1">
+            <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
+          </div>
+          <div class="tright-2">
+            <span class="price">
+              <span style="display: none"></span>
+              <span></span>
+              <span style="color: red">
+                {{productInfo.productionmark}}积分
+                &nbsp;&nbsp;
+                <span class="totalPrice">装修价格 ¥{{ productInfo.totalPrice }}</span>
+
+              </span>
+            </span>
+          </div>
+          <div class="tright-2">
+            <span style="display: none"></span>
+            <span>
+              <span></span>
+              <span>{{productInfo.salsecount}}</span>
+            </span>
+            <span>
+              <span></span>
+              <span>{{ productInfo.viewcount }}</span>
+            </span>
+            <span :class="{colle:productInfo.hascollect}" @click="collect()">
+              <span></span>
+              <span>收藏</span>
+            </span>
+          </div>
+
+          <div class="tright-3" style="margin-right: 0">
+            <span></span><span>{{productInfo.customername}}</span>
+            <span></span><span>{{productInfo.customercontact}}</span>
+            <span></span><span>{{productInfo.customeraddr}}</span>
+          </div>
+          <div class="tright-4">
+            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
+          </div>
+          <div class="tright-5">
+            <div>需求描述</div>
+            <div>
+              <p>{{productInfo.productdesc}}</p>
+            </div>
+          </div>
+          <div class="tright-6">
+            <div>
+              <div style="width: 40px;height: 40px;border-radius:50%;overflow: hidden;margin-right: 10px;">
+                <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="'../../static/img/head05.png'" alt="">
+              </div>
+              <span>{{productInfo.username}}</span>
+            </div>
+            <div>
+              <button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="mp-cont">
         <div class="nav">
           <ul>
-            <li v-for="(item,index) in navBtns" :class="{sel:item.ok}" @click="navBtn(index,item.component)">{{item.text}}</li>
+            <li v-for="(item,index) in navBtns" :class="{sel:navIndex===index}" @click="navBtn(index,item.component)">{{item.text}}</li>
           </ul>
         </div>
         <div>
@@ -81,7 +91,7 @@
             <div class="cont1" v-if="duihuan">
               <div class="listWrap">
                 <div class="list">
-                  <div><img src="../../static/img/img16.png" alt=""></div>
+                  <div><img :src="imgInfo[0].img" onerror="'../../static/img/img16.png'" alt=""></div>
                   <div>
                     <div><span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span></div>
                     <div><span>{{productInfo.productionmark}}积分</span></div>
@@ -91,18 +101,18 @@
                       <div><span></span><span>{{productInfo.customeraddr}}</span></div>
                     </div>
                     <div>
-                      <span v-for="(item,index) in productInfo.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>
+                      <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div>
                 <div><span>本次消耗：</span><span>{{productInfo.productionmark}}积分</span></div>
-                <div><span>当前积分余额：</span><span>{{JSON.parse(userInfo).data.score}}积分</span></div>
+                <div><span>当前积分余额：</span><span>{{JSON.parse(userInfo).score}}积分</span></div>
               </div>
               <div>
                 <div>
-                  <textarea placeholder="用户备注" id="textarea1" v-model="beizhu"></textarea>
+                  <textarea placeholder="兑换留言" id="textarea1" v-model="beizhu"></textarea>
                 </div>
               </div>
               <div>
@@ -123,11 +133,13 @@
             <div class="cont2" v-if="suc">
               <div>
                 <div><img src="../../static/img/icon29.png" alt=""></div>
-                <div>消耗50积分</div>
+                <div>消耗{{productInfo.productionmark}}积分</div>
               </div>
               <div>
                 <div>恭喜您，已经获得的</div>
-                <div><span>广州天河</span><span>恒大御府</span><span>02户型</span><span>78m²</span></div>
+                <div>
+                  <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
+                </div>
               </div>
               <div><button @click="closetan">完成</button></div>
             </div>
@@ -163,73 +175,60 @@
           title:"您即将获得",
           enought:true,
           sucduihuan:true,
-          productInfo:{},
+          productInfo:{producttag:[]},
           shareSpaceInfo:[],
           imgInfo:[],
           scoreUserId:null,
           userId:null,
-          clientId:''
+          clientId:'',
+          navIndex:0
         }
       },
       methods:{
         navBtn(index,component){
-          $(event.target).addClass('sel');
-          $(event.target).siblings('li').removeClass('sel')
+
           this.$data.detail = component;
-          console.log(component);
+          this.navIndex=index
           const that = this;
           if(component.name == "ShareConvert"){
 
           }
         },
         sucbtn(val){
-          // var userScore = JSON.parse(localStorage.getItem('user-info')).data.score
-          // console.log(userScore);
-          // if(val<userScore){
-          //   this.duihuan = false;
-          //   this.title = "";
-          //   this.suc = true;
-          //   let userAccount = JSON.parse(localStorage.getItem('user-info')).data.account;
-          //   let desId = this.productInfo.desid+'';
-          //   const that = this;
-          //   //复制酷乐家接口
-          //   this.$api.axiosPost('/product/exchangeProduct'+that.$store.state.login.str1,0,{
-          //     userAccount:userAccount,
-          //     desId:desId
-          //   },function (res) {
-          //     console.log(res)
-          //     var userName = JSON.parse(localStorage.getItem('user-info')).data.username
-          //     var productName = that.productInfo.productname
-          //     var client = that.productInfo.customername
-          //     const token = JSON.parse(localStorage.getItem('user-data')).token
-          //     if(res.data.successCounts&&res.data.successCounts == 1){
-          //     //  增加兑换用户积分
-          //       that.$api.axiosPost('/person/addUserScoreRecord'+that.$store.state.login.str1,1,{
-          //         scroeUserId:109740,//that.scoreUserId,
-          //         clientId:2785609,//that.clientId,
-          //         score:10,//that.productInfo.productionmark,
-          //         action:'兑换',
-          //         description:'aaa',//'方案获得用户'+userName+'兑换[方案:'+productName+',客户:'+client+']'
-          //         token:token,
-          //         userId:'109740'
-          //       },function (res) {
-          //         console.log(res)
-          //       })
-          //     }else{
-          //       this.$message.error('兑换失败');
-          //     }
-          //   })
-          // }else {
-          //   this.suc1 = true;
-          //   this.duihuan = false;
-          //   this.title = "";
-          // }
+
+          let user =JSON.parse(this.userInfo)
+          let userScore =user.score
+          let that=this
+          if(val<=userScore){
+
+            let userAccount = user.account;
+            let desId = this.productInfo.desid+''
+            const that = this
+            //复制酷乐家接口
+            this.$api.axiosPost('/product/exchangeProduct',1,{
+              userAccount:userAccount,
+              desId:desId,
+              beizhu:that.beizhu
+            },function (res) {
+
+              that.duihuan = false;
+              that.title = ""
+              that.suc = true
+
+            })
+          }else {
+            that.suc1 = true;
+            that.duihuan = false;
+            that.title = "";
+          }
         },
         lijiduihuan(){
-          $('body').css({
-            overflow:'hidden'
-          });
+          // $('body').css({
+          //   overflow:'hidden'
+          // });
           this.tan1 = true
+          this.duihuan = true
+
         },
         closetan(){
           $('body').css({
@@ -248,6 +247,20 @@
           $(bigImg).attr({
             src:val
           })
+        },
+        collect(){
+          let that=this
+          let proid=that.productInfo.id
+          let hascollect=that.productInfo.hascollect
+          this.$api.axiosPost('/product/collect',1,{
+            product_id:proid
+          },function(res){
+            if(hascollect==true){
+              that.productInfo.hascollect=false
+            }else{
+              that.productInfo.hascollect=true
+            }
+          })
         }
       },
       watch:{
@@ -263,18 +276,36 @@
       },
       mounted(){
         var productId = this.$router.history.current.query.productId;
-        console.log(productId);
-        const that = this;
-        //方案详情获取
-        this.$ajax.axiosGet('/pro/desc/'+productId,3,{},function (res) {
-          console.log(res);
-          let data = res.data;
-          that.productInfo = data;
-          that.shareSpaceInfo = data.data.desid;
-          that.imgInfo = data.data.desid;
-          console.log(that.productInfo);
-          console.log(that.shareSpaceInfo);
+
+        let that = this;
+        that.userInfo=localStorage.getItem('user-info')
+
+        //方案详情
+        this.$api.axiosPost('/product/productDetail',1,{
+          productId:productId
+        },function (res) {
+          that.productInfo = JSON.parse(res.data.productInfo);
+          //编辑信息赋值
+
+          let res1 = JSON.parse(res.data.productInfo);
+          let desid = res1.desid
+          let st = res1.createtime
+
+          //获取渲染图
+          that.$api.axiosPost('/render/synchro',1,{
+            designId:desid,
+            start:0,
+            num:10
+          },function (res){
+            that.imgInfo = res.data.renders;
+            that.shareSpaceInfo = res.data.renders;
+
+
+          })
         })
+
+
+
         //方案详情获取
         // this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
         //   productId:productId
@@ -330,6 +361,11 @@
 
 <style lang="scss" scoped>
 @import "../../static/sass/shareProject";
+  .totalPrice{
+    font-size: 16px;
+    color: #888;
+    background: none !important;
+  }
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

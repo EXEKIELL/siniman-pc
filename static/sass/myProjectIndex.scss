@@ -112,7 +112,7 @@
           >div{
             >div{
               float: left;
-              width: 7%;
+              min-width: 7%;
               position: relative;
               div{
                 display: inline;
@@ -148,14 +148,24 @@
       padding: 0 40px;
       .list1{
         width: 30%;
+        -webkit-transition: -webkit-box-shadow 0.5s;
+        transition: -webkit-box-shadow 0.5s;
         transition: box-shadow 0.5s;
+        transition: box-shadow 0.5s, -webkit-box-shadow 0.5s;
         border: 1px solid #f6f6f6;
         margin-bottom: 80px;
-        cursor: pointer;
-        margin-right: 70px;
+        margin-right: 4%;
+        height: 380px;
         .list1-img{
           position: relative;
           overflow: hidden;
+          height: 60%;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: end;
+          -ms-flex-align: end;
+          align-items: flex-end;
           img{
             width: 100%;
           }
@@ -262,17 +272,21 @@
         }
         .list1-tag{
           text-align: left;
+          display: -webkit-box;
+          display: -ms-flexbox;
           display: flex;
+          -webkit-box-pack: left;
+          -ms-flex-pack: left;
           justify-content: left;
-          padding: 0 30px 30px 30px;
+          padding: 0 20px 30px 20px;
           span{
-            width: 20%;
+            width: auto;
             text-align: center;
             border: 1px solid #e2e6ff;
-            padding: 5px 0;
+            padding: 5px 5px;
             font-size: 14px;
             color: #555555;
-            margin-right: 20px;
+            margin-right: 2%;
           }
         }
       }

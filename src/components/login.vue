@@ -22,7 +22,7 @@
               <input type="password" class="passWord" v-model="pswd.pswd">
               <div class="tishi2"></div>
             </div>
-            <div><span @click="xuan"><span class="xuan"></span><input type="checkbox" ></span><span>自动登录</span></div>
+            <div style="display: none"><span @click="xuan"><span class="xuan"></span><input type="checkbox" ></span><span>自动登录</span></div>
             <div><button @click="sub">登录</button></div>
           </form>
           <form class="form2" v-if="fL">
@@ -45,10 +45,7 @@
       data() {
         return {
           xuan1:true,
-          num1:'',
-          ok:false,
           timer:null,
-          timer1:null,
           yanzhengForm:{
             phoneNum:'',
             validcode:''
@@ -66,32 +63,19 @@
             $('.tishi2').text('密码不能为空')
           }else {
             this.$store.dispatch('login/LoginPost')
-            console.log(1)
+
           }
-          this.$nextTick(()=>{
-            const TIME = 60;
-            if(!this.timer1){
-              this.num1 = TIME;
-              this.timer1 = setInterval(()=> {
-                if(this.num1>0&&this.num1<=TIME){
-                  this.num1--;
-                }else {
-                  clearInterval(this.timer1);
-                  this.timer1 = null;
-                  this.ok = true
-                }
-              },1000)
-            }
-          })
+
 
           event.preventDefault()
         },
         sub1(){
+
           if(this.$store.state.login.form.yanzhengma==''){
             $('.tishi3').text("验证码不能为空")
           }else{
-            console.log(this.$store.state.login.form.yanzhengma)
-            this.$store.commit('login/PHONEYANZHENG')
+            this.$store.dispatch('login/phoneyanzheng')
+
           }
           event.preventDefault()
         },
@@ -112,9 +96,11 @@
         },
         huoqu(){
           this.ok = false;
-          var e = event.target
+          let e = event.target
           const TIME = 60;
           if(!this.timer){
+
+            this.$store.dispatch('login/getyanzheng')
             this.num1 = TIME;
             this.timer = setInterval(()=> {
               if(this.num1>0&&this.num1<=TIME){
@@ -147,8 +133,11 @@
           pswd:state=>state.login.form,
           fL:state=>state.login.fL,
           loging:state=>state.login.loging,
-          phone:state=>state.login.loginMessage.phone,
-          yanzhengma:state=>state.login.form
+          phone:state=>state.login.verify.phone,
+          yanzhengma:state=>state.login.form,
+          timer1:state=>state.login.timer1,
+          num1:state=>state.login.num1,
+          ok:state=>state.login.ok,
         })
         // username:{
         //   get(){
@@ -168,6 +157,8 @@
         // }
       },
       mounted(){
+
+
         $('.userName').focus(function () {
           $('.tishi1').text("")
         })
@@ -176,7 +167,7 @@
         })
         $('.userName').focusin(function () {
           $('.span1 img').attr({
-            src:"../../static/img/loginIcon01_sel.png"
+            src:"./static/img/loginIcon01_sel.png"
           })
           $('.span1').css({
             "border":"1px solid #f8c1c9",
@@ -185,7 +176,7 @@
         })
         $('.userName').focusout(function () {
           $('.span1 img').attr({
-            src:"../../static/img/loginIcon01.png"
+            src:"./static/img/loginIcon01.png"
           })
           $('.span1').css({
             "border":"1px solid #e4e4e4",
@@ -194,7 +185,7 @@
         })
         $('.passWord').focusin(function () {
           $('.span2 img').attr({
-            src:"../../static/img/loginIcon02_sel.png"
+            src:"./static/img/loginIcon02_sel.png"
           })
           $('.span2').css({
             "border":"1px solid #f8c1c9",
@@ -203,7 +194,7 @@
         })
         $('.passWord').focusout(function () {
           $('.span2 img').attr({
-            src:"../../static/img/loginIcon02.png"
+            src:"./static/img/loginIcon02.png"
           })
           $('.span2').css({
             "border":"1px solid #e4e4e4",

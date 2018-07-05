@@ -120,7 +120,7 @@
   padding: 0 10px;
   border-radius: 0;
   border: 1px solid #a8d375;
-  background-color: #ecfadb;
+  /*background-color: #ecfadb;*/
   color: #83b844;
   text-align: center; }
 #myProject .mp-bianjiBox .el-input__inner::placeholder {

@@ -102,7 +102,7 @@
       }
       .left-2{
         height: 345px;
-        padding: 0 50px;
+        padding: 0 20px;
         #canvas1{
         }
       }
@@ -156,7 +156,7 @@
           >div{
             >div{
               float: left;
-              width: 7%;
+              min-width: 7%;
               position: relative;
               div{
                 display: inline;
@@ -190,15 +190,20 @@
       flex-wrap: wrap;
       align-content: space-between;
       padding: 0 40px;
+
       .list1{
         width: 30%;
         transition: box-shadow 0.5s;
         border: 1px solid #f6f6f6;
         margin-bottom: 80px;
-        margin-right: 70px;
+        margin-right: 4%;
+        height: 380px;
         .list1-img{
           position: relative;
           overflow: hidden;
+          height: 60%;
+          display: flex;
+          align-items: flex-end;
           img{
             width: 100%;
           }
@@ -307,15 +312,15 @@
           text-align: left;
           display: flex;
           justify-content: left;
-          padding: 0 30px 30px 30px;
+          padding: 0 20px 30px 20px;
           span{
-            width: 20%;
+            width: auto;
             text-align: center;
             border: 1px solid #e2e6ff;
-            padding: 5px 0;
+            padding: 5px 5px;
             font-size: 14px;
             color: #555555;
-            margin-right: 20px;
+            margin-right: 2%;
           }
         }
       }

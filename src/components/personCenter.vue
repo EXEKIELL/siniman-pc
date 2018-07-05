@@ -5,7 +5,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
             <router-link to="#">
-              <img :src="item.src" alt="">
+              <img :src="item.imgurl" alt="">
             </router-link>
           </div>
         </div>
@@ -30,8 +30,8 @@
                   type="daterange"
                   @change="change"
                   value-format="yyyy-MM-dd"
-                  start-placeholder="选择日期"
-                end-placeholder="结束日期">
+                  :start-placeholder="firstDay"
+                  :end-placeholder="today">
                 </el-date-picker>
               </div>
               <button class="aaa" @click="dianwo"></button>
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="left-2">
-          <canvas id="canvas1"  height="320"></canvas>
+          <div id="canvas1" class="echarts"></div>
         </div>
       </div>
       <div class="w2-right">
@@ -55,8 +55,8 @@
                   v-model="value2"
                   @change="change1"
                   type="daterange"
-                  start-placeholder="选择日期"
-                  end-placeholder="结束日期">
+                  :start-placeholder="firstDay"
+                  :end-placeholder="today">
                 </el-date-picker>
               </div>
               <button class="aaa" @click="dianwo"></button>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="left-2">
-          <canvas id="canvas2" width="530" height="320"></canvas>
+          <div id="canvas2" class="echarts"></div>
         </div>
       </div>
     </div>
@@ -78,12 +78,12 @@
       <div class="w3-nav">
         <ul>
           <li class="clearFix" v-for="(item,index) in tagList" :key="index">
-            <span class="nav-left">{{item.catalogname+'：'}}</span>
+            <span class="nav-left">{{item.cat_name+'：'}}</span>
             <div class="nav-right">
               <div>
                 <div @click="navSel('全部',index)" class="sel" >全部</div>
               </div>
-              <div v-for="(item1,index1) in item.list" :key="index1">
+              <div v-for="(item1,index1) in item.lists" :key="index1">
                 <div @click="navSel(index,index1)" >{{item1.tagname}}</div>
               </div>
             </div>
@@ -91,33 +91,16 @@
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in postData.data" :key="index">
+        <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
-            <img src="../../static/img/img05.png"  alt=""><!--:src="item.simg==''?'../../static/img/img05.png':item.simg"-->
+            <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+
             <div>
               <button @click="toUrl(item.id)">编辑方案</button>
             </div>
             <!--<div>-->
               <!--<div>-->
                 <!--<img src="../../static/img/img_sm01.png" alt="">-->
-                <!--<div class="maskSm">-->
-                  <!--<button>设为封面</button>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<img src="../../static/img/img_sm02.png" alt="">-->
-                <!--<div class="maskSm">-->
-                  <!--<button>设为封面</button>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<img src="../../static/img/img_sm03.png" alt="">-->
-                <!--<div class="maskSm">-->
-                  <!--<button>设为封面</button>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<img src="../../static/img/img_sm04.png" alt="">-->
                 <!--<div class="maskSm">-->
                   <!--<button>设为封面</button>-->
                 <!--</div>-->
@@ -138,8 +121,9 @@
               </div>
             </div>
           </div>
+
           <div class="list1-tag">
-            <span v-for="(item1,index1) in item.tags" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+            <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
           </div>
         </div>
       </div>
@@ -162,4 +146,8 @@
 </style>
 <style lang="scss">
   @import "../../static/sass/public";
+  .echarts{
+    width: 530px !important;
+    height: 320px !important;
+  }
 </style>

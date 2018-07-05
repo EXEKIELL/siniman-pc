@@ -17,7 +17,7 @@ if(store.state.login.sign_1 == '' && !localStorage.getItem('sign_1')){
   sign_1 = store.state.login.sign_1 || JSON.parse(localStorage.getItem('sign_1'));
 }
 // console.log(sign_1);
-let root = 'http://share.hengdikeji.com/pc';
+let root = 'http://localhost:8080/share';
 let headers = [
   {'Content-Type':'application/x-www-form-urlencoded'},
   {'Content-Type': 'application/json'},

@@ -34,12 +34,13 @@
               <div>
                 <span>获赞</span><span>{{userdata.goodcount==null?0:userdata.goodcount}}</span>
               </div>
-              <div>
+              <router-link tag="div" to="/indexWrap/myProjectIndex">
                 <span>作品</span><span>{{userdata.productCount==null?0:userdata.productCount}}</span>
-              </div>
-              <div>
+              </router-link>
+              <router-link tag="div" to="/indexWrap/messageXq?type=reservation">
                 <span>预约</span><span>{{userdata.bespeakcount==null?0:userdata.bespeakcount}}</span>
-              </div>
+              </router-link>
+
             </div>
           </div>
         </div>
@@ -50,7 +51,7 @@
             </div>
             <div>
               <div>积分明细</div>
-              <div @click="toUrl">点击进入>></div>
+              <div @click="toUrl('积分明细')">点击进入>></div>
             </div>
           </div>
           <div>
@@ -59,7 +60,7 @@
             </div>
             <div>
               <div>设计方案</div>
-              <div @click="toUrl">点击进入>></div>
+              <div @click="toUrl('设计方案')">点击进入>></div>
             </div>
           </div>
           <div>
@@ -68,7 +69,7 @@
             </div>
             <div>
               <div>消息管理</div>
-              <div @click="toUrl">点击进入>></div>
+              <div @click="toUrl('消息管理')">点击进入>></div>
             </div>
           </div>
         </div>
@@ -94,8 +95,8 @@
         onhide(){
           $('.idendity').hide()
         },
-        toUrl(event){
-          var text = $(event.target).siblings('div').text();
+        toUrl(text){
+
           if(text == '积分明细'){
             this.$router.push('/indexWrap/integralDetail')
           }else if(text == '设计方案'){
@@ -107,22 +108,18 @@
       },
       mounted(){
         const that = this
-        // let shopId = this.userdata.shops.split(",");
-        // console.log(shopId)
-        // this.$api.axiosGet('/shop/shopDetail'+that.$store.state.login.str1,{
-        //   shopId:shopId[0]
-        // },function (res) {
-        //   console.log(res)
-        //   that.shopName = res.data.data.shopname
-        // })
+
         that.userdata = JSON.parse(localStorage.getItem('user-info'));
-        console.log(that.userData);
-        that.roles = JSON.parse(localStorage.getItem('user-info')).roles;
-        console.log(that.roles);
-        this.$ajax.axiosPost('/user/stores',3,{},function (res) {
-          console.log(res);
-          that.shopName = res.data.data[0].shopname;
+        let shopId = this.userdata.shops.split(",");
+
+        this.$api.axiosPost('/shop/shopDetail',1,{
+          shopId:shopId[0]
+        },function (res) {
+
+          that.shopName = res.data.data.shopname
         })
+        that.roles = JSON.parse(localStorage.getItem('user-info')).roles;
+
       }
     }
 </script>

@@ -4,23 +4,24 @@
         <div class="wrap-list" v-for="(item,index) in projectSpace" :key="index">
           <div>
             <img :src=item.img>
-            <button class="del">
+            <button class="del" style="display: none">
               <img src="../../static/img/icon20.png" alt="">
             </button>
           </div>
           <div>
-            <div class="xianshi clearFix" v-if="ok">
+            <div class="bianji clearFix" v-if="item.ok==1">
               <div>
-                <span>创意描述：</span><span>{{}}</span>
+                <span>创意描述：</span><input class="write" type="text" v-model="item.description">
               </div>
-              <button @click="xian(item)">编辑描述</button>
+              <button @click="bz(index)">保存</button>
             </div>
-            <div class="bianji clearFix" v-else>
+            <div class="xianshi clearFix" v-else>
               <div>
-                <span>创意描述：</span><input class="write" type="text" v-model="item.miaoshu">
+                <span>创意描述：</span><span>{{ item.description?item.description:"您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~" }}</span>
               </div>
-              <button @click="bz(item)">保存</button>
+              <button @click="xian(index)">编辑描述</button>
             </div>
+
           </div>
         </div>
       </div>
@@ -33,49 +34,26 @@
       data(){
         return {
           indexs:null,
-          ok:true,
-          projectSpaceList:[
-            {
-              imgsrc:"../../static/img/img09.png",
-              miaoshu:"您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~",
-              ok:true
-            },
-            {
-              imgsrc:"../../static/img/img09.png",
-              miaoshu:"您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~",
-              ok:true
-            },
-            {
-              imgsrc:"../../static/img/img09.png",
-              miaoshu:"您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~",
-              ok:true
-            },
-            {
-              imgsrc:"../../static/img/img09.png",
-              miaoshu:"您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~",
-              ok:true
-            }
-          ]
+          ok:0,
+          projectSpaceList:[]
         }
       },
-      props:{
-        projectSpace:{
-          type:Array,
-          required:true
-        }
-      },
+      props:["projectSpace"],
       methods:{
-        xian(item){
-          this.ok = false;
-          // item.miaoshu = ''
+        xian(index){
+            this.$forceUpdate();
+            this.projectSpace[index].ok=1
         },
-        bz(item){
-          this.ok = true;
-          // if(item.miaoshu == ''){
-          //   item.miaoshu = '您暂未对该效果图进行创意描述，增加描述可提高被购买率哦~'
-          // }
+        bz(index){
+          let that=this
+          let data=this.projectSpace[index]
+          that.$api.axiosPost('/render/updateDesc',1,data,function(){
+            that.projectSpace[index].ok=0
+            that.$forceUpdate();
+          })
         }
       },
+
       mounted(){
 
       }

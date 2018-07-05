@@ -3,12 +3,17 @@
     <div class="mp-top clearFix">
       <div class="top-left">
         <div class="bigImg">
+
           <img src="" alt="" ref="bigImg">
         </div>
         <div id="swiper1" class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+            <div class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
+                 @mouseenter="check(item.img,index)">
               <img :src="item.img" alt="">
+              <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}" style="display: none" @click="setCover(item.id,index)">
+                <button>{{ item.cover===1?'封面':'设置封面' }}</button>
+              </div>
             </div>
           </div>
         </div>
@@ -23,7 +28,7 @@
           <span></span><span>{{productInfo.customeraddr}}</span>
         </div>
         <div class="tright-3">
-          <span v-for="(item,index) in productInfo.producttag" :key="index" v-if="index<4">{{item.tagname}}</span>
+          <span v-for="(item,index) in productInfo.producttag[0]" :key="index" >{{item.tagname}}</span>
         </div>
         <div class="tright-4">
           <div>需求描述</div>
@@ -32,19 +37,19 @@
           </div>
         </div>
         <div class="tright-5">
-          <button @click="btn1(1)"><span></span><span>分享家·赢豪礼，最高可得苹果笔记本电脑</span></button>
-          <button @click="btn1(2)"><span></span><span>编辑客户信息</span></button>
+          <button @click="btn1(1)"><span></span><span>分享家·赢豪礼</span></button>
+          <button @click="btn1(2)"><span></span><span>编辑方案信息</span></button>
         </div>
       </div>
     </div>
     <div class="mp-cont">
       <div class="nav">
         <ul>
-          <li v-for="(item,index) in navBtns" :class="{sel:item.ok}" @click="navBtn(index,item.component)">{{item.text}}</li>
+          <li v-for="(item,index) in navBtns" :class="{sel:navIndex===index}" @click="navBtn(index,item.component)">{{item.text}}</li>
         </ul>
       </div>
       <div>
-        <detail :is="detail" :projectSpace="projectSpace"></detail>
+        <detail :is="detail" :productId="productInfo.id" :projectSpace="projectSpaceList"></detail>
       </div>
     </div>
     <div class="mp-bianjiBox" v-if="bianjiBox">
@@ -90,29 +95,34 @@
                       <span>m²</span>
                     </div>
                   </div>
+                  <div>
+                    <div style="margin-left: -10px;">
+                      <label style="width: 37%">兑换积分：</label>
+                      <input type="number" placeholder="请输入兑换积分" v-model="form1.productionmark">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="formItem3">
                 <div class="item-title">标签信息</div>
+
                 <div class="item-cont">
                   <div>已选择：</div>
-                  <div class="shou">
-                    <div v-for="(item,index) in tagsels" :key="index">
-                      <label>{{item.catalogname}}：</label>
-                      <div>
-                        <span v-for="(item3,index3) in item.list" :key="index3">{{item3.tagname}}<span @click="del(item3,index3)"></span></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>请选择：</div>
                   <div class="info">
-                    <div v-for="(item,index) in tags" :key="index">
-                      <label>{{item.catalogname}}：</label>
-                      <div>
-                        <span v-for="(item2,index2) in item.list" :key="index2" @click="changeTag(index,index2,item2)">{{item2.tagname}}</span>
-                      </div>
-                    </div>
+                    <el-select v-model="value5" multiple placeholder="请选择标签">
+                      <el-option-group
+                        v-for="item in tags"
+                        :label="item.cat_name">
+                        <el-option
+                          v-for="val in item.lists"
+                          :key="val.id"
+                          :label="val.tagname"
+                          :value="val.id">
+                        </el-option>
+                      </el-option-group>
+                    </el-select>
                   </div>
+
                 </div>
               </div>
               <div class="formItem4">
@@ -131,30 +141,30 @@
             <div>
               <div class="list2">
                 <div>
-                  <img src="../../static/img/img13.png" alt="">
-                  <span>50人已获得</span>
+                  <img :src="sysconfig.pcprize1.value" alt="">
+                  <span style="display: none">50人已获得</span>
                 </div>
-                <div><span>MAC pro 15.4</span></div>
-                <div><span>￥10000.00</span></div>
+                <div><span>{{ sysconfig.pcprize1.name }}</span></div>
+                <div><span>{{ sysconfig.pcprize1.price }}</span></div>
               </div>
               <div class="list2">
                 <div>
-                  <img src="../../static/img/img14.png" alt="">
-                  <span>50人已获得</span>
+                  <img :src="sysconfig.pcprize2.value" alt="">
+                  <span style="display: none">50人已获得</span>
                 </div>
-                <div><span>Iphone X</span></div>
-                <div><span>￥7000.00</span></div>
+                <div><span>{{ sysconfig.pcprize2.name }}</span></div>
+                <div><span>{{ sysconfig.pcprize2.price }}</span></div>
               </div>
               <div class="list2">
                 <div>
-                  <img src="../../static/img/img15.png" alt="">
-                  <span>50人已获得</span>
+                  <img :src="sysconfig.pcprize3.value" alt="">
+                  <span style="display: none">50人已获得</span>
                 </div>
-                <div><span>七天邮轮</span></div>
-                <div><span>￥7790.00</span></div>
+                <div><span>{{ sysconfig.pcprize3.name }}</span></div>
+                <div><span>{{ sysconfig.pcprize3.price }}</span></div>
               </div>
             </div>
-            <div>
+            <div style="display: none">
               <div>
                 <img src="../../static/img/wechai_icon.png" alt="">
                 <div>
@@ -173,14 +183,8 @@
             </div>
             <div>
               <div><span>赢豪礼规则</span></div>
-              <div>
-                <ul>
-                  <li>01.规则选定，品牌部未确定配套方案。规则选定，品牌部未确定配套方案。</li>
-                  <li>01.规则选定，品牌部未确定配套方案。规则选定，品牌部未确定配套方案。</li>
-                  <li>01.规则选定，品牌部未确定配套方案。规则选定，品牌部未确定配套方案。</li>
-                  <li>01.规则选定，品牌部未确定配套方案。规则选定，品牌部未确定配套方案。</li>
-                  <li>01.规则选定，品牌部未确定配套方案。规则选定，品牌部未确定配套方案。</li>
-                </ul>
+              <div class="activityRules" v-html="sysconfig.activityRules.value">
+
               </div>
             </div>
             <div><span>声明：在法律允许的范围内本活动最终解释权归诗尼曼所有</span></div>
@@ -192,6 +196,7 @@
 </template>
 
 <script>
+
   import ProjectSpace from './projectSpace'
   import ProjectConvert from './projectConvert'
   import ProjectComment from './projectComment'
@@ -203,32 +208,33 @@
           bianjiBox:false,
           bianji:false,
           fenxiang:true,
-          tagsels:[
-            {catalogname:'类型：',list:[]},
-            {catalogname:'阶段：',list:[]},
-            {catalogname:'户型：',list:[]},
-            {catalogname:'风格：',list:[]},
-          ],
           tags:[],
           navBtns:[
             {text:"空间详情",ok:true,component:ProjectSpace},
             {text:"兑换详情",ok:false,component:ProjectConvert},
             {text:"分享家用户评论",ok:false,component:ProjectComment}
           ],
+          navIndex:0,
           add1:'',
           add2:'',
           add3:'',
           bianjiBoxTitle:"",
           form1:{},
-          productInfo:[],
+          productInfo:{
+            producttag:[]
+          },
           imgInfo:[],
-          projectSpace:[]
+          projectSpaceList:[],
+          value5:[],
+          sysconfig:{}
         }
       },
+
       methods:{
+
         navBtn(index,component){
-          $(event.target).addClass('sel');
-          $(event.target).siblings('li').removeClass('sel');
+          this.navIndex=index
+
           this.$data.detail = component
         },
         btn1(index){
@@ -251,9 +257,9 @@
           }
         },
         bianjiBoxSub(){
-          this.form1.producttag = this.tagsels;
           const that = this;
-          this.$api.axiosPost('/product/update'+that.$store.state.login.str1,1,that.form1,function (res) {
+          that.form1.protags=that.value5
+          this.$api.axiosPost('/product/update',1,that.form1,function (res) {
             console.log(res)
             that.$data.bianjiBox = false;
             $('body').css({
@@ -267,11 +273,13 @@
             overflow:'initial'
           })
         },
-        check(val){
+        check(val,index){
           var bigImg = this.$refs.bigImg;
           $(bigImg).attr({
             src:val
           })
+          this.imgInfo[index].show=1;
+
         },
         changeTag(index,index2,val2){
           for(var i = 0;i<this.tagsels.length;i++){
@@ -279,22 +287,34 @@
               if(this.tagsels[i].list.find(function (val) {
                 return val.tagname == val2.tagname
               }) == undefined){
-                console.log(this.tagsels[i].list.find(function (val) {
-                  return val.tagname == val2.tagname
-                }))
+
                 this.tagsels[i].list.push(val2)
               }
             }
           }
-          console.log(this.tagsels)
         },
         del(val,index){
-          for(var i = 0;i<this.tagsels.length;i++){
-            if(val.catalogname == this.tagsels[i].catalogname){
-              this.tagsels[i].list.splice(index,1);
-              console.log(this.tagsels)
+          this.form1.producttag[0].splice(index,1)
+          // for(var i = 0;i<this.tagsels.length;i++){
+          //   if(val.catalogname == this.tagsels[i].catalogname){
+          //     this.tagsels[i].list.splice(index,1);
+          //   }
+          // }
+        },
+        setCover(id,index){
+          let that=this
+          that.$api.axiosPost('/render/setcover',1,{
+            id:id,
+            designId:that.productInfo.desid
+          },function(){
+            for (let i=0;i<that.imgInfo.length;i++){
+              if(index===i){
+                that.imgInfo[i].cover=1
+              }else{
+                that.imgInfo[i].cover=0
+              }
             }
-          }
+          })
         }
       },
       updated(){
@@ -308,56 +328,99 @@
       },
       mounted(){
         let productId = this.$router.history.current.query.productId;
+        let sysconfig=JSON.parse(localStorage.getItem("sysconfig"))
+        this.sysconfig=sysconfig
         const that = this;
         //方案详情
-        this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
+        this.$api.axiosPost('/product/productDetail',1,{
           productId:productId
         },function (res) {
-          console.log(res);
-          console.log(JSON.parse(res.data.productInfo));
           that.productInfo = JSON.parse(res.data.productInfo);
           //编辑信息赋值
           that.form1 = JSON.parse(res.data.productInfo);
           var res1 = JSON.parse(res.data.productInfo);
-          console.log(res1);
           var desid = res1.desid;
           var st = res1.createtime;
+
+          let producttag=that.form1.producttag[0]
+          for(let i=0;i<producttag.length;i++){
+              that.value5.push(producttag[i].id)
+          }
           //获取渲染图
-          that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
+          that.$api.axiosPost('/render/synchro',1,{
             designId:desid,
             // startTime:st,
             start:0,
             num:10
           },function (res){
-            console.log(res)
+
             that.imgInfo = res.data.renders;
-            console.log(that.imgInfo);
-            that.projectSpace = res.data.renders;
-            // console.log(that.projectSpace)
+
+            that.projectSpaceList = res.data.renders;
+
             var bigImg = that.$refs.bigImg;
             $(bigImg).attr({
               src:res.data.renders[0].img
             })
-            // console.log(that.imgInfo)
-            // console.log(JSON.parse(res.data.productInfo))
-            // 获取标签
-            let tagsList = that.form1.tags.split(',');
-            that.$api.axiosGet('/tag/getTagList'+that.$store.state.login.str1,{},function (res) {
-              console.log(res);
-              that.tags = res.data;
-              for(var i = 0;i<that.tags.length;i++){
-                that.tagsels[i].catalogname = that.tags[i].catalogname
-              }
-            })
+            $('.min-swiper').hover(function(){
+
+              $(this).children(".min-swiper").show();
+            },function(){
+              $(this).children(".min-swiper").hide();
+            });
+
           })
+        })
+
+        // let tagsList = that.form1.tags.split(',');
+        that.$api.axiosPost('/tag/getTagList',1,{},function (res) {
+          that.tags = res.data.data;
+          // for(var i = 0;i<that.tags.length;i++){
+          //   that.tagsels[i].catalogname = that.tags[i].catalogname
+          // }
         })
       }
     }
 </script>
+<style scoped>
+  .tagSelect .el-input__inner{
+    background: none !important;
+  }
 
+</style>
 <style lang="scss" scoped>
 @import "../../static/sass/myProject";
+.tagSelect .el-input__inner{
+  background: none !important;
+}
+.maskSm{
+  position: absolute;
+  background-color: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 10px;
+}
+.maskSm button{
+  color: #fff;
+  background:none;
+}
+.min-swiper .sel{
+  background-color: rgba(206 ,116 ,129,0.6);
+  padding:3px 10px;
+}
+.min-swiper:hover .maskSm{
+  display: block!important;
+}
+ .activityRules{
+   margin-top: 50px;
+   margin-bottom: 30px;
+   font-size: 14px;
+   color: #555555;
+   line-height: 25px;
+ }
+
 </style>
 <style lang="scss">
 @import "../../static/sass/public";
+
 </style>

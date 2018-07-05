@@ -48,7 +48,7 @@
             float: left;
           }
           >div:first-child{
-            width: 3%;
+            width: 5%;
             margin-right: 10px;
             img{
               width: 40px;
@@ -57,7 +57,7 @@
           }
           >div:nth-child(2){
             text-align: left;
-            width: 96%;
+            width: 80%;
             >div{
               margin-bottom: 20px;
             }
@@ -69,7 +69,7 @@
               span{
                 position: relative;
               }
-              span::after{
+              .news::after{
                 content: '';
                 display: block;
                 position: absolute;

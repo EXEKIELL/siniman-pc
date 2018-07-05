@@ -12,7 +12,7 @@
                   <span>积分余额</span>
                 </div>
                 <div>
-                  <span>201612-2018.02</span>
+                  <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
                   <span>￥{{list1.total}}</span>
@@ -30,7 +30,7 @@
                   <span>近三个月获得积分</span>
                 </div>
                 <div>
-                  <span>201612-2018.02</span>
+                  <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
                   <span>￥{{list1.obtain}}</span>
@@ -48,7 +48,7 @@
                   <span>近三个月消耗积分</span>
                 </div>
                 <div>
-                  <span>201612-2018.02</span>
+                  <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
                   <span>￥{{list1.consume}}</span>
@@ -103,9 +103,16 @@
           ],
           postList:[],
           score:'',//JSON.parse(localStorage.getItem('user-info')).data.score,
-          list1:{},
+          list1:{
+            total:0,
+            obtain:0,
+            consume:0
+          },
           totalPage:1,
-          type:2
+          type:2,
+          today:'',
+          ago:'',
+          current_page:1
         }
       },
       methods:{
@@ -123,63 +130,67 @@
           }else{
             this.type = 1;
           }
-          //用户积分明细列表
-          this.$ajax.axiosGet('/user/userinfo/integralList',3,{
-            type:that.type,
-            page:1
-          },function (res) {
-            console.log(res);
-            that.postList = res.data.data;
-            that.totalPage = res.data.page;
-            console.log(that.postList);
-          })
+          this.change(1)
         },
+
         change(val){
           let that = this;
-            // let token = JSON.parse(localStorage.getItem('user-data')).token;
-            // let userId = JSON.parse(localStorage.getItem('user-info')).data.userid+'';
-            // that.$api.axiosPost('/person/getUserScoreRecords'+that.$store.state.login.str1,1,{
-            //   token:token,
-            //   userId:userId,
-            //   page:val,
-            //   pageSize:'10'
-            // },function (res) {
-            //   console.log(res)
-            //   that.postList = res.data.attributes.records
-            // })
           //用户积分明细列表
-          this.$ajax.axiosGet('/user/userinfo/integralList',3,{
+          this.$api.axiosPost('/person/getUserScoreRecords',1,{
             type:that.type,
-            page:val
+            page:val,
+            pageSize:"10",
           },function (res) {
-            console.log(res);
-            that.postList = res.data.data;
-            that.totalPage = res.data.page;
-            console.log(that.postList);
+            that.postList = res.data.data.records
+            if(that.postList.length>=10 ){
+
+              if(val==that.totalPage ){
+                that.totalPage++
+              }
+
+            }
+
           })
-        }
+        },
       },
       filters:{
 
       },
       mounted(){
         let that = this;
-        //用户积分统计
-        this.$ajax.axiosGet('/user/userinfo/integralCount',3,{},function (res) {
-          console.log(res);
-          that.list1 = res.data.data;
-          console.log(that.list1);
-        });
-        //用户积分明细列表
-        this.$ajax.axiosGet('/user/userinfo/integralList',3,{
-          type:2,
-          page:1
+
+        let date=new Date();
+        that.today=that.$api.formatDate(date,'yyyy.MM.dd')
+        date.setMonth( date.getMonth()-3 );
+        that.ago=that.$api.formatDate(date,'yyyy.MM.dd')
+
+        // //用户积分统计
+        this.$api.axiosPost('/person/getUserScore',1,{
+          searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+          searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+          type:2, //全部
         },function (res) {
-          console.log(res);
-          that.postList = res.data.data;
-          that.totalPage = res.data.page;
-          console.log(that.postList);
-        })
+          that.list1.total=res.data.data.score
+        });
+
+        this.$api.axiosPost('/person/getUserScore',1,{
+          searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+          searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+          type:0, //获取
+        },function (res) {
+          that.list1.obtain=res.data.data.score
+        });
+
+        this.$api.axiosPost('/person/getUserScore',1,{
+          searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+          searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+          type:1, //消耗
+        },function (res) {
+          that.list1.consume=Math.abs(res.data.data.score)
+        });
+
+        this.change(1)
+
       }
     }
 </script>
