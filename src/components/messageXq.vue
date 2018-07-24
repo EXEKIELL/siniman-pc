@@ -17,7 +17,7 @@
                 <div><span>{{item.msg}}</span></div>
                 <div></div>
                 <div>
-                  <a v-if="item.openType==1" :href="item.link">点击查看</a>
+                  <a v-if="item.openType==1" v-show="item.link!=''" :href="item.link">点击查看</a>
                   <a v-if="item.openType==2" href="javascript:;" @click="receive(item.link,item.id,index)">点击领取</a>
 
                   <a v-if="item.openType==3 && item.link" href="javascript:;" style="color: #333">已领取</a>

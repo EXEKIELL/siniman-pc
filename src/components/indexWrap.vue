@@ -46,13 +46,13 @@
                     </router-link>
 
                   </li>
-                  <li>
+                  <li @click="headRight.message = 0">
                     <router-link to="/indexWrap/messageXq">
-                      <span></span><span>消息</span><span v-show="headRight.message">{{headRight.message}}</span>
+                      <span></span><span>消息</span><span v-show="headRight.message>0">{{headRight.message}}</span>
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="#">
+                    <router-link to="/indexWrap/integralDetail">
                       <span></span><span>积分：</span><span>{{headRight.integral}}</span>
                     </router-link>
                   </li>
