@@ -6,8 +6,9 @@
         </div>
         <div class="w3-cont" style="flex-wrap: wrap;justify-content: initial;">
 
-          <el-container :span="24" v-for="(item,index) in postData.list">
+          <el-container :span="24" v-for="(item,index) in postData.list" :key="index">
             <el-header>
+
               <el-row>
                 <el-col :span="8">
                   <div class="grid-left bg-purple">
@@ -32,30 +33,33 @@
               </el-row>
             </el-header>
             <el-main>
-              <el-row>
-                <el-col :span="5">
-                  <div class="grid-content bg-purple">
-                    <div class="pro_img">
-                      <img  :src="item.proImg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
+              <div @click="desc(item.productId)">
+                <el-row>
+                  <el-col :span="5">
+                    <div class="grid-content bg-purple">
+                      <div class="pro_img">
+                        <img  :src="item.proImg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
+                      </div>
                     </div>
-                  </div>
-                </el-col>
-                <el-col :span="15">
-                  <div class="prodesc">
-                    <router-link tag="div" :to="{path:'/indexWrap/shareProject',query:{productId:item.productId}}">
-                      {{ item.productName }}
-                    </router-link>
-                    <div>
-                      <el-tag v-for="val in item.protag">{{ val.tagname }}</el-tag>
+                  </el-col>
+                  <el-col :span="15">
+                    <div class="prodesc">
+                      <router-link tag="div" :to="{path:'/indexWrap/shareProject',query:{productId:item.productId}}">
+                        {{ item.productName }}
+                      </router-link>
+                      <div>
+                        <el-tag v-for="(val,key) in item.protag" :key="key">{{ val.tagname }}</el-tag>
+                      </div>
                     </div>
-                  </div>
-                </el-col>
-                <el-col :span="4">
-                  <div class="grid-content bg-purple">
-                    {{ item.payIntegral }}积分
-                  </div>
-                </el-col>
-              </el-row>
+                  </el-col>
+                  <el-col :span="4">
+                    <div class="grid-content bg-purple">
+                      {{ item.payIntegral }}积分
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+
             </el-main>
             <div style="clear: both"></div>
           </el-container>
@@ -98,6 +102,9 @@
             let data = res.data.data;
             that.postData = data;
           })
+        },
+        desc(id){
+          this.$router.push({path:'/indexWrap/shareProject',query:{productId:id}})
         }
       },
       mounted(){

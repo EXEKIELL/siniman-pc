@@ -63,10 +63,7 @@
             $('.tishi2').text('密码不能为空')
           }else {
             this.$store.dispatch('login/LoginPost')
-
           }
-
-
           event.preventDefault()
         },
         sub1(){

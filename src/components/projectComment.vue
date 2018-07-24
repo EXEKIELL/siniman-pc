@@ -10,7 +10,8 @@
         </div>
         <div class="list-2">
           <div>
-            <div><span style="display: none"></span>
+            <div>
+              <span style="display: none"></span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span>{{ item.username }}</span></div>
           </div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="myProject">
+  <div id="myProject" v-loading.body="listLoading">
     <div class="mp-top clearFix">
       <div class="top-left">
         <div class="bigImg">
@@ -109,16 +109,30 @@
                 <div class="item-cont">
                   <div>已选择：</div>
                   <div class="info">
-                    <el-select v-model="value5" multiple placeholder="请选择标签">
+                    <el-select v-model="value5" @remove-tag="seletTag" @change="seletTag" multiple placeholder="请选择标签">
                       <el-option-group
-                        v-for="item in tags"
-                        :label="item.cat_name">
-                        <el-option
-                          v-for="val in item.lists"
-                          :key="val.id"
-                          :label="val.tagname"
-                          :value="val.id">
-                        </el-option>
+                        v-for="(item,key) in tags"
+                        :label="item.cat_name" :key="key">
+                        <template v-for="val in item.lists">
+                          <template v-if="invalue5(val.id,item.disabled)">
+                            <el-option
+                              :key="val.id"
+                              :label="val.tagname"
+                              :value="val.id"
+                              :disabled="false"
+                            ></el-option>
+                          </template>
+                          <template v-else>
+                            <el-option
+                              :key="val.id"
+                              :label="val.tagname"
+                              :value="val.id"
+                              :disabled="item.disabled"
+                            ></el-option>
+                          </template>
+
+                        </template>
+
                       </el-option-group>
                     </el-select>
                   </div>
@@ -164,23 +178,7 @@
                 <div><span>{{ sysconfig.pcprize3.price }}</span></div>
               </div>
             </div>
-            <div style="display: none">
-              <div>
-                <img src="../../static/img/wechai_icon.png" alt="">
-                <div>
-                  <img src="../../static/img/weixinerweima.png" alt="">
-                </div>
-              </div>
-              <div>
-                <img src="../../static/img/weibo_icon.png" alt="">
-              </div>
-              <div>
-                <img src="../../static/img/qq_icon.png" alt="">
-              </div>
-              <div>
-                <img src="../../static/img/qqzone_icon.png" alt="">
-              </div>
-            </div>
+
             <div>
               <div><span>赢豪礼规则</span></div>
               <div class="activityRules" v-html="sysconfig.activityRules.value">
@@ -200,6 +198,7 @@
   import ProjectSpace from './projectSpace'
   import ProjectConvert from './projectConvert'
   import ProjectComment from './projectComment'
+
     export default {
       name: "MyProject",
       data(){
@@ -226,7 +225,8 @@
           imgInfo:[],
           projectSpaceList:[],
           value5:[],
-          sysconfig:{}
+          sysconfig:{},
+          listLoading:false
         }
       },
 
@@ -254,14 +254,28 @@
             this.$data.fenxiang = false;
             this.$data.bianjiBoxTitle = "编辑方案信息";
             this.$data.bianjiBox = true
+            /*方案标签设置*/
+            let tags=this.tags
+            let value5=this.value5
+            for (let i=0;i<tags.length;i++){
+              let lists=tags[i].lists
+              this.tags[i].disabled=false
+              for (let y=0;y<lists.length;y++){
+                if(value5.indexOf(lists[y].id)>=0){
+                  this.tags[i].disabled=true
+                }
+              }
+            }
           }
         },
+
         bianjiBoxSub(){
           const that = this;
           that.form1.protags=that.value5
           this.$api.axiosPost('/product/update',1,that.form1,function (res) {
-            console.log(res)
+
             that.$data.bianjiBox = false;
+            that.getdesc()
             $('body').css({
               overflow:'initial'
             })
@@ -281,25 +295,8 @@
           this.imgInfo[index].show=1;
 
         },
-        changeTag(index,index2,val2){
-          for(var i = 0;i<this.tagsels.length;i++){
-            if(val2.catalogname == this.tagsels[i].catalogname){
-              if(this.tagsels[i].list.find(function (val) {
-                return val.tagname == val2.tagname
-              }) == undefined){
-
-                this.tagsels[i].list.push(val2)
-              }
-            }
-          }
-        },
         del(val,index){
           this.form1.producttag[0].splice(index,1)
-          // for(var i = 0;i<this.tagsels.length;i++){
-          //   if(val.catalogname == this.tagsels[i].catalogname){
-          //     this.tagsels[i].list.splice(index,1);
-          //   }
-          // }
         },
         setCover(id,index){
           let that=this
@@ -315,8 +312,79 @@
               }
             }
           })
-        }
+        },
+
+        /*是否在选中的数组中*/
+        invalue5(id,disabled){
+          let value5=this.value5
+          if(value5.indexOf(id)>=0){
+            return true
+          }
+          return false
+        },
+        /*选中改变事件*/
+        seletTag(){
+          /*方案标签设置*/
+          let tags=this.tags
+          let value5=this.value5
+          for (let i=0;i<tags.length;i++){
+            let lists=tags[i].lists
+            this.tags[i].disabled=false
+            for (let y=0;y<lists.length;y++){
+              if(value5.indexOf(lists[y].id)>=0){
+                this.tags[i].disabled=true
+              }
+            }
+          }
+        },
+        /*获取方案详情*/
+        getdesc(id){
+          let productId = this.$router.history.current.query.productId;
+          const that = this;
+          //方案详情
+          this.listLoading=true
+          this.$api.axiosPost('/product/productDetail',1,{
+            productId:productId
+          },function (res) {
+            that.productInfo = JSON.parse(res.data.productInfo);
+            //编辑信息赋值
+            that.form1 = JSON.parse(res.data.productInfo);
+            var res1 = JSON.parse(res.data.productInfo);
+            var desid = res1.desid;
+            var st = res1.createtime;
+            that.listLoading=false
+            let producttag=that.form1.producttag[0]
+            for(let i=0;i<producttag.length;i++){
+              that.value5.push(producttag[i].id)
+            }
+            //获取渲染图
+            that.$api.axiosPost('/render/synchro',1,{
+              designId:desid,
+              // startTime:st,
+              start:0,
+              num:10
+            },function (res){
+
+              that.imgInfo = res.data.renders;
+
+              that.projectSpaceList = res.data.renders;
+
+              var bigImg = that.$refs.bigImg;
+              $(bigImg).attr({
+                src:res.data.renders[0].img
+              })
+              $('.min-swiper').hover(function(){
+
+                $(this).children(".min-swiper").show();
+              },function(){
+                $(this).children(".min-swiper").hide();
+              });
+
+            })
+          })
+        },
       },
+
       updated(){
         var swiper1 = new Swiper('#swiper1',{
           pagination: '.swiper-pagination',
@@ -327,57 +395,15 @@
         })
       },
       mounted(){
-        let productId = this.$router.history.current.query.productId;
+
         let sysconfig=JSON.parse(localStorage.getItem("sysconfig"))
         this.sysconfig=sysconfig
+
         const that = this;
-        //方案详情
-        this.$api.axiosPost('/product/productDetail',1,{
-          productId:productId
-        },function (res) {
-          that.productInfo = JSON.parse(res.data.productInfo);
-          //编辑信息赋值
-          that.form1 = JSON.parse(res.data.productInfo);
-          var res1 = JSON.parse(res.data.productInfo);
-          var desid = res1.desid;
-          var st = res1.createtime;
-
-          let producttag=that.form1.producttag[0]
-          for(let i=0;i<producttag.length;i++){
-              that.value5.push(producttag[i].id)
-          }
-          //获取渲染图
-          that.$api.axiosPost('/render/synchro',1,{
-            designId:desid,
-            // startTime:st,
-            start:0,
-            num:10
-          },function (res){
-
-            that.imgInfo = res.data.renders;
-
-            that.projectSpaceList = res.data.renders;
-
-            var bigImg = that.$refs.bigImg;
-            $(bigImg).attr({
-              src:res.data.renders[0].img
-            })
-            $('.min-swiper').hover(function(){
-
-              $(this).children(".min-swiper").show();
-            },function(){
-              $(this).children(".min-swiper").hide();
-            });
-
-          })
-        })
-
-        // let tagsList = that.form1.tags.split(',');
+        that.getdesc()
         that.$api.axiosPost('/tag/getTagList',1,{},function (res) {
           that.tags = res.data.data;
-          // for(var i = 0;i<that.tags.length;i++){
-          //   that.tagsels[i].catalogname = that.tags[i].catalogname
-          // }
+
         })
       }
     }

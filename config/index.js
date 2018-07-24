@@ -11,12 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/commodity':{
-        target:'http://localhost:8081',
-        changeOrigin:true,
-        pathRewrite:{
-          '^/commodity':'/commodity'
-        }
+      '*':{
+        target:'http://127.0.0.1:8080/share/',
+        changeOrigin:true
       }
     },
 
@@ -51,7 +48,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

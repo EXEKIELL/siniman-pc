@@ -26,12 +26,12 @@
       data(){
         return {
           dataList:[
-            {type:"system",img:'../../static/img/icon30.png',name:'系统消息',message:0,show:true},
-            {type:"reservation",img:'../../static/img/icon33.png',name:'预约设计',message:0,show:true},
-            {type:"integral",img:'../../static/img/icon34.png',name:'积分消息',message:0,show:true},
-            {type:"activity",img:'../../static/img/icon35.png',name:'活动消息',message:0,show:true},
-            {type:"",img:'../../static/img/icon31.png',name:'订单消息',message:0,show:false},
-            {type:"",img:'../../static/img/icon32.png',name:'客户跟进',message:0,show:false},
+            {type:"system",img:'./static/img/icon30.png',name:'系统消息',message:0,show:true},
+            {type:"reservation",img:'./static/img/icon33.png',name:'预约设计',message:0,show:true},
+            {type:"integral",img:'./static/img/icon34.png',name:'积分消息',message:0,show:true},
+            {type:"activity",img:'./static/img/icon35.png',name:'活动消息',message:0,show:true},
+            {type:"",img:'./static/img/icon31.png',name:'订单消息',message:0,show:false},
+            {type:"",img:'./static/img/icon32.png',name:'客户跟进',message:0,show:false},
           ]
         }
       },

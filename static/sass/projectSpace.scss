@@ -5,14 +5,14 @@
     flex-wrap: wrap;
     padding: 45px;
     .wrap-list{
-      width: 49%;
+      width: 98%;
       overflow: hidden;
       transition: 0.5s;
       margin-bottom: 30px;
       >div:first-child{
         position: relative;
         margin: 25px;
-        height: 350px;
+        //height: 350px;
         display: flex;
         //height: auto;
         >img{

@@ -47,7 +47,7 @@
 
           <div class="tright-3" style="margin-right: 0">
             <span></span><span>{{productInfo.customername}}</span>
-            <span></span><span>{{productInfo.customercontact}}</span>
+            <span></span><span>{{ phoneStr(productInfo.customercontact) }}</span>
             <span></span><span>{{productInfo.customeraddr}}</span>
           </div>
           <div class="tright-4">
@@ -97,7 +97,7 @@
                     <div><span>{{productInfo.productionmark}}积分</span></div>
                     <div>
                       <div><span></span><span>{{productInfo.customername}}</span></div>
-                      <div><span></span><span>{{productInfo.customercontact}}</span></div>
+                      <div><span></span><span>{{ phoneStr(productInfo.customercontact) }}</span></div>
                       <div><span></span><span>{{productInfo.customeraddr}}</span></div>
                     </div>
                     <div>
@@ -181,10 +181,19 @@
           scoreUserId:null,
           userId:null,
           clientId:'',
-          navIndex:0
+          navIndex:0,
+          ordercount:0,
         }
       },
+
       methods:{
+        phoneStr(str){
+          if(str){
+            let str2 = str.substr(0,3)+"****"+str.substr(7);
+            return str2;
+          }
+
+        },
         navBtn(index,component){
 
           this.$data.detail = component;
@@ -226,8 +235,24 @@
           // $('body').css({
           //   overflow:'hidden'
           // });
-          this.tan1 = true
-          this.duihuan = true
+          let userinfo=JSON.parse(localStorage.getItem('user-info'))
+          if(userinfo.userid==this.productInfo.userid){
+            this.$message.error('不能兑换自己的方案')
+            return false
+          }
+          if(this.ordercount>0){
+            this.$confirm('您已经兑换过这个方案了，是否继续？','提示',{
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(()=>{
+              this.tan1 = true
+              this.duihuan = true
+            }).catch(()=>{})
+          }else{
+            this.tan1 = true
+            this.duihuan = true
+          }
 
         },
         closetan(){
@@ -286,7 +311,7 @@
         },function (res) {
           that.productInfo = JSON.parse(res.data.productInfo);
           //编辑信息赋值
-
+          that.ordercount=res.data.ordercount
           let res1 = JSON.parse(res.data.productInfo);
           let desid = res1.desid
           let st = res1.createtime
@@ -305,56 +330,6 @@
         })
 
 
-
-        //方案详情获取
-        // this.$api.axiosGet('/product/productDetail'+that.$store.state.login.str1,{
-        //   productId:productId
-        // },function (res) {
-        //   console.log(res)
-        //   console.log('方案详情获取',JSON.parse(res.data.productInfo))
-        //   console.log(JSON.parse(res.data.productInfo));
-        //   that.productInfo = JSON.parse(res.data.productInfo);
-        //   that.clientId = JSON.parse(res.data.productInfo).customerid
-        //   var res1 = JSON.parse(res.data.productInfo);
-        //   console.log(userId,res1.userid);
-        //   that.scoreUserId = res1.userid;
-        //
-        //   //判定是否能兑换
-        //
-        //   // if(res1.userid == userId){
-        //   //   that.text1 = '无需兑换';
-        //   //   var btn = that.$refs.duihuanbtn;
-        //   //   $(btn).attr('disabled',true)
-        //   // }
-        //   console.log(res1)
-        //   var desid = res1.desid;
-        //   var st = res1.createtime;
-        //   //渲染图获取
-        //   that.$api.axiosGet('/render/synchro'+that.$store.state.login.str1,{
-        //     designId:desid,
-        //     // startTime:st,
-        //     start:0,
-        //     num:10
-        //   },function (res){
-        //     console.log(res)
-        //     that.imgInfo = res.data.renders
-        //     that.shareSpaceInfo = res.data.renders
-        //     var bigImg = that.$refs.bigImg
-        //     $(bigImg).attr({
-        //       src:res.data.renders[0].img
-        //     })
-        //     console.log(that.imgInfo)
-        //     // console.log(JSON.parse(res.data.productInfo))
-        //   })
-        // })
-      //用户积分查询
-      //   this.$api.axiosPost('/person/getUserScore'+that.$store.state.login.str1,1,{
-      //     token:token,
-      //     userId:userId+''
-      //   },function (res) {
-      //     console.log(res)
-      //     that.score = res.data.attributes.score
-      //   })
       }
     }
 </script>

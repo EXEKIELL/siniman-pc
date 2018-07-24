@@ -47,7 +47,7 @@
 
                   </li>
                   <li>
-                    <router-link to="/indexWrap/messageManage">
+                    <router-link to="/indexWrap/messageXq">
                       <span></span><span>消息</span><span v-show="headRight.message">{{headRight.message}}</span>
                     </router-link>
                   </li>
@@ -62,7 +62,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <div @click="exit">
+                    <div @click="exit" style="cursor:pointer">
                       <span></span><span>退出</span>
                     </div>
                   </li>
@@ -88,7 +88,7 @@
           show2:true,
           value1: '',
           headLeft: {
-            src:"../../static/img/hlicon.png",
+            src:"./static/img/hlicon.png",
             text:"个人中心"
           },
           headRight:{
@@ -97,9 +97,9 @@
             integral:''
           },
           swiperList:[
-            {src:"../../static/img/img01.png"},
-            {src:"../../static/img/img01.png"},
-            {src:"../../static/img/img01.png"}
+            {src:"./static/img/img01.png"},
+            {src:"./static/img/img01.png"},
+            {src:"./static/img/img01.png"}
           ],
           shou2List:[
             {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false},
@@ -256,9 +256,10 @@
         }
       },
       mounted(){
+        let userinfo=JSON.parse(localStorage.getItem('user-info'))
 
-        this.headRight.headUrl = JSON.parse(localStorage.getItem('user-info')).img==''?'../../static/img/head05.png':JSON.parse(localStorage.getItem('user-info')).img;
-        this.headRight.integral = JSON.parse(localStorage.getItem('user-info')).score;
+        this.headRight.headUrl = userinfo.img==''?'../../static/img/head05.png':userinfo.img;
+        this.headRight.integral = userinfo.score;
         let unread= JSON.parse(localStorage.getItem('user-info')).unread;
         if(unread>=99){
           this.headRight.message="99+"

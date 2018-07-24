@@ -118,7 +118,6 @@ const loginInfo = {
           context.dispatch('getSystem');
 
 
-
           router.push('/indexWrap/personCenter');
         }else{
           context.state.loging=false
@@ -140,6 +139,9 @@ const loginInfo = {
             },1000)
           }
         }
+        //保存账号密码
+        let str={user:context.state.form.username,psw:context.state.form.pswd}
+        localStorage.setItem('userpsw',JSON.stringify(str))
       })
     },
     //获取用户基本信息

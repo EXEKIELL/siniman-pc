@@ -73,7 +73,7 @@
                 <span></span><span>{{item.customername}}</span>
               </div>
               <div>
-                <span></span><span>{{item.customercontact}}</span>
+                <span></span><span>{{phoneStr(item.customercontact)}}</span>
               </div>
               <div>
                 <span></span><span>{{item.customeraddr|customeraddr }}</span>
@@ -150,6 +150,13 @@
         }
       },
       methods:{
+        phoneStr(str){
+          if(str){
+            let str2 = str.substr(0,3)+"****"+str.substr(7);
+            return str2;
+          }
+
+        },
         navSel(val,val1){
           $('.clearFix').find('.nav-right div').on("click",function(){
             $(this).parent().find('div').removeClass("sel")

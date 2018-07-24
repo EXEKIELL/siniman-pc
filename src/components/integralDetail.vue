@@ -61,8 +61,10 @@
           </div>
         </div>
       </div>
+
       <div class="list2">
         <div class="nav">
+          <button class="link" @click="golink">积分商城</button>
           <ul>
             <li v-for="(item,index) in navBtns1"><span :class="{sel:item.selClass}" @click="clickNav(index)">{{item.text}}</span></li>
           </ul>
@@ -152,6 +154,12 @@
 
           })
         },
+        /*去积分商城 */
+        golink(){
+          let sysconfig=JSON.parse(localStorage.getItem('sysconfig'))
+          let userpsw=JSON.parse(localStorage.getItem('userpsw'))
+          window.open(sysconfig.points_mall.value+'?username='+userpsw.user+'&password='+userpsw.psw)
+        },
       },
       filters:{
 
@@ -197,6 +205,19 @@
 
 <style lang="scss" scoped>
 @import "../../static/sass/integralDetail";
+  .nav{
+    position: relative;
+  }
+.nav .link{
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  background-color: #a51e32;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+}
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

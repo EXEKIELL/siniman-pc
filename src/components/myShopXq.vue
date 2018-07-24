@@ -21,6 +21,7 @@
                 :before-upload="beforeAvatarUpload"
                 :on-success="uploadSuccess"
                 :file-list="file_list"
+
               >
                 <i class="el-icon-plus"></i>
               </el-upload>

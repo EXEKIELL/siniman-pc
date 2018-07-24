@@ -1,5 +1,5 @@
 <template>
-    <div id="messageXq">
+    <div id="messageXq" v-loading.body="listLoading">
       <div class="wrap">
         <div class="nav">
           <ul>
@@ -26,6 +26,7 @@
               </div>
             </li>
           </ul>
+          <button class="taskButton" v-if="msgType=='task' && msgList.length>=1" @click="receivelist">一键领取</button>
         </div>
         <div class="pagina" v-if="page===1">
           <el-pagination
@@ -55,18 +56,20 @@
             {text:"预约设计",selClass:false,type:"reservation"},
             {text:"积分消息",selClass:false,type:"integral"},
             {text:"活动消息",selClass:false,type:"activity"},
+            {text:"待领取积分",selClass:false,type:"task"},
           ],
           icons:[
-            {url:'../../static/img/icon41.png',name:'系统消息',type:"system"},
-            {url:'../../static/img/icon44.png',name:'预约设计',type:"reservation"},
-            {url:'../../static/img/icon45.png',name:'积分消息',type:"integral"},
-            {url:'../../static/img/icon46.png',name:'活动消息',type:"activity"}
+            {url:'./static/img/icon41.png',name:'系统消息',type:"system"},
+            {url:'./static/img/icon44.png',name:'预约设计',type:"reservation"},
+            {url:'./static/img/icon45.png',name:'积分消息',type:"integral"},
+            {url:'./static/img/icon46.png',name:'活动消息',type:"activity"}
           ],
           msgType:null,
           msgList:[],
           page:1,
           last_page:1,
-          currentpage:1
+          currentpage:1,
+          listLoading:false,
         }
       },
       methods:{
@@ -85,13 +88,15 @@
         },
         pageChange(val){
           let that = this
+          that.listLoading=true
           that.$api.axiosPost('/msg/msgList',1,{
               data:{
-                type_code:that.msgType
+                type_code:that.msgType=="task"?"integral":that.msgType,
+                open_type:that.msgType=="task"?2:null
               },
               page:{
                 pageNum:val,
-                pageSize:10
+                pageSize:that.msgType=="task"?20:10
               }
           },function(res){
             let data=res.data.data
@@ -99,6 +104,8 @@
             that.last_page=data.last_page
 
             that.msgList=data.list
+
+            that.listLoading=false
           })
         },
         newtime(val){
@@ -121,6 +128,37 @@
               return false
             }
         },
+        /*一键领取*/
+        receivelist(){
+          let that=this
+          that.listLoading=true
+          let lists=that.msgList
+
+          for (let i=0;i<lists.length;i++){
+            let openType=lists[i].openType
+            if(openType==2){
+              let links=lists[i].link.split("/")
+              let ids=links[5].split(".")
+              let id=ids[0]
+              let msgId=lists[i].id
+
+              that.$api.axiosPost('/msg/receive',1,{
+                id: id,
+                msgId:msgId
+              },function(res){
+
+              })
+            }
+            Message.success("领取成功")
+            that.listLoading=false
+            setTimeout(function () {
+              that.pageChange(1)
+            },1000)
+
+          }
+
+        },
+        /*单个领取*/
         receive(link,msgId,index){
           let that=this
           let links=link.split("/")
@@ -171,5 +209,15 @@
     font-size: 16px;
     color: #333333;
     font-weight: bold;
+  }
+  .content{position: relative}
+  .taskButton{
+    position: absolute;
+    top: 14px;
+    right: 59px;
+    padding: 7px 10px;
+    color:  #fff;
+    background-color: #409EFF;
+    font-size: 16px;
   }
 </style>

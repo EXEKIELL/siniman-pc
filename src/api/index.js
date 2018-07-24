@@ -11,7 +11,9 @@ import {Message} from 'element-ui'
 //url
 var json01 = JSON.stringify({access_token:''});
 var sign_1 = Base64.encode(json01);
-var root = 'http://120.24.212.12:8080/share/';
+var root='http://120.24.212.12:8080/share/';
+// var root = 'http://localhost:8080/share/';
+
 var headers = [
   {'Content-Type':'application/x-www-form-urlencoded'},
   {'Content-Type': 'application/json'},
@@ -42,26 +44,34 @@ function filterNull (o) {
 
 function axiosPost(url,index,params,fun) {
 
+  let header={}
+  let access_token=getToken()
+  let authorization
+
+  if(access_token){
+    let Base64 = require('js-base64').Base64
+    header.access_token=access_token
+    let json=JSON.stringify(header)
+    let baseJson=Base64.encode(json)
+    authorization=baseJson
+  }
+  let link=url
+  if(authorization){
+    link +="?authorization="+authorization
+  }
+
   axios({
     method:'post',
     baseURL:root,
-    url:url,
+    url:link,
     headers:headers[index],
     data:params,
     dataType:"JSON",
     transformRequest:[function (data) {
 
-      let header={}
-      let access_token=getToken()
-      if(access_token){
-        let Base64 = require('js-base64').Base64
-        header.access_token=access_token
-        let json=JSON.stringify(header)
-        let baseJson=Base64.encode(json)
-        data.authorization='Basic '+baseJson
-
+      if(authorization){
+        data.authorization='Basic '+authorization
       }
-
       if(index==0 || index==2 ){
         Object.keys(data).forEach((key) => {
           if ((typeof data[key]) === 'object') {
@@ -98,6 +108,8 @@ function axiosPost(url,index,params,fun) {
     }
 
     // $('html , body').animate({scrollTop: 0},'fast');
+  }).catch((error)=>{
+    console.log(error)
   })
 }
 function getToken(){

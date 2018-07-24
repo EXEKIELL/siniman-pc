@@ -45,31 +45,31 @@
           </div>
         </div>
         <div class="list2">
-          <div>
+          <div @click="toUrl('积分明细')">
             <div>
               <img src="../../static/img/icon34.png" alt="">
             </div>
             <div>
               <div>积分明细</div>
-              <div @click="toUrl('积分明细')">点击进入>></div>
+              <div>点击进入>></div>
             </div>
           </div>
-          <div>
+          <div @click="toUrl('设计方案')">
             <div>
               <img src="../../static/img/icon53.png" alt="">
             </div>
             <div>
               <div>设计方案</div>
-              <div @click="toUrl('设计方案')">点击进入>></div>
+              <div>点击进入>></div>
             </div>
           </div>
-          <div>
+          <div @click="toUrl('消息管理')">
             <div>
               <img src="../../static/img/icon54.png" alt="">
             </div>
             <div>
               <div>消息管理</div>
-              <div @click="toUrl('消息管理')">点击进入>></div>
+              <div>点击进入>></div>
             </div>
           </div>
         </div>

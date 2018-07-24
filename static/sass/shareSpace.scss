@@ -5,15 +5,15 @@
     flex-wrap: wrap;
     padding: 45px;
     .wrap-list{
-      width: 49%;
+      width: 98%;
       overflow: hidden;
       transition: 0.5s;
       margin-bottom: 30px;
-      border: 1px solid #e4e4e4;
+      //border: 1px solid #e4e4e4;
       >div:first-child{
         position: relative;
         margin: 25px;
-        height: 384px;
+        //height: 384px;
         >img{
           width: 100%;
         }
@@ -63,13 +63,9 @@
         }
       }
     }
-    //.wrap-list:hover{
-    //  box-shadow: 0 0 35px #e4e4e4;
-    //  >div:first-child{
-    //    .del{
-    //      display: flex;
-    //    }
-    //  }
-    //}
+    .wrap-list:hover{
+      box-shadow: 0 0 35px #e4e4e4;
+
+    }
   }
 }

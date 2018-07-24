@@ -80,14 +80,41 @@
 
         // 指定图表的配置项和数据
         let option = {
+          tooltip : {
+            trigger: 'axis',
+            axisPointer : {
+              type : 'shadow'
+            }
+          },
+          toolbox: {
+            show : true,
+            feature : {
+              saveAsImage : {show: true}
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
           title: {
             text: '饼形图统计'
           },
           series: [{
             name: '销量',
             type: 'pie',
-            radius : '55%',//饼图的半径大小
-            data: self.echarts1Data
+            radius : '55%' //饼图的半径大小
+            ,data: self.echarts1Data,
+            label : {
+              normal : {
+                formatter: '{b}:{c}: ({d}%)',
+                textStyle : {
+                  fontWeight : 'normal',
+                  fontSize : 15
+                }
+              }
+            }
           }]
         };
 
@@ -95,6 +122,24 @@
         myChart.setOption(option);
         let myChart2 = echarts.init(document.getElementById('echarts2'));
         let option2 = {
+          tooltip : {
+            trigger: 'axis',
+            axisPointer : {
+              type : 'shadow'
+            }
+          },
+          toolbox: {
+            show : true,
+            feature : {
+              saveAsImage : {show: true}
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
           title: {
             text: '柱形图统计'
           },
@@ -113,7 +158,12 @@
           series: [{
             name: '销量',
             type: 'bar',
-            data: self.echarts2Data
+            data: self.echarts2Data,
+            label:{
+              normal:{
+                show: true,
+                position: 'top'}
+              },
           }]
         };
         myChart2.setOption(option2);
@@ -125,7 +175,9 @@
           title: {
             text: '转化率统计分析'
           },
-
+          legend: {
+            data:['百分比']
+          },
           xAxis : [
             {
               type : 'category',
@@ -142,7 +194,13 @@
             {
               name: '未选择',
               type: 'bar',
-              data: self.echarts3Data
+              data: self.echarts3Data,
+              label:{
+                normal:{
+                  show: true,
+                  position: 'top'
+                }
+              },
             }
           ]
         };
@@ -157,9 +215,9 @@
 <style lang="scss" scoped>
   @import "../../static/sass/myReport";
   .echarts{
-    width: 100%;
-    height: 362px;
+    width: 800px;
+    height: 600px;
     background-color: #fff;
-    margin-top: 0.2rem;
+    margin-top: 20px;
   }
 </style>
