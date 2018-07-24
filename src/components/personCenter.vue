@@ -92,7 +92,7 @@
       </div>
       <div class="w3-cont">
         <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
-          <div class="list1-img">
+          <div class="list1-img" v-if="">
             <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
 
             <div>

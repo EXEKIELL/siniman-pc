@@ -220,7 +220,13 @@ export default {
      let str=localStorage.getItem('sysconfig')
     // JSON.stringify
      let configSystem=JSON.parse(str)
-     return  configSystem[config].value
+
+     if(configSystem[config]){
+       return  configSystem[config].value
+     }else{
+       return null
+     }
+
   },
 
 }

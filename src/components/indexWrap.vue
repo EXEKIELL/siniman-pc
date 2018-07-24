@@ -2,33 +2,35 @@
     <div id="indexWrap">
       <el-container>
         <el-aside width="200px" v-if="true">
-          <div class="logo">
-            <img src="../../static/img/logo.png" alt="">
-          </div>
-          <div class="list" id="lis1">
-            <ul>
-              <li class="list1" @click="handleChange1">
-                <router-link to="/indexWrap/shareCommunity">
-                  <span></span>分享社区
-                </router-link>
-              </li>
-            </ul>
-          </div>
-          <div class="list" id="lis2" >
-            <ul>
-              <li class="list2" @click="handleChange2">
-                <router-link to="/indexWrap/personCenter" >
-                  <span></span>个人中心
-                </router-link>
-              </li>
-              <ul class="shou2">
-                <li v-for="(item,index) in shou2List" v-show="item.show" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
-                  <router-link :to="item.path">
-                    <span></span>{{item.text}}
+          <div class="asideWrap">
+            <div class="logo">
+              <img src="../../static/img/logo.png" alt="">
+            </div>
+            <div class="list" id="lis1">
+              <ul>
+                <li class="list1" @click="handleChange1">
+                  <router-link to="/indexWrap/shareCommunity">
+                    <span></span>分享社区
                   </router-link>
                 </li>
               </ul>
-            </ul>
+            </div>
+            <div class="list" id="lis2" >
+              <ul>
+                <li class="list2" @click="handleChange2">
+                  <router-link to="/indexWrap/personCenter" >
+                    <span></span>个人中心
+                  </router-link>
+                </li>
+                <ul class="shou2">
+                  <li v-for="(item,index) in shou2List" v-show="item.show" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
+                    <router-link :to="item.path">
+                      <span></span>{{item.text}}
+                    </router-link>
+                  </li>
+                </ul>
+              </ul>
+            </div>
           </div>
         </el-aside>
         <el-container>

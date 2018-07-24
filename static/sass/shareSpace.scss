@@ -5,9 +5,10 @@
     flex-wrap: wrap;
     padding: 45px;
     .wrap-list{
-      width: 98%;
+      width: 60%;
       overflow: hidden;
       transition: 0.5s;
+      margin: auto;
       margin-bottom: 30px;
       //border: 1px solid #e4e4e4;
       >div:first-child{
