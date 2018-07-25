@@ -96,7 +96,7 @@
               },
               page:{
                 pageNum:val,
-                pageSize:that.msgType=="task"?20:10
+                pageSize:that.msgType=="task"?10:5
               }
           },function(res){
             let data=res.data.data
@@ -106,6 +106,33 @@
             that.msgList=data.list
 
             that.listLoading=false
+            setTimeout(function () {
+              let len=that.msgList.length
+              for(let item=0;item<len;item++){
+                if(that.msgList[item].status==0){
+                  that.$api.axiosPost('/msg/updateStatus',1,{
+                    id: that.msgList[item].id
+                  },function(res){
+                    that.msgList[item].status=1
+                  })
+                }
+                if(item+1==len){
+                  that.$api.axiosPost('/msg/msgStatis',1,{},function (res) {
+                    if(res.data.status === 200){
+                      if(res.data.data>=99){
+                        that.$store.state.login.msgcount='99+'
+                      }else{
+                        that.$store.state.login.msgcount=res.data.data
+                      }
+
+                    }
+                  })
+                }
+              }
+
+            },2000)
+
+
           })
         },
         newtime(val){
@@ -116,13 +143,6 @@
             let that=this
             if(val==0){
               /**去改变消息状态**/
-              setTimeout(function(){
-                that.$api.axiosPost('/msg/updateStatus',1,{
-                  id: id
-                },function(res){
-                  that.msgList[index].status=1
-                })
-              },1000)
               return true
             }else{
               return false

@@ -48,9 +48,9 @@
                     </router-link>
 
                   </li>
-                  <li @click="headRight.message = 0">
+                  <li>
                     <router-link to="/indexWrap/messageXq">
-                      <span></span><span>消息</span><span v-show="headRight.message>0">{{headRight.message}}</span>
+                      <span></span><span>消息</span><span v-show="$store.state.login.msgcount>0">{{$store.state.login.msgcount}}</span>
                     </router-link>
                   </li>
                   <li>
@@ -262,13 +262,10 @@
 
         this.headRight.headUrl = userinfo.img==''?'../../static/img/head05.png':userinfo.img;
         this.headRight.integral = userinfo.score;
+
         let unread= JSON.parse(localStorage.getItem('user-info')).unread;
-        if(unread>=99){
-          this.headRight.message="99+"
-        }else{
-          this.headRight.message=unread
-        }
-        console.log("我的未读消息："+unread);
+
+
         let roles=JSON.parse(localStorage.getItem('user-info')).roles
         let thas=this
 

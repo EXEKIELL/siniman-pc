@@ -34,7 +34,8 @@ const loginInfo = {
     },
     timer1:null,
     num1:'',
-    ok:false
+    ok:false,
+    msgcount:0,
   },
   mutations:{
     CHANGEFLASH(state){
@@ -156,7 +157,17 @@ const loginInfo = {
 
         }
       })
+      //
+      api.axiosPost('/msg/msgStatis',1,{},function (res) {
+         if(res.data.status === 200){
+           if(res.data.data>=99){
+             context.state.msgcount='99+'
+           }else{
+             context.state.msgcount=res.data.data
+           }
 
+         }
+      })
     },
     //获取系统配置
     getSystem(context){
