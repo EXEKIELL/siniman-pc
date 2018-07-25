@@ -74,7 +74,7 @@
               <div>{{ item.productionmark }}积分</div>
               <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
             </div>
-            <div class="l1cont-2 clearFix">
+            <div class="l1cont-2 clearFix" v-if="item.customername != ''">
               <div>
                 <span></span><span>{{item.customername}}</span>
               </div>

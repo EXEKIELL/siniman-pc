@@ -2,13 +2,16 @@
   <div id="myProject" v-loading.body="listLoading">
     <div class="mp-top clearFix">
       <div class="top-left">
-        <div class="bigImg">
-
-          <img src="" alt="" ref="bigImg">
+        <div class="bigImg" style="justify-content: center;-webkit-justify-content: center;">
+          <img style="width: initial;max-height: 100%;max-width: 100%;" v-if="imgInfo.length == 0" :src="productInfo.simg" alt="">
+          <img v-else src="" alt="" ref="bigImg">
         </div>
         <div id="swiper1" class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
+            <div v-if="imgInfo.length==0" class="swiper-slide">
+              <img :src="productInfo.simg" alt="">
+            </div>
+            <div v-else class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
                  @mouseenter="check(item.img,index)">
               <img :src="item.img" alt="">
               <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}" style="display: none" @click="setCover(item.id,index)">
@@ -22,7 +25,7 @@
         <div class="tright-1">
           <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
         </div>
-        <div class="tright-2">
+        <div class="tright-2" v-if="productInfo.customername != ''">
           <span></span><span>{{productInfo.customername}}</span>
           <span></span><span>{{productInfo.customercontact}}</span>
           <span></span><span>{{productInfo.customeraddr}}</span>
