@@ -11,8 +11,8 @@ import {Message} from 'element-ui'
 //url
 var json01 = JSON.stringify({access_token:''});
 var sign_1 = Base64.encode(json01);
-// var root='http://120.24.212.12:8080/share/';
-var root='http://127.0.0.1:8080/share/';
+var root='http://120.24.212.12:8080/share/';
+// var root='http://127.0.0.1:8080/share/';
 // var root = window.location.protocol+'//'+window.location.host+'/share/';
 
 var headers = [
