@@ -104,7 +104,7 @@ const loginInfo = {
 
       api.axiosPost('/user/userLogin',0,{
         username:$.trim(context.state.form.username),
-        password:$.trim(context.state.form.pswd)
+        password:Base64.encode($.trim(context.state.form.pswd))
       },function (res) {
         if(!res.data.data.verify_key){
           //保存token
@@ -117,7 +117,6 @@ const loginInfo = {
 
           context.dispatch('getUserInfo');
           context.dispatch('getSystem');
-
 
           router.push('/indexWrap/personCenter');
         }else{

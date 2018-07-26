@@ -60,7 +60,7 @@
           <button @click="getproductList(1)">搜索</button>
         </div>
       </div>
-      <div class="w3-cont">
+      <div class="w3-cont" v-loading.body="listLoading">
         <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
             <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
@@ -152,7 +152,8 @@
           postTags:[],
           scoreStart:0,
           scoreEnd:1000,
-          productName:null
+          productName:null,
+          listLoading:false
         }
       },
       methods:{
@@ -233,6 +234,7 @@
 
         getproductList(page){
           const that = this;
+          that.listLoading=true
           // //获取方案列表
           this.$api.axiosPost('/product/productAll',1,{
             data:{
@@ -248,7 +250,7 @@
               pageSize:9
             }
           },function (res) {
-
+            that.listLoading=false
             let data = res.data.data;
             that.postData = data;
 
@@ -258,11 +260,14 @@
       },
       filters:{
         customeraddr:function(val){
-          if(val.length>=7){
-            return val.substr(0,7)+'...'
-          }else{
-            return val
+          if(val){
+            if(val.length>=7){
+              return val.substr(0,7)+'...'
+            }else{
+              return val
+            }
           }
+          return ''
         }
       },
       mounted(){
