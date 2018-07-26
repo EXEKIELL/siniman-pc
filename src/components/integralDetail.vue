@@ -20,6 +20,7 @@
               </div>
               <div>
                 <img src="../../static/img/icon36.png" alt="">
+                <button class="link" @click="golink">点击进入</button>
               </div>
             </div>
           </div>
@@ -37,7 +38,7 @@
                 </div>
               </div>
               <div class="list-right">
-                <img src="../../static/img/icon36.png" alt="">
+                <img src="../../static/img/icon37.png" alt="">
               </div>
             </div>
           </div>
@@ -55,7 +56,7 @@
                 </div>
               </div>
               <div>
-                <img src="../../static/img/icon36.png" alt="">
+                <img src="../../static/img/icon38.png" alt="">
               </div>
             </div>
           </div>
@@ -64,7 +65,6 @@
 
       <div class="list2">
         <div class="nav">
-          <button class="link" @click="golink">积分商城</button>
           <ul>
             <li v-for="(item,index) in navBtns1"><span :class="{sel:item.selClass}" @click="clickNav(index)">{{item.text}}</span></li>
           </ul>
@@ -208,16 +208,25 @@
   .nav{
     position: relative;
   }
-.nav .link{
+.link{
   position: absolute;
-  top: 20px;
-  left: 10px;
-  background-color: #a51e32;
-  padding: 10px 20px;
+  bottom: 15px;
+  left: 37px;
+  background-color: #ffffff;
+  padding: 5px 15px;
   cursor: pointer;
-  color: #fff;
-  font-size: 16px;
+  color: #f8917c;
+  font-size: 14px;
+  font-weight: lighter;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
+  .link:hover{
+    -webkit-box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    -moz-box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

@@ -2,9 +2,9 @@
     <div id="myShopXq">
       <div class="wrap">
         <div class="list1">
-          <div class="l1-title">
-            <span>修改资料</span>
-          </div>
+          <!--<div class="l1-title">-->
+            <!--<span>修改资料</span>-->
+          <!--</div>-->
           <div class="l1-cont">
             <div>
               <span>门店图片：</span>
@@ -30,24 +30,26 @@
               </el-dialog>
             </div>
             <div>
-              <div>
-                <span>门店名称：</span>
+              <div class="lc1">
+                <span>门店名称</span>
                 <input type="text" v-model="detailData.shopname" >
               </div>
-              <div>
-                <span>联系方式：</span>
+            </div>
+            <div>
+              <div class="lc1">
+                <span>联系方式</span>
                 <input type="text" v-model="detailData.shopcontact">
               </div>
-              <div>
-                <span>联系人：</span>
+            </div>
+            <div>
+              <div class="lc1">
+                <span>联&ensp;系&ensp;人</span>
                 <input type="text" v-model="detailData.contacts">
               </div>
-
             </div>
-
             <div>
-              <div>
-                <span>地区：</span>
+              <div class="lc1">
+                <span>选择地区</span>
                 <el-select v-model="ids[0]" @change="selPro" popper-class="abc" >
                   <el-option  value="">
                     <span>请选择省</span>
@@ -82,14 +84,16 @@
                   </el-option>
                 </el-select>
               </div>
-              <div>
-                <span>详细地址：</span>
+            </div>
+            <div>
+              <div class="lc1">
+                <span>详细地址</span>
                 <input type="text" v-model="detailData.detailaddress">
               </div>
             </div>
             <div>
-              <button  @click="xiugai">修改</button>
-              <button  style="background: none" @click="fanhui">返回</button>
+              <button  @click="xiugai">保存修改</button>
+              <button   @click="fanhui">返回</button>
             </div>
           </div>
         </div>

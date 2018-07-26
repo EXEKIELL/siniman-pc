@@ -53,6 +53,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
           }
         }
       }
@@ -96,6 +97,9 @@
             display: inline;
             padding: 10px 20px;
             cursor: pointer;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
           }
           span.sel{
             background-color: #3489ff;
