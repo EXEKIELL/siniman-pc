@@ -32,28 +32,40 @@
           </ul>
         </div>
         <div class="w3-cont">
-          <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
-            <div class="list1-img">
-              <img :src="item.simg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
-            </div>
-            <div class="list1-cont">
-              <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
-              <div class="l1cont-2 clearFix">
-                <div>
-                  <span></span><span>{{item.customername}}</span>
-                </div>
-                <div>
-                  <span></span><span>{{item.customercontact}}</span>
-                </div>
-                <div>
-                  <span></span><span>{{item.customeraddr}}</span>
+
+          <template v-if="productList.list.length>=1">
+            <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
+              <div class="list1-img">
+                <img :src="item.simg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
+              </div>
+              <div class="list1-cont">
+                <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
+                <div class="l1cont-2 clearFix">
+                  <div>
+                    <span></span><span>{{item.customername}}</span>
+                  </div>
+                  <div>
+                    <span></span><span>{{item.customercontact}}</span>
+                  </div>
+                  <div>
+                    <span></span><span>{{item.customeraddr}}</span>
+                  </div>
                 </div>
               </div>
+              <div class="list1-tag">
+              <span v-for="(item,index) in item.producttag[0]" :key="index" v-if="index<4">
+                <template v-if="item">
+                   {{item.tagname}}
+                </template>
+              </span>
+              </div>
             </div>
-            <div class="list1-tag">
-              <span v-for="(item,index) in item.producttag[0]" :key="index" v-if="index<4">{{item.tagname}}</span>
+          </template>
+          <template v-else>
+            <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
+              该类目下还没有设计方案哦
             </div>
-          </div>
+          </template>
         </div>
       </div>
       <div class="pagina">

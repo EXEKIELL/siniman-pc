@@ -37,7 +37,7 @@
           <el-header>
             <div class="clearFix head">
               <div class="head-left">
-                <span><img :src="headLeft.src" onerror="'../../static/img/head05.png'"></span><span>{{headLeft.text}}</span>
+                <span><img :src="headLeft.src" onerror="this.src='../../static/img/head05.png'"></span><span>{{headLeft.text}}</span>
               </div>
               <div class="head-right">
                 <ul class="clearFix">

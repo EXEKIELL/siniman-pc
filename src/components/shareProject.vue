@@ -55,7 +55,12 @@
             <span></span><span>{{productInfo.customeraddr}}</span>
           </div>
           <div class="tright-4">
-            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
+            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">
+              <template v-if="item">
+                   {{item.tagname}}
+              </template>
+
+            </span>
           </div>
           <div class="tright-5">
             <div>需求描述</div>
@@ -66,7 +71,7 @@
           <div class="tright-6">
             <div>
               <div style="width: 40px;height: 40px;border-radius:50%;overflow: hidden;margin-right: 10px;">
-                <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="'../../static/img/head05.png'" alt="">
+                <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="this.src='../../static/img/head05.png'" alt="">
               </div>
               <span>{{productInfo.username}}</span>
             </div>
@@ -95,7 +100,14 @@
             <div class="cont1" v-if="duihuan">
               <div class="listWrap">
                 <div class="list">
-                  <div><img :src="imgInfo[0].img" onerror="'../../static/img/img16.png'" alt=""></div>
+                  <div>
+                    <template v-if="imgInfo[0]">
+                      <img :src="imgInfo[0].img" onerror="'../../static/img/img16.png'" alt="">
+                    </template>
+                    <template v-else>
+                      <img :src="productInfo.simg" onerror="'../../static/img/img16.png'" alt="">
+                    </template>
+                  </div>
                   <div>
                     <div><span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span></div>
                     <div><span>{{productInfo.productionmark}}积分</span></div>
@@ -105,7 +117,9 @@
                       <div><span></span><span>{{productInfo.customeraddr}}</span></div>
                     </div>
                     <div>
-                      <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
+                      <span v-for="(item,index) in productInfo.producttag[0]" :key="index">
+                        <template v-if="item">{{item.tagname}}</template>
+                      </span>
                     </div>
                   </div>
                 </div>

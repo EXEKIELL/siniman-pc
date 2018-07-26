@@ -25,13 +25,24 @@
         <div class="tright-1">
           <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
         </div>
-        <div class="tright-2" v-if="productInfo.customername != ''">
-          <span></span><span>{{productInfo.customername}}</span>
-          <span></span><span>{{productInfo.customercontact}}</span>
-          <span></span><span>{{productInfo.customeraddr}}</span>
+        <div class="tright-2" v-if="productInfo.customername != '' && productInfo.customername!='--'">
+          <template v-if="productInfo.customername">
+            <span></span><span>{{productInfo.customername}}</span>
+          </template>
+
+          <template v-if="productInfo.customercontact">
+            <span></span><span>{{productInfo.customercontact}}</span>
+          </template>
+
+          <template v-if="productInfo.customeraddr">
+            <span></span><span>{{productInfo.customeraddr}}</span>
+          </template>
+
         </div>
         <div class="tright-3">
-          <span v-for="(item,index) in productInfo.producttag[0]" :key="index" >{{item.tagname}}</span>
+          <span v-for="(item,index) in productInfo.producttag[0]" :key="index" >
+            <template v-if="item">{{item.tagname}}</template>
+          </span>
         </div>
         <div class="tright-4">
           <div>需求描述</div>

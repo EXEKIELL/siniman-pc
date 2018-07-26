@@ -87,8 +87,14 @@
             </div>
           </div>
           <div class="list1-tag" >
+
             <template v-if="item.producttag[0].length>=1">
-              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
+                <template v-if="item1">
+                    {{item1.tagname}}
+                </template>
+
+              </span>
             </template>
             <template v-else>
               <span style="border-color:#fff ">...</span>
