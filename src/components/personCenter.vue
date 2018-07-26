@@ -112,20 +112,25 @@
               <div class="list1-cont">
                 <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
                 <div class="l1cont-2 clearFix">
-                  <div v-if="item.customername != ''">
+                  <div v-if="item.customername != '' && item.customername !='--' && item.customername !=0">
                     <span></span><span>{{item.customername}}</span>
                   </div>
-                  <div v-if="item.customercontact != ''">
+                  <div v-if="item.customercontact != '' && item.customercontact !=0 && item.customercontact !='--' ">
                     <span></span><span>{{item.customercontact}}</span>
                   </div>
-                  <div v-if="item.customeraddr != ''">
+                  <div v-if="item.customeraddr != '' && item.customeraddr !=0 && item.customeraddr !='--'  ">
                     <span></span><span>{{item.customeraddr}}</span>
                   </div>
                 </div>
               </div>
 
-              <div class="list1-tag">
-                <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+              <div class="list1-tag" v-if="item.producttag[0].length>=1">
+                <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
+                  <template v-if="item1">
+                        {{item1.tagname}}
+                  </template>
+
+                </span>
               </div>
             </div>
           </template>
