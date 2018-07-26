@@ -1,3 +1,11 @@
+.textEllipsis {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  word-break: normal !important;
+  width: 100%;
+  display: block;
+}
 #personCenter{
   .wrap1{
     .swiper-pagination-bullet{
@@ -589,20 +597,43 @@
 }
 #myShopXq{
   .el-icon-arrow-up:before{
-    color: #d94650;
+    color: #999999;
   }
   .el-input__inner{
     text-align: center;
     height: 60px;
     font-size: 16px;
-    color: #d94650;
+    color: #555555;
     padding:  0 1% ;
-    background-color: #fff1f2;
-    border: 1px solid #ffc7cb;
+    background-color: transparent;
+    border: 1px solid #c8c8c8;
     border-radius: 0;
   }
   .el-input__inner::placeholder{
-    color: #d94650;
+    color: #555555;
+  }
+  .el-upload--picture-card{
+    width: 60px;
+    height: 60px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    line-height: 65px;
+  }
+  .el-upload--picture-card i{
+    font-size: 22px;
+  }
+  .el-upload--picture-card:hover, .el-upload:focus{
+    border: 0;
+    -webkit-box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
+    -moz-box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
+    box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
+  }
+  .el-upload-list--picture-card .el-upload-list__item{
+    width: 60px;
+    height: 60px;
   }
 }
 #accountAssignment{
@@ -730,14 +761,14 @@
   zoom: 1;
 }
 .abc{
-  background-color: #fff1f2;
-  border: 1px solid #ffc7cb;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
   color: #d94650;
   .el-select-dropdown__item{
     left: 1px;
   }
   .popper__arrow::after{
-    border-bottom-color: #fff1f2!important;
+    border-bottom-color: #ffffff!important;
   }
   .el-select-dropdown__item.selected{
     color: #d94650;

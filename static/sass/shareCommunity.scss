@@ -62,6 +62,7 @@
       display: flex;
       background-color: #fff;
       margin-bottom: 40px;
+      align-items: center;
       >div:first-child{
         display: flex;
         width: 50%;
@@ -89,29 +90,53 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              color: #8794f4;
+              color: #bfbfbf;
               .icon{
                 width: 20px;
                 height: 19px;
-                background-size: 100% auto;
+                background-size: 50% auto;
                 margin-right: 5px;
               }
               .icon0{
                 background: url("../../static/img/p1.png") no-repeat center;
+                background-size: 80% auto;
               }
+
               .icon1{
                 background: url("../../static/img/p2.png") no-repeat center;
+                background-size: 80% auto;
               }
+
               .icon2{
                 background: url("../../static/img/p3.png") no-repeat center;
+                background-size: 80% auto;
               }
+
               .icon3{
                 background: url("../../static/img/p4.png") no-repeat center;
+                background-size: 80% auto;
               }
+
             }
             li.sel{
               font-weight: bold;
-              border: 1px solid #8794f4;
+              color: #8794f4;
+              .icon0{
+                background: url("../../static/img/p1_sel.png") no-repeat center;
+                background-size: 80% auto;
+              }
+              .icon1{
+                background: url("../../static/img/p2_sel.png") no-repeat center;
+                background-size: 80% auto;
+              }
+              .icon2{
+                background: url("../../static/img/p3_sel.png") no-repeat center;
+                background-size: 80% auto;
+              }
+              .icon3{
+                background: url("../../static/img/p4_sel.png") no-repeat center;
+                background-size: 80% auto;
+              }
             }
           }
         }
@@ -138,20 +163,25 @@
       >div:nth-child(2){
         display: flex;
         width: 30%;
+        height: 40px;
         input{
           width: 80%;
           font-size: 16px;
-          color: #8693f3;
-          border: 1px solid #8693f3;
+          color: #333333;
+          border: 1px solid #bfbfbf;
           padding: 0 20px;
-          background-color: #f0f2ff;
+          background-color: transparent;
         }
         input::placeholder{
-          color: #8693f3;
+          color: #bfbfbf;
         }
+
         button{
           width: 20%;
           color: #ffffff;
+          background-color: #bfbfbf;
+        }
+        button:hover{
           background-color: #8693f3;
         }
       }
@@ -216,6 +246,7 @@
         margin-right: 4%;
         height: 425px;
         padding: 30px 0 15px 0;
+        cursor: pointer;
         .list1-img{
           position: relative;
           height: 50%;
@@ -294,7 +325,7 @@
             }
             >div{
               display: inline-block;
-              color: red;
+              color: #333333;
             }
           }
           .l1cont-1{
@@ -304,9 +335,7 @@
             >span:first-child{
               margin-right: 20px;
             }
-            >span:last-child{
-              float: right;
-            }
+
           }
           .l1cont-2{
             margin-bottom: 15px;
@@ -343,19 +372,29 @@
           text-align: left;
           display: flex;
           justify-content: left;
-          padding: 0 20px 20px 20px;
+          padding: 0 20px 15px 20px;
           span{
             width: auto;
             text-align: center;
-            border: 1px solid #e2e6ff;
             padding: 5px 5px;
             font-size: 14px;
             color: #555555;
-            margin-right: 2%;
+            margin-right: 5%;
+            position: relative;
+          }
+          span:after{
+            content: '';
+            display: block;
+            position: absolute;
+            border-right: 1px solid #9b9b9b;
+            height: 65%;
+            right: -8px;
+            top: 20%;
           }
         }
         .list-user{
           font-size: 14px;
+          padding: 0 20px 20px 20px;
           >div{
             line-height: 30px;
           }
@@ -399,7 +438,7 @@
       .list1:hover{
         box-shadow: 1px 1px 35px 10px #ebebeb;
         .l1cont-1{
-          font-weight: bold;
+
         }
         .list1-img{
           >div:nth-child(2){

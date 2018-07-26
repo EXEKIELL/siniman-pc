@@ -5,64 +5,91 @@
           <span>我的订单</span>
         </div>
         <div class="w3-cont" style="flex-wrap: wrap;justify-content: initial;">
-
-          <el-container :span="24" v-for="(item,index) in postData.list" :key="index">
-            <el-header>
-
-              <el-row>
-                <el-col :span="8">
-                  <div class="grid-left bg-purple">
-                    <div class="headerImg">
-                      <img :src="item.userImg" alt="" onerror="'../../static/img/head05.png'" alt="">
-                    </div>
-                    <div class="username">{{ item.username }}</div>
-                    <div style="clear: both"></div>
+          <div class="list" v-for="(item,index) in 9" :key="index">
+            <div class="listWrap">
+              <div class="wrap_1">
+                <div class="w1_1">
+                  <div class="w1-img">
+                    <img src="../../static/img/head02.png" alt="">
                   </div>
-                </el-col>
-                <el-col :span="8">
-                  <div class="grid-left bg-purple">
-                    <div class="shopIcon">
-                      <img src="../../static/img/icon/icon19.png" alt="">
-                    </div>
-                    <div class="shopName">{{ item.shopName }}</div>
-                  </div>
-                </el-col>
-                <el-col :span="8"><div class="grid-content bg-purple"></div>
-                  {{ item.createTime}}
-                </el-col>
-              </el-row>
-            </el-header>
-            <el-main>
-              <div @click="desc(item.productId)">
-                <el-row>
-                  <el-col :span="5">
-                    <div class="grid-content bg-purple">
-                      <div class="pro_img">
-                        <img  :src="item.proImg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
-                      </div>
-                    </div>
-                  </el-col>
-                  <el-col :span="15">
-                    <div class="prodesc">
-                      <router-link tag="div" :to="{path:'/indexWrap/shareProject',query:{productId:item.productId}}">
-                        {{ item.productName }}
-                      </router-link>
-                      <div>
-                        <el-tag v-for="(val,key) in item.protag" :key="key">{{ val.tagname }}</el-tag>
-                      </div>
-                    </div>
-                  </el-col>
-                  <el-col :span="4">
-                    <div class="grid-content bg-purple">
-                      {{ item.payIntegral }}积分
-                    </div>
-                  </el-col>
-                </el-row>
+                  <div>超级管理员</div>
+                </div>
+                <div class="w1_2">2018-07-25 14：12</div>
               </div>
+              <div class="wrap_2">
+                <div class="w2-left">
+                  <img src="../../static/img/img02.png" alt="">
+                </div>
+                <div class="w2-right">
+                  <div class="r1 textEllipsis">广州天河·恒大天河·恒大天河·恒大天河·恒大天河·恒大御府</div>
+                  <div class="r2">
+                    <span v-for="(item,index) in 4" :key="index">装修阶段</span>
+                  </div>
+                  <div class="r3">50积分</div>
+                  <div class="r4">
+                    <span class="icon"></span><span>辽宁辽阳百恩策</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<el-container :span="24" v-for="(item,index) in postData.list" :key="index">-->
+            <!--<el-header>-->
 
-            </el-main>
-            <div style="clear: both"></div>
-          </el-container>
+              <!--<el-row>-->
+                <!--<el-col :span="8">-->
+                  <!--<div class="grid-left bg-purple">-->
+                    <!--<div class="headerImg">-->
+                      <!--<img :src="item.userImg" alt="" onerror="'../../static/img/head05.png'" alt="">-->
+                    <!--</div>-->
+                    <!--<div class="username">{{ item.username }}</div>-->
+                    <!--<div style="clear: both"></div>-->
+                  <!--</div>-->
+                <!--</el-col>-->
+                <!--<el-col :span="8">-->
+                  <!--<div class="grid-left bg-purple">-->
+                    <!--<div class="shopIcon">-->
+                      <!--<img src="../../static/img/icon/icon19.png" alt="">-->
+                    <!--</div>-->
+                    <!--<div class="shopName">{{ item.shopName }}</div>-->
+                  <!--</div>-->
+                <!--</el-col>-->
+                <!--<el-col :span="8"><div class="grid-content bg-purple"></div>-->
+                  <!--{{ item.createTime}}-->
+                <!--</el-col>-->
+              <!--</el-row>-->
+            <!--</el-header>-->
+            <!--<el-main>-->
+              <!--<div @click="desc(item.productId)">-->
+                <!--<el-row>-->
+                  <!--<el-col :span="5">-->
+                    <!--<div class="grid-content bg-purple">-->
+                      <!--<div class="pro_img">-->
+                        <!--<img  :src="item.proImg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                  <!--<el-col :span="15">-->
+                    <!--<div class="prodesc">-->
+                      <!--<router-link tag="div" :to="{path:'/indexWrap/shareProject',query:{productId:item.productId}}">-->
+                        <!--{{ item.productName }}-->
+                      <!--</router-link>-->
+                      <!--<div>-->
+                        <!--<el-tag v-for="(val,key) in item.protag" :key="key">{{ val.tagname }}</el-tag>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                  <!--<el-col :span="4">-->
+                    <!--<div class="grid-content bg-purple">-->
+                      <!--{{ item.payIntegral }}积分-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                <!--</el-row>-->
+              <!--</div>-->
+
+            <!--</el-main>-->
+            <!--<div style="clear: both"></div>-->
+          <!--</el-container>-->
 
         </div>
       </div>
