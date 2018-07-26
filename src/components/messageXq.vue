@@ -110,8 +110,10 @@
               let len=that.msgList.length
               for(let item=0;item<len;item++){
                 if(that.msgList[item].status==0){
+
                   that.$api.axiosPost('/msg/updateStatus',1,{
-                    id: that.msgList[item].id
+                    id: that.msgList[item].id,
+                    typecode:that.msgList[item].typeCode
                   },function(res){
                     that.msgList[item].status=1
                   })
