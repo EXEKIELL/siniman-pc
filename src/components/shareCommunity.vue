@@ -69,11 +69,13 @@
             </div>
           </div>
           <div class="list1-cont">
-            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
             <div class="price clearFix">
               <div>{{ item.productionmark }}积分</div>
               <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
+              <div class="area"><span>{{item.area}}m²</span></div>
             </div>
+            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
+
             <div class="l1cont-2 clearFix" v-if="item.customername != ''">
               <div>
                 <span></span><span>{{item.customername}}</span>
@@ -302,10 +304,15 @@
 <style lang="scss" scoped>
 @import "../../static/sass/shareCommunity";
 .totalPrice{
-  font-size: 14px !important;
-  color: #888 !important;
+  font-size: 16px !important;
+  color: #333333 !important;
   background: none !important;
 }
+  .area{
+    float: right;
+    color: #333333!important;
+    font-weight: bold;
+  }
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

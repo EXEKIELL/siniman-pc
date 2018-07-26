@@ -147,7 +147,7 @@
 <style lang="scss">
   @import "../../static/sass/public";
   .echarts{
-    width: 530px !important;
+    width: 600px !important;
     height: 320px !important;
   }
 </style>
