@@ -86,6 +86,14 @@ export default {
     toUrl(val){
       this.$router.push({path:'/indexWrap/myProject',query:{productId:val}})
     },
+    share(val){
+      this.$alert('分享', '温馨提示', {
+        confirmButtonText: '确定',
+        callback: action => {
+
+        }
+      });
+    },
     change(val){
       let that = this
       /*当月*/

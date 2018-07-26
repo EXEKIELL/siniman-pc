@@ -1,8 +1,8 @@
 <template>
   <div id="projectComment">
     <div class="wrap">
-
-      <div class="list clearFix" v-for="(item,index) in commentList">
+      <div v-if="commentList.length == 0" style="width: 100%;text-align: center;font-size: 18px;color: #333333;">暂无评论</div>
+      <div v-else class="list clearFix" v-for="(item,index) in commentList">
         <div class="list-1">
           <div class="headerImg">
             <img :src="item.userImg" alt="" onerror="'../../static/img/head05.png'">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="pagina">
+    <div class="pagina" v-if="commentList.length != 0">
       <el-pagination
         background
         layout="prev, pager, next"

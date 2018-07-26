@@ -1,7 +1,8 @@
 <template>
   <div id="shareSpace">
     <div class="wrap">
-      <div class="wrap-list" v-for="(item,index) in shareSpaceInfo" :key="index">
+      <div v-if="shareSpaceInfo.length == 0" style="width: 100%;text-align: center;font-size: 18px;color: #333333;">暂无图片描述</div>
+      <div v-else class="wrap-list" v-for="(item,index) in shareSpaceInfo" :key="index">
         <div class="list001" style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;justify-content: center;">
           <img :src='item.img' @click="click">
           <div class="tags01">

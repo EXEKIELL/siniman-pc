@@ -2,12 +2,16 @@
     <div id="shareProject">
       <div class="mp-top clearFix">
         <div class="top-left">
-          <div class="bigImg" style="display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center;">
+          <div class="bigImg" style="display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center">
             <img v-if="imgInfo.length>=1" :src="imgInfo[0].img" alt="" ref="bigImg">
+            <img style="width: initial;max-height: 100%;max-width: 100%;" v-else :src="productInfo.simg" alt="">
           </div>
           <div id="swiper1" class="swiper-container">
             <div class="swiper-wrapper">
-              <div style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+              <div v-if="imgInfo.length == 0" class="swiper-slide">
+                <img :src="productInfo.simg" alt="">
+              </div>
+              <div v-else style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
                 <img :src="item.img" alt="">
               </div>
             </div>
@@ -45,7 +49,7 @@
             </span>
           </div>
 
-          <div class="tright-3" style="margin-right: 0">
+          <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
             <span></span><span>{{productInfo.customername}}</span>
             <span></span><span>{{ phoneStr(productInfo.customercontact) }}</span>
             <span></span><span>{{productInfo.customeraddr}}</span>

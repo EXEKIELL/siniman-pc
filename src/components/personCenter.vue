@@ -91,12 +91,12 @@
         </ul>
       </div>
       <div class="w3-cont">
-        <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
-          <div class="list1-img" v-if="">
+        <div style="cursor: pointer;" class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+          <div class="list1-img" v-if="" style="">
             <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
 
-            <div>
-              <button @click="toUrl(item.id)">编辑方案</button>
+            <div style="top: 0;left: 0;">
+              <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>
             </div>
             <!--<div>-->
               <!--<div>-->
@@ -110,13 +110,13 @@
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
             <div class="l1cont-2 clearFix">
-              <div>
+              <div v-if="item.customername != ''">
                 <span></span><span>{{item.customername}}</span>
               </div>
-              <div>
+              <div v-if="item.customercontact != ''">
                 <span></span><span>{{item.customercontact}}</span>
               </div>
-              <div>
+              <div v-if="item.customeraddr != ''">
                 <span></span><span>{{item.customeraddr}}</span>
               </div>
             </div>

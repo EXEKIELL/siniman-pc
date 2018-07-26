@@ -22,26 +22,6 @@
       <div class="w3-title">
         <span>共享方案</span>
       </div>
-      <div class="w3-seek">
-        <div>
-          <div>排序：</div>
-          <div>
-            <ul class="orderby">
-              <li class="sel"  @click="paixu1('默认')" >默认</li>
-              <li v-for="(item,index) in paixus"  :class="{sel:item.isSel}" :key="index" @click="paixu1(item.text,index)">{{item.text}}</li>
-            </ul>
-          </div>
-          <div>
-            <input type="text" v-model="scoreStart" value="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
-            <span>~</span>
-            <input value="1000" v-model="scoreEnd" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
-          </div>
-        </div>
-        <div>
-          <input type="text" placeholder="请输入方案名称" v-model="productName">
-          <button @click="getproductList(1)">搜索</button>
-        </div>
-      </div>
       <div class="w3-nav">
         <ul>
           <li class="clearFix" v-for="(item,index) in tagsList" :key="index">
@@ -57,10 +37,36 @@
           </li>
         </ul>
       </div>
+      <div class="w3-seek">
+        <div>
+          <div>排序：</div>
+          <div>
+            <ul class="orderby">
+              <!--<li class="sel"  @click="paixu1('默认')" >默认</li>-->
+              <!--{{item.text}}-->
+              <li v-for="(item,index) in paixus"  :class="{sel:item.isSel}" :key="index" @click="paixu1(item.text,index)">
+                <span class="icon" :class="{icon0:index == 0,icon1:index == 1,icon2:index == 2,icon3:index == 3}"></span><span>{{item.text}}</span>
+              </li>
+            </ul>
+          </div>
+          <!--<div>-->
+            <!--<input type="text" v-model="scoreStart" value="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">-->
+            <!--<span>~</span>-->
+            <!--<input value="1000" v-model="scoreEnd" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">-->
+          <!--</div>-->
+        </div>
+        <div>
+          <input type="text" placeholder="请输入方案名称" v-model="productName">
+          <button @click="getproductList(1)">搜索</button>
+        </div>
+      </div>
       <div class="w3-cont">
         <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
           <div class="list1-img">
             <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+            <div style="top: -30px;left: 0; z-index: 200">
+              <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+            </div>
           </div>
           <div class="list1-cont">
             <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
@@ -68,7 +74,7 @@
               <div>{{ item.productionmark }}积分</div>
               <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
             </div>
-            <div class="l1cont-2 clearFix">
+            <div class="l1cont-2 clearFix" v-if="item.customername != ''">
               <div>
                 <span></span><span>{{item.customername}}</span>
               </div>
@@ -88,7 +94,7 @@
               <span style="border-color:#fff ">...</span>
             </template>
           </div>
-          <div class="list-user">
+          <div class="list-user clearFix">
             <el-col :span="12">
               <div class="grid-left bg-purple userbox">
                 <div class="userimg">
@@ -133,7 +139,7 @@
           swiperList:[],
           tagsList:[],
           paixus:[
-            {text:"积分",type:"",isSel:false},
+            {text:"价格",type:"",isSel:false},
             {text:"销量",isSel:false},
             {text:"点赞量",isSel:false},
             {text:"收藏量",isSel:false}
@@ -215,6 +221,14 @@
         toUrl(val){
 
           this.$router.push({path:'/indexWrap/shareProject',query:{productId:val}})
+        },
+        share(){
+          this.$alert('分享', '温馨提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+
+            }
+          });
         },
 
         getproductList(page){

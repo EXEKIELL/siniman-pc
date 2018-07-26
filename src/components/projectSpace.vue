@@ -1,7 +1,8 @@
 <template>
     <div id="projectSpace">
       <div class="wrap">
-        <div class="wrap-list" v-for="(item,index) in projectSpace" :key="index">
+        <div v-if="projectSpace.length == 0" style="width: 100%;text-align: center;font-size: 18px;color: #333333;">暂无详情</div>
+        <div v-else class="wrap-list" v-for="(item,index) in projectSpace" :key="index">
           <div>
             <img :src=item.img>
             <button class="del" style="display: none">
