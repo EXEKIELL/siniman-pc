@@ -21,19 +21,19 @@
             <div class="huifuBox" v-if="item.huifu">
               <el-input
                 type="textarea"
-                :rows="2"
+                :rows="1"
                 v-model="item.huifu.huifuContent"
                 :placeholder="'回复'+item.username+'：'">
               </el-input>
               <div class="huifuButton">
-                <el-button type="primary" @click="submitHuifu(item.huifu,index)">保存</el-button>
+                <el-button type="primary" style="background-color: #a51e32" @click="submitHuifu(item.huifu,index)">保存</el-button>
                 <el-button type="info" plain @click="huifuBox(index,item.msgid)">取消</el-button>
               </div>
             </div>
 
             <div class="huifu1" v-for="(vla,index2) in item.comments">
               <div class="huifuList">
-                <div><span>{{ vla.username }}：</span><span>{{ vla.content }}</span></div>
+                <div><span style="color: #a51e32">{{ vla.username }}</span>：<span>{{ vla.content }}</span></div>
                 <div><span> <span class="delete_conment" @click="delete1(vla.id,vla.userId,index,index2)">删除</span> | {{ getDate(vla.createTime) }}</span></div>
               </div>
             </div>

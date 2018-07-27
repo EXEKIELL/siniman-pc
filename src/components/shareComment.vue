@@ -37,7 +37,7 @@
 
             <div class="huifu1" v-for="(vla,index2) in item.comments">
               <div class="huifuList">
-                <div><span>{{ vla.username }}：</span><span>{{ vla.content }}</span></div>
+                <div><span style="color: #a51e32">{{ vla.username }}</span>：<span>{{ vla.content }}</span></div>
                 <div><span> {{ getDate(vla.createTime) }}</span></div>
               </div>
             </div>
