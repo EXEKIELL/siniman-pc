@@ -21,25 +21,44 @@
           <div class="tright-1">
             <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
           </div>
+
+          <div class="tright-4">
+            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">
+              <template v-if="item">
+                   {{item.tagname}}
+              </template>
+
+            </span>
+          </div>
+
+          <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
+            <span></span><span>{{productInfo.customername}}</span>
+            <span></span><span>{{ phoneStr(productInfo.customercontact) }}</span>
+            <span></span><span>{{productInfo.customeraddr}}</span>
+          </div>
           <div class="tright-2">
             <span class="price">
-              <span style="display: none"></span>
+              <span style=""></span>
               <span></span>
               <span style="color: red">
+
                 {{productInfo.productionmark}}积分
                 &nbsp;&nbsp;
-                <span class="totalPrice">装修价格 ¥{{ productInfo.totalPrice }}</span>
+                <span class="totalPrice" style="color: #ff0101">
+                  <span style="color: #000;background: none"> 总格 :</span>
+
+                  {{ productInfo.totalPrice }}元</span>
 
               </span>
             </span>
           </div>
-          <div class="tright-2">
+          <div class="tright-2 shouc">
             <span style="display: none"></span>
-            <span>
+            <span style="display: none">
               <span></span>
               <span>{{productInfo.salsecount}}</span>
             </span>
-            <span>
+            <span style="display: none">
               <span></span>
               <span>{{ productInfo.viewcount }}</span>
             </span>
@@ -49,14 +68,6 @@
             </span>
           </div>
 
-          <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
-            <span></span><span>{{productInfo.customername}}</span>
-            <span></span><span>{{ phoneStr(productInfo.customercontact) }}</span>
-            <span></span><span>{{productInfo.customeraddr}}</span>
-          </div>
-          <div class="tright-4">
-            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
-          </div>
           <div class="tright-5">
             <div>需求描述</div>
             <div>
@@ -66,7 +77,7 @@
           <div class="tright-6">
             <div>
               <div style="width: 40px;height: 40px;border-radius:50%;overflow: hidden;margin-right: 10px;">
-                <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="'../../static/img/head05.png'" alt="">
+                <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="this.src='../../static/img/head05.png'" alt="">
               </div>
               <span>{{productInfo.username}}</span>
             </div>
@@ -86,7 +97,7 @@
           <detail :is="detail" :shareSpaceInfo="shareSpaceInfo"></detail>
         </div>
       </div>
-      <div class="duihuan" v-if="tan1">
+      <div class="duihuan" v-if="tan1" v-loading.body="listLoading">
         <div class="wrap">
           <div class="biankuang">
             <div class="cont1-title">
@@ -95,7 +106,14 @@
             <div class="cont1" v-if="duihuan">
               <div class="listWrap">
                 <div class="list">
-                  <div><img :src="imgInfo[0].img" onerror="'../../static/img/img16.png'" alt=""></div>
+                  <div>
+                    <template v-if="imgInfo[0]">
+                      <img :src="imgInfo[0].img" onerror="'../../static/img/img16.png'" alt="">
+                    </template>
+                    <template v-else>
+                      <img :src="productInfo.simg" onerror="'../../static/img/img16.png'" alt="">
+                    </template>
+                  </div>
                   <div>
                     <div><span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span></div>
                     <div><span>{{productInfo.productionmark}}积分</span></div>
@@ -105,7 +123,9 @@
                       <div><span></span><span>{{productInfo.customeraddr}}</span></div>
                     </div>
                     <div>
-                      <span v-for="(item,index) in productInfo.producttag[0]" :key="index">{{item.tagname}}</span>
+                      <span v-for="(item,index) in productInfo.producttag[0]" :key="index">
+                        <template v-if="item">{{item.tagname}}</template>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -187,6 +207,7 @@
           clientId:'',
           navIndex:0,
           ordercount:0,
+          listLoading:false
         }
       },
 
@@ -208,7 +229,7 @@
           }
         },
         sucbtn(val){
-
+          this.listLoading=true
           let user =JSON.parse(this.userInfo)
           let userScore =user.score
           let that=this
@@ -227,13 +248,15 @@
               that.duihuan = false;
               that.title = ""
               that.suc = true
-
+              that.listLoading=false
             })
           }else {
             that.suc1 = true;
             that.duihuan = false;
             that.title = "";
+            that.listLoading=false
           }
+
         },
         lijiduihuan(){
           // $('body').css({
@@ -344,6 +367,11 @@
     font-size: 16px;
     color: #888;
     background: none !important;
+  }
+  .shouc{
+    float: right;
+    margin-top: -41px !important;
+
   }
 </style>
 <style lang="scss">

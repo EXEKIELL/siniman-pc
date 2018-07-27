@@ -281,7 +281,7 @@
         that.uploadUrl=baseUrl+'shop/upload'
         //获取地区列表
         this.$api.axiosPost('/area/getByParentId',1,{
-          parentId:''
+          parentId:0
         },function (res) {
           that.selectList = res.data.data
         })
@@ -294,6 +294,8 @@
           that.ids = [parseInt(res.data.data.province),parseInt(res.data.data.city),parseInt(res.data.data.region)]
 
           that.file_list=JSON.parse(that.detailData.coverphoto)
+
+
           //获取地区
           that.$api.axiosPost('/area/getByParentId',1,{
             parentId:that.ids[0]

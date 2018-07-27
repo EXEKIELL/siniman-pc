@@ -40,11 +40,11 @@
           line-height: 38px;
         }
         .el-range-input{
-          background-color: #fff2ef;
-          color: #ffa897;
+          //background-color: #fff2ef;
+          //color: #ffa897;
         }
         .el-range-input::placeholder{
-          color: #ffa897;
+          //color: #ffa897;
         }
         .el-input--prefix .el-input__inner {
           background-color: #fff2ef;
@@ -77,15 +77,15 @@
           height: 100%;
         }
         .el-range-input{
-          background-color: #e0f0ff;
-          color: #8ac3fa;
+          //background-color: #e0f0ff;
+          //color: #8ac3fa;
         }
         .el-range-separator{
           color: #8ac3fa;
           line-height: 38px;
         }
         .el-range-input::placeholder{
-          color: #8ac3fa;
+          //color: #8ac3fa;
         }
         .el-input__inner:focus{
           border: 1px solid #b9dcff;
@@ -485,11 +485,11 @@
           line-height: 56px;
         }
         .el-range-input{
-          background-color: #fff2ef;
-          color: #ffa897;
+          //background-color: #fff2ef;
+          //color: #ffa897;
         }
         .el-range-input::placeholder{
-          color: #ffa897;
+          //color: #ffa897;
         }
         .el-input--prefix .el-input__inner {
           background-color: #fff2ef;
@@ -780,4 +780,11 @@
   .el-icon-arrow-up:before{
     color: #d94650;
   }
+}
+.qart{
+  width: 300px;
+  height: 350px;
+}
+.el-textarea__inner::placeholder{
+  color: #aaa;
 }

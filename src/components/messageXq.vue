@@ -89,9 +89,10 @@
         pageChange(val){
           let that = this
           that.listLoading=true
+          that.msgList=[]
           that.$api.axiosPost('/msg/msgList',1,{
               data:{
-                type_code:that.msgType=="task"?"integral":that.msgType,
+                type_code:that.msgType=="task"?null:that.msgType,
                 open_type:that.msgType=="task"?2:null
               },
               page:{
@@ -110,8 +111,10 @@
               let len=that.msgList.length
               for(let item=0;item<len;item++){
                 if(that.msgList[item].status==0){
+
                   that.$api.axiosPost('/msg/updateStatus',1,{
-                    id: that.msgList[item].id
+                    id: that.msgList[item].id,
+                    typecode:that.msgList[item].typeCode
                   },function(res){
                     that.msgList[item].status=1
                   })
@@ -166,8 +169,10 @@
                 id: id,
                 msgId:msgId
               },function(res){
-
+                let integral=that.$store.state.login.integral;
+                that.$store.state.login.integral=integral+res.data.data
               })
+
             }
             Message.success("领取成功")
             that.listLoading=false
@@ -184,12 +189,15 @@
           let links=link.split("/")
           let ids=links[5].split(".")
           let id=ids[0]
+
           that.$api.axiosPost('/msg/receive',1,{
             id: id,
             msgId:msgId
           },function(res){
+            console.log(res)
             Message.success("领取成功")
-
+            let integral=that.$store.state.login.integral;
+            that.$store.state.login.integral=integral+res.data.data
             that.msgList[index].openType=3
           })
 

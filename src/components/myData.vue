@@ -11,33 +11,25 @@
             <div>
               <div>
                 <span>{{userdata.username}}</span>
-                <span v-for="(item,index) in roles" :key="index" v-if="index==0">{{item.name}}</span>
-                <div @mouseover="onshow" @mouseout="onhide">
-                  <div class="idendity">
-                    <ul>
-                      <li v-for="(item,index) in roles" :key="index">{{item.name}}</li>
-                    </ul>
-                  </div>
-                </div>
+
+                <span style="color: #999" v-for="(item,index) in roles" :key="index" v-if="index<=0">{{item.name}}</span>
+
               </div>
-              <div><span></span><span>{{userdata.phone}}</span></div>
+              <div class="icon phone"><span></span><span>{{userdata.phone}}</span></div>
+              <div class="icon account"><span></span><span>账号：</span><span>{{userdata.account}}</span></div>
+              <div class="icon shop"><span></span><span>门店：</span><span>{{shopName}}</span></div>
             </div>
           </div>
-          <div>
+
+          <div class="sater">
             <div>
-              <div><span></span><span>账号：</span><span>{{userdata.account}}</span></div>
-              <div><span></span><span>门店：</span><span>{{shopName}}</span></div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div>
+              <div class="huozan">
                 <span>获赞</span><span>{{userdata.goodcount==null?0:userdata.goodcount}}</span>
               </div>
-              <router-link tag="div" to="/indexWrap/myProjectIndex">
+              <router-link tag="div" class="zuop" to="/indexWrap/myProjectIndex">
                 <span>作品</span><span>{{userdata.productCount==null?0:userdata.productCount}}</span>
               </router-link>
-              <router-link tag="div" to="/indexWrap/messageXq?type=reservation">
+              <router-link tag="div" class="yuyue" to="/indexWrap/messageXq?type=reservation">
                 <span>预约</span><span>{{userdata.bespeakcount==null?0:userdata.bespeakcount}}</span>
               </router-link>
 
@@ -53,6 +45,7 @@
               <div>积分明细</div>
               <div>点击进入>></div>
             </div>
+            <span></span>
           </div>
           <div @click="toUrl('设计方案')">
             <div>
@@ -62,6 +55,7 @@
               <div>设计方案</div>
               <div>点击进入>></div>
             </div>
+            <span></span>
           </div>
           <div @click="toUrl('消息管理')">
             <div>
@@ -71,6 +65,7 @@
               <div>消息管理</div>
               <div>点击进入>></div>
             </div>
+            <span></span>
           </div>
         </div>
       </div>
@@ -82,9 +77,9 @@
       name: "MyData",
       data(){
         return {
-          headimg:'../../static/img/head05.png',
+          headimg:'./static/img/head05.png',
           userdata:'',//JSON.parse(localStorage.getItem('user-info')).data,
-          roles:'',//JSON.parse(JSON.parse(localStorage.getItem('user-info')).data.roles),
+          roles:'',//,
           shopName:''
         }
       },
@@ -110,6 +105,7 @@
         const that = this
 
         that.userdata = JSON.parse(localStorage.getItem('user-info'));
+
         let shopId = this.userdata.shops.split(",");
 
         this.$api.axiosPost('/shop/shopDetail',1,{
@@ -118,7 +114,7 @@
 
           that.shopName = res.data.data.shopname
         })
-        that.roles = JSON.parse(localStorage.getItem('user-info')).roles;
+        that.roles =JSON.parse(that.userdata.roles);
 
       }
     }

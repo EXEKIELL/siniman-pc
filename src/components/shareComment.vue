@@ -1,28 +1,29 @@
 <template>
   <div id="shareComment">
 
-    <div v-if="commentList.length!=0" class="huifuBox">
-      <h1>评论（{{ count }}）</h1>
+    <div class="huifuBox">
+      <h1 style="display: none">评论（{{ count }}）</h1>
       <el-input
+        class="messageInput"
         label=""
         v-model="huifuContent"
         type="textarea"
-        :rows="7"
+        :rows="4"
         resize="none"
-        placeholder="请留下您的评价，谢谢">
+        style="width: 98%"
+        placeholder="评论留言：">
       </el-input>
       <div class="huifuButton">
-        <el-button type="primary" @click="submitHuifu()">发表评价</el-button>
+        <el-button style="width: 200px;height: 60px; background-color: #a51e32;font-size: 18px;color: #fff"
+                   @click="submitHuifu()">评论留言</el-button>
       </div>
-
     </div>
 
     <div class="wrap">
-      <div v-if="commentList.length == 0" style="width: 100%;text-align: center;font-size: 18px;color: #333333;">暂无评论</div>
-      <div v-else class="list clearFix" v-for="(item,index) in commentList">
+      <div class="list clearFix" v-for="(item,index) in commentList">
         <div class="list-1">
           <div class="headerImg">
-            <img :src="item.userImg" alt="" onerror="'../../static/img/head05.png'">
+            <img :src="item.userImg" alt="" onerror="this.src='./static/img/head05.png'">
           </div>
         </div>
         <div class="list-2">
@@ -164,19 +165,7 @@
 .delete_conment{
   cursor:pointer;
 }
-.huifuBox{
-  width: 80%;
-  margin-bottom: 20px;
-}
-  .huifuBox .textarea{
-    height: 200px;
-  }
-  .huifuBox h1{
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: left;
-  }
+
 </style>
 <style lang="scss">
   @import "../../static/sass/public";

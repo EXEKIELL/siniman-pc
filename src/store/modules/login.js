@@ -36,6 +36,7 @@ const loginInfo = {
     num1:'',
     ok:false,
     msgcount:0,
+    integral:0,
   },
   mutations:{
     CHANGEFLASH(state){
@@ -83,7 +84,7 @@ const loginInfo = {
       }
     },
     USERINFO(state,data){
-      state.userInfo = data
+      // state.userInfo = data
     },
     PHONEYZ(state,suc){
       if(suc){
@@ -104,7 +105,7 @@ const loginInfo = {
 
       api.axiosPost('/user/userLogin',0,{
         username:$.trim(context.state.form.username),
-        password:$.trim(context.state.form.pswd)
+        password:Base64.encode($.trim(context.state.form.pswd))
       },function (res) {
         if(!res.data.data.verify_key){
           //保存token
@@ -117,7 +118,6 @@ const loginInfo = {
 
           context.dispatch('getUserInfo');
           context.dispatch('getSystem');
-
 
           router.push('/indexWrap/personCenter');
         }else{
@@ -152,11 +152,10 @@ const loginInfo = {
         if(res.data.status === 200){
           //保存用户信息到本地
           localStorage.setItem('user-info',JSON.stringify(res.data.data))
-          //保存用户到仓库
-          context.state.userInfo = res.data.data;
-
+          context.state.integral=res.data.data.score
         }
       })
+
       //
       api.axiosPost('/msg/msgStatis',1,{},function (res) {
          if(res.data.status === 200){

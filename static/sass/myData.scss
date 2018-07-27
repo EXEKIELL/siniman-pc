@@ -1,13 +1,14 @@
 #myData{
   .wrap{
-    background: url("../../static/img/bj03.png") no-repeat;
+    //background: url("../../static/img/bj03.png") no-repeat;
     background-size: 100% 100%;
     padding: 0 50px;
     .list1{
       display: flex;
       justify-content: space-around;
       border-bottom: 1px solid #e4e4e4;
-      padding: 150px 0;
+      padding: 100px 0;
+      background-color: #fff;
       >div{
         display: flex;
         align-items: center;
@@ -16,16 +17,16 @@
         >div:first-child{
           margin-right: 20px;
           div{
-            width: 160px;
-            height: 160px;
+            width: 130px;
+            height: 130px;
             border: 1px solid #e9e9e9;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             img{
-              width: 160px;
-              height: 160px;
+              width: 130px;
+              height: 130px;
             }
           }
         }
@@ -84,103 +85,101 @@
               }
             }
           }
-          div:last-child{
+          .icon{font-size: 14px;line-height:20px;}
+          .phone{
             text-align: left;
             span{
               display: inline-block;
               vertical-align: middle;
             }
             span:first-child{
-              background: url("../../static/img/icon47.png") no-repeat;
+              background: url("../../static/img/phone.png") no-repeat;
               background-size: 100% 100%;
-              width: 9px;
+              width: 14px;
+              height: 14px;
+              margin-right: 5px;
+            }
+          }
+          .account{
+            text-align: left;
+            span{
+              display: inline-block;
+              vertical-align: middle;
+            }
+            span:first-child{
+              background: url("../../static/img/account.png") no-repeat;
+              background-size: 100% 100%;
+              width: 14px;
+              height: 14px;
+              margin-right: 5px;
+            }
+          }
+          .shop{
+            text-align: left;
+            span{
+              display: inline-block;
+              vertical-align: middle;
+            }
+            span:first-child{
+              background: url("../../static/img/shop.png") no-repeat;
+              background-size: 100% 100%;
+              width: 14px;
               height: 14px;
               margin-right: 5px;
             }
           }
         }
       }
-      >div:nth-child(2){
-        >div{
-          text-align: left;
-          >div{
-            font-size: 16px;
-            color: #333333;
-          }
-          >div:first-child{
-            margin-bottom: 10px;
-            span{
-              display: inline-block;
-              vertical-align: middle;
-            }
-            span:first-child{
-              background: url("../../static/img/icon48.png") no-repeat;
-              background-size: 100% 100%;
-              margin-right: 5px;
-              margin-right: 5px;
-              width: 12px;
-              height: 14px;
-            }
-          }
-          >div:last-child{
-            span{
-              display: inline-block;
-              vertical-align: middle;
-            }
-            span:first-child{
-              background: url("../../static/img/icon49.png") no-repeat;
-              background-size: 100% 100%;
-              margin-right: 5px;
-              margin-right: 5px;
-              width: 12px;
-              height: 14px;
-            }
-          }
-        }
-      }
-      >div:nth-child(3){
+
+      .sater{
         >div{
           display: flex;
           div{
             background: url("../../static/img/icon50.png") no-repeat;
             background-size: 100% 100%;
-            width: 90px;
-            height: 90px;
+            width: 130px;
+            height: 130px;
             position: relative;
             margin-right: 30px;
+
             span{
               width: 63px;
               position: absolute;
-              top: 15px;
-              left: 25px;
+              bottom: -10px;
+              left: 50px;
               margin-left: -13px;
-              font-size: 14px;
-              color: #ff6700;
+              font-size: 16px;
+              color: #000;
             }
             span:last-child{
               top: initial;
-              color: #ffffff;
-              bottom: 15px;
+              color: #ff9b87;
+              bottom: 60px;
+              font-size: 20px;
             }
           }
           div:nth-child(2){
             background: url("../../static/img/icon51.png") no-repeat;
             background-size: 100% 100%;
             span{
-              color: #0189d7;
+              color: #000;
+              left: 48px;
             }
             span:last-child{
-              color: #ffffff;
+              color: #0189d7;
+              font-size: 20px;
             }
           }
           div:nth-child(3){
             background: url("../../static/img/icon52.png") no-repeat;
             background-size: 100% 100%;
             span{
-              color: #da4650;
+              color: #000;
+              left: 48px;
             }
             span:last-child{
-              color: #ffffff;
+              font-size: 20px;
+              color: #ff87a9;
             }
           }
         }
@@ -189,9 +188,11 @@
     .list2{
       display: flex;
       justify-content: space-between;
+      background-color: #fff;
+      margin-top: 10px;
       //padding: 150px 0;
       >div{
-        border: 1px solid #e4e4e4;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -218,7 +219,17 @@
             cursor: pointer;
           }
         }
+        >span{
+
+          display: block;
+          border-right: 1px solid #e4e4e4;
+          height: 40%;
+          position: absolute;
+          right: 0;
+        }
+
       }
+
       >div:nth-child(2){
         border-left: 0;
         >div:nth-child(2){
@@ -233,6 +244,9 @@
           div:last-child{
             color: #ff9b87;
           }
+        }
+        >span{
+          display: none;
         }
       }
     }

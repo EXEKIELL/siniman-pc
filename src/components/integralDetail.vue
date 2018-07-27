@@ -20,7 +20,7 @@
               </div>
               <div>
                 <img src="../../static/img/icon36.png" alt="">
-                <button class="link" @click="golink">点击进入</button>
+                <button class="link" @click="golink">积分兑换</button>
               </div>
             </div>
           </div>
@@ -137,6 +137,7 @@
 
         change(val){
           let that = this;
+          that.postList=[]
           //用户积分明细列表
           this.$api.axiosPost('/person/getUserScoreRecords',1,{
             type:that.type,
@@ -210,10 +211,9 @@
   }
 .link{
   position: absolute;
-  bottom: 15px;
-  left: 37px;
+  bottom: 0.8rem;
   background-color: #ffffff;
-  padding: 5px 15px;
+  padding: 5px 5px;
   cursor: pointer;
   color: #f8917c;
   font-size: 14px;

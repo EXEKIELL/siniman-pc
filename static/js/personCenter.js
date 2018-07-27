@@ -1,7 +1,10 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
-
+import VueQArt from 'vue-qart'
 export default {
+  components:{
+    VueQArt
+  },
   name: 'PersonCenter',
   data(){
     return {
@@ -25,6 +28,7 @@ export default {
       tags:[],
       postData:{},
       contList:[],
+      showUser:false,
       totalPage:null,
       postTags:[],
       orderByField:'salsecount',
@@ -47,7 +51,24 @@ export default {
       clientStats:{
         list:{},
         lastList:{}
-      }
+      },
+      config: {
+        value: "",
+        filter: 'color',
+        imagePath:'./static/img/logo01.png',
+        version:1,
+      },
+      downloadButton: false,
+      dialogFormVisible:false,
+      today2:'',
+      ago:'',
+      list1:{
+        total:0,
+        obtain:0,
+        consume:0
+      },
+      listLoading:false,
+      lodingstr:'加载中...'
     }
   },
   methods:{
@@ -83,16 +104,27 @@ export default {
       console.log(1)
       $(e).siblings('div').find('input').focus()
     },
-    toUrl(val){
-      this.$router.push({path:'/indexWrap/myProject',query:{productId:val}})
-    },
-    share(val){
-      this.$alert('分享', '温馨提示', {
-        confirmButtonText: '确定',
-        callback: action => {
+    phoneStr(str){
+      if(str){
+        let str2 = str.substr(0,3)+"****"+str.substr(7);
+        return str2;
+      }
 
-        }
-      });
+    },
+    toUrl(val){
+      let routeData=this.$router.resolve({path:'/indexWrap/myProject',query:{productId:val}})
+      window.open(routeData.href, '_blank');
+    },
+    share(id){
+      /*生成二维码*/
+      let url=this.$api.mobileUrl+"?id="+id
+      this.config.value=url
+      this.dialogFormVisible=true
+      // console.log(this.config.value)
+    },
+    diaclose(){
+      this.dialogFormVisible=false
+      this.config.value=''
     },
     change(val){
       let that = this
@@ -145,7 +177,8 @@ export default {
     pageChange(val){
       const that = this;
       // //获取方案列表
-
+      that.postData.list=[]
+      this.listLoading=true
       this.$api.axiosPost('/product/productList',1,{
         data:{
           prostatus:1,
@@ -158,13 +191,19 @@ export default {
           pageSize:9
         }
       },function (res) {
-
+        that.listLoading=false
         let data = res.data.data;
         that.postData = data;
-
+        if(that.postData.length<=0){
+          that.lodingstr="还没有相应的方案";
+        }
       })
-
-
+    },
+    /*去积分商城 */
+    golink(){
+      let sysconfig=JSON.parse(localStorage.getItem('sysconfig'))
+      let userpsw=JSON.parse(localStorage.getItem('userpsw'))
+      window.open(sysconfig.points_mall.value+'?username='+userpsw.user+'&password='+userpsw.psw)
     },
     setOption:function(){
 
@@ -319,6 +358,18 @@ export default {
       this.screenWidth = val
     }
   },
+  filters:{
+    customeraddr:function(val){
+      if(val){
+        if(val.length>=7){
+          return val.substr(0,7)+'...'
+        }else{
+          return val
+        }
+      }
+      return ''
+    }
+  },
   beforeUpdate(){
 
   },
@@ -363,5 +414,35 @@ export default {
 
       that.tagList = res.data.data
     })
+
+    let date2=new Date();
+    that.today=that.$api.formatDate(date2,'yyyy.MM.dd')
+    date2.setMonth( date.getMonth()-3 );
+    that.ago=that.$api.formatDate(date2,'yyyy.MM.dd')
+
+    // //用户积分统计
+    this.$api.axiosPost('/person/getUserScore',1,{
+      searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+      searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+      type:2, //全部
+    },function (res) {
+      that.list1.total=res.data.data.score
+    });
+
+    this.$api.axiosPost('/person/getUserScore',1,{
+      searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+      searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+      type:0, //获取
+    },function (res) {
+      that.list1.obtain=res.data.data.score
+    });
+
+    this.$api.axiosPost('/person/getUserScore',1,{
+      searchDateStart:that.$api.formatDate(new Date(that.ago.replace(/\./g, '/')),'yyyy-MM-dd'),
+      searchDateEnd:that.$api.formatDate(new Date(that.today.replace(/\./g, '/')),'yyyy-MM-dd'),
+      type:1, //消耗
+    },function (res) {
+      that.list1.consume=Math.abs(res.data.data.score)
+    });
   }
 }

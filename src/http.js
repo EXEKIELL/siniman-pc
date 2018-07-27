@@ -9,10 +9,10 @@ axios.defaults.timeout = 100000 //超时时间
 var loadinginstace
 axios.interceptors.request.use(config=>{
 //  element ui Loading 方法
-  loadinginstace = Loading.service({fullscreen:true})
+//   loadinginstace = Loading.service({fullscreen:true})
   return config
 },error => {
-  loadinginstace.close()
+  // loadinginstace.close()
   Message.error({
     message: '加载超时'
   })
@@ -24,18 +24,18 @@ axios.interceptors.response.use(data=>{
 //  响应成功关闭loading
   if(data.data.data && typeof data.data.data == 'string'){
     if(JSON.parse(data.data.data).code && JSON.parse(data.data.data).code == 1003){
-      localStorage.clear();
+      // localStorage.clear();
       router.replace('/login')
       Message.error({
         message: '登录已过期'
       });
     }
   }
-  loadinginstace.close()
+  // loadinginstace.close()
   return data
 },error => {
 
-  loadinginstace.close()
+  // loadinginstace.close()
   // Message.error({
   //   message: '加载失败'
   // })

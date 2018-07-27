@@ -5,7 +5,7 @@
       <div v-else class="list clearFix" v-for="(item,index) in orderList">
         <div class="list-1">
           <div class="headerImg">
-            <img :src="item.userImg" alt="" onerror="'../../static/img/head05.png'">
+            <img :src="item.userImg" alt="" onerror="this.src='./static/img/head05.png'">
           </div>
         </div>
         <div class="list-2">
