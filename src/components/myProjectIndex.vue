@@ -69,6 +69,34 @@
                 <div style="top: -30px;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
                 </div>
+                <div>
+
+                  <div>
+                    <img src="../../static/img/img_sm01.png" alt="">
+                    <div class="maskSm">
+                      <button>设为封面</button>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../../static/img/img_sm01.png" alt="">
+                    <div class="maskSm">
+                      <button>设为封面</button>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../../static/img/img_sm01.png" alt="">
+                    <div class="maskSm">
+                      <button>设为封面</button>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../../static/img/img_sm01.png" alt="">
+                    <div class="maskSm">
+                      <button>设为封面</button>
+                    </div>
+                  </div>
+
+                </div>
               </div>
               <div class="list1-wrap">
                 <div class="list1-cont">

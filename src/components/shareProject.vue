@@ -19,7 +19,7 @@
         </div>
         <div class="top-right">
           <div class="tright-1">
-            <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
+            <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span>
           </div>
 
           <div class="tright-4">
@@ -29,6 +29,7 @@
               </template>
 
             </span>
+            <span>{{productInfo.area}}m²</span>
           </div>
 
           <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
@@ -40,33 +41,33 @@
             <span class="price">
               <span style=""></span>
               <span></span>
-              <span style="color: red">
+              <span style="color: red;font-size: 16px;">
 
                 {{productInfo.productionmark}}积分
                 &nbsp;&nbsp;
-                <span class="totalPrice" style="color: #ff0101">
-                  <span style="color: #000;background: none"> 总格 :</span>
+                <span v-if="productInfo.totalPrice" class="totalPrice" style="color: #ff0101;font-size: 14px;">
+                  <span style="font-size: 14px;color: #888888;background: none"> 装修总格 :</span>
 
-                  {{ productInfo.totalPrice }}元</span>
+                  {{ productInfo.totalPrice+'元' }}</span>
 
               </span>
             </span>
           </div>
-          <div class="tright-2 shouc">
-            <span style="display: none"></span>
-            <span style="display: none">
-              <span></span>
-              <span>{{productInfo.salsecount}}</span>
-            </span>
-            <span style="display: none">
-              <span></span>
-              <span>{{ productInfo.viewcount }}</span>
-            </span>
-            <span :class="{colle:productInfo.hascollect}" @click="collect()">
-              <span></span>
-              <span>收藏</span>
-            </span>
-          </div>
+          <!--<div class="tright-2 shouc">-->
+            <!--<span style="display: none"></span>-->
+            <!--<span style="display: none">-->
+              <!--<span></span>-->
+              <!--<span>{{productInfo.salsecount}}</span>-->
+            <!--</span>-->
+            <!--<span style="display: none">-->
+              <!--<span></span>-->
+              <!--<span>{{ productInfo.viewcount }}</span>-->
+            <!--</span>-->
+            <!--<span :class="{colle:productInfo.hascollect}" @click="collect()">-->
+              <!--<span></span>-->
+              <!--<span>收藏</span>-->
+            <!--</span>-->
+          <!--</div>-->
 
           <div class="tright-5">
             <div>需求描述</div>
