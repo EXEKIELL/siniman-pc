@@ -88,14 +88,14 @@
               </div>
             </div>
           </div>
-          <!--<div class="list1-tag" >-->
-            <!--<template v-if="item.producttag[0].length>=1">-->
-              <!--<span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">{{item1.tagname}}</span>-->
-            <!--</template>-->
-            <!--<template v-else>-->
-              <!--<span style="border-color:#fff ">...</span>-->
-            <!--</template>-->
-          <!--</div>-->
+          <div class="list1-tag" >
+            <template v-if="item.producttag[0].length>=1">
+              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">{{item1.tagname}}</span>
+            </template>
+            <template v-else>
+              <span style="border-color:#fff ">...</span>
+            </template>
+          </div>
           <div class="list-user clearFix">
             <el-col :span="12">
               <div class="grid-left bg-purple userbox">
@@ -260,12 +260,10 @@
       },
       filters:{
         customeraddr:function(val){
-          if(val.length){
-            if(val.length>=7){
-              return val.substr(0,7)+'...'
-            }else{
-              return val
-            }
+          if(val.length>=7){
+            return val.substr(0,7)+'...'
+          }else{
+            return val
           }
         }
       },
