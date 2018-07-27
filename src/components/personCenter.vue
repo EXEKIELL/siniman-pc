@@ -165,44 +165,108 @@
       <div class="w3-cont" v-loading.body="listLoading">
         <template v-if="postData.list">
           <template v-if="postData.list.length>=1">
-            <div style="cursor: pointer;" class="list1"  v-for="(item,index) in postData.list" :key="index" >
-              <div class="list1-img" v-if="" style="">
-                <img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+            <!--<div style="cursor: pointer;" class="list1"  v-for="(item,index) in postData.list" :key="index" >-->
+              <!--<div class="list1-img" v-if="" style="">-->
+                <!--<img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">-->
 
-                <div style="top: 0;left: 0;z-index: 300">
-                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>
-                </div>
-                <!--<div>-->
-                <!--<div>-->
-                <!--<img src="../../static/img/img_sm01.png" alt="">-->
-                <!--<div class="maskSm">-->
-                <!--<button>设为封面</button>-->
+                <!--<div style="top: 0;left: 0;z-index: 300">-->
+                  <!--<button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>-->
                 <!--</div>-->
+                <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<img src="../../static/img/img_sm01.png" alt="">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="maskSm">&ndash;&gt;-->
+                <!--&lt;!&ndash;<button>设为封面</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+              <!--<div class="list1-cont" @click="toUrl(item.id)">-->
+                <!--<div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>-->
+                <!--<div class="l1cont-2 clearFix">-->
+                  <!--<div v-if="item.customername != '' && item.customername !='&#45;&#45;' && item.customername !=0">-->
+                    <!--<span></span><span>{{item.customername}}</span>-->
+                  <!--</div>-->
+                  <!--<div v-if="item.customercontact != '' && item.customercontact !=0 && item.customercontact !='&#45;&#45;' ">-->
+                    <!--<span></span><span>{{item.customercontact}}</span>-->
+                  <!--</div>-->
+                  <!--<div v-if="item.customeraddr != '' && item.customeraddr !=0 && item.customeraddr !='&#45;&#45;'  ">-->
+                    <!--<span></span><span>{{item.customeraddr}}</span>-->
+                  <!--</div>-->
                 <!--</div>-->
-                <!--</div>-->
-              </div>
-              <div class="list1-cont" @click="toUrl(item.id)">
-                <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
-                <div class="l1cont-2 clearFix">
-                  <div v-if="item.customername != '' && item.customername !='--' && item.customername !=0">
-                    <span></span><span>{{item.customername}}</span>
-                  </div>
-                  <div v-if="item.customercontact != '' && item.customercontact !=0 && item.customercontact !='--' ">
-                    <span></span><span>{{item.customercontact}}</span>
-                  </div>
-                  <div v-if="item.customeraddr != '' && item.customeraddr !=0 && item.customeraddr !='--'  ">
-                    <span></span><span>{{item.customeraddr}}</span>
-                  </div>
-                </div>
-              </div>
+              <!--</div>-->
 
-              <div class="list1-tag" v-if="item.producttag[0].length>=1">
-                <span  v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
-                  <template v-if="item1">
-                        {{item1.tagname}}
+              <!--<div class="list1-tag" v-if="item.producttag[0].length>=1">-->
+                <!--<span  v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">-->
+                  <!--<template v-if="item1">-->
+                        <!--{{item1.tagname}}-->
+                  <!--</template>-->
+
+                <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+            <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+              <div class="list1-img">
+                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <div style="top: -30px;left: 0; z-index: 200">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+                </div>
+              </div>
+              <div class="list1-wrap">
+                <div class="list1-cont">
+                  <div class="price">
+                    <div>{{ item.productionmark }}积分</div>
+                    <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
+                    <div class="area"><span>{{item.area}}m²</span></div>
+                  </div>
+                  <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
+
+                  <div class="l1cont-2 clearFix" v-if="item.customername != ''">
+                    <div>
+                      <span></span><span>{{item.customername}}</span>
+                    </div>
+                    <div>
+                      <span></span><span>{{phoneStr(item.customercontact)}}</span>
+                    </div>
+                    <div>
+                      <span></span><span>{{item.customeraddr|customeraddr }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="list1-tag" >
+
+                  <template v-if="item.producttag[0].length>=1">
+              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
+                <template v-if="item1">
+                    {{item1.tagname}}
+                </template>
+
+              </span>
                   </template>
-
-                </span>
+                  <template v-else>
+                    <span style="border-color:#fff ">...</span>
+                  </template>
+                </div>
+                <div class="list-user clearFix" v-if="showUser">
+                  <el-col :span="12">
+                    <div class="grid-left bg-purple userbox">
+                      <div class="userimg">
+                        <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
+                      </div>
+                      <div class="username">{{ item.username }}</div>
+                    </div>
+                  </el-col>
+                  <el-col :span="5">
+                    <div class="grid-content bg-purple cart">
+                      {{ item.salsecount }}
+                    </div>
+                  </el-col>
+                  <el-col :span="5">
+                    <div class="grid-content bg-purple view">
+                      {{ item.viewcount }}
+                    </div>
+                  </el-col>
+                </div>
               </div>
             </div>
           </template>

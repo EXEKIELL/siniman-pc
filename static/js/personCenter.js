@@ -28,6 +28,7 @@ export default {
       tags:[],
       postData:{},
       contList:[],
+      showUser:false,
       totalPage:null,
       postTags:[],
       orderByField:'salsecount',
@@ -102,6 +103,13 @@ export default {
       var e = window.event.target;
       console.log(1)
       $(e).siblings('div').find('input').focus()
+    },
+    phoneStr(str){
+      if(str){
+        let str2 = str.substr(0,3)+"****"+str.substr(7);
+        return str2;
+      }
+
     },
     toUrl(val){
       let routeData=this.$router.resolve({path:'/indexWrap/myProject',query:{productId:val}})
@@ -348,6 +356,18 @@ export default {
   watch:{
     screenWidth (val) {
       this.screenWidth = val
+    }
+  },
+  filters:{
+    customeraddr:function(val){
+      if(val){
+        if(val.length>=7){
+          return val.substr(0,7)+'...'
+        }else{
+          return val
+        }
+      }
+      return ''
     }
   },
   beforeUpdate(){

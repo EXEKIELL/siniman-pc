@@ -83,59 +83,61 @@
                 <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
               </div>
             </div>
-            <div class="list1-cont">
-              <div class="price clearFix">
-                <div>{{ item.productionmark }}积分</div>
-                <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;总价：¥{{ item.totalPrice }}</div>
-                <div class="area"><span>{{item.area}}m²</span></div>
-              </div>
-              <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
+            <div class="list1-wrap">
+              <div class="list1-cont">
+                <div class="price">
+                  <div>{{ item.productionmark }}积分</div>
+                  <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
+                  <div class="area"><span>{{item.area}}m²</span></div>
+                </div>
+                <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
 
-              <div class="l1cont-2 clearFix" v-if="item.customername != ''">
-                <div>
-                  <span></span><span>{{item.customername}}</span>
-                </div>
-                <div>
-                  <span></span><span>{{phoneStr(item.customercontact)}}</span>
-                </div>
-                <div>
-                  <span></span><span>{{item.customeraddr|customeraddr }}</span>
+                <div class="l1cont-2 clearFix" v-if="item.customername != ''">
+                  <div>
+                    <span></span><span>{{item.customername}}</span>
+                  </div>
+                  <div>
+                    <span></span><span>{{phoneStr(item.customercontact)}}</span>
+                  </div>
+                  <div>
+                    <span></span><span>{{item.customeraddr|customeraddr }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="list1-tag" >
+              <div class="list1-tag" >
 
-              <template v-if="item.producttag[0].length>=1">
+                <template v-if="item.producttag[0].length>=1">
               <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
                 <template v-if="item1">
                     {{item1.tagname}}
                 </template>
 
               </span>
-              </template>
-              <template v-else>
-                <span style="border-color:#fff ">...</span>
-              </template>
-            </div>
-            <div class="list-user clearFix" v-if="showUser">
-              <el-col :span="12">
-                <div class="grid-left bg-purple userbox">
-                  <div class="userimg">
-                    <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
+                </template>
+                <template v-else>
+                  <span style="border-color:#fff ">...</span>
+                </template>
+              </div>
+              <div class="list-user clearFix" v-if="showUser">
+                <el-col :span="12">
+                  <div class="grid-left bg-purple userbox">
+                    <div class="userimg">
+                      <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
+                    </div>
+                    <div class="username">{{ item.username }}</div>
                   </div>
-                  <div class="username">{{ item.username }}</div>
-                </div>
-              </el-col>
-              <el-col :span="5">
-                <div class="grid-content bg-purple cart">
-                  {{ item.salsecount }}
-                </div>
-              </el-col>
-              <el-col :span="5">
-                <div class="grid-content bg-purple view">
-                  {{ item.viewcount }}
-                </div>
-              </el-col>
+                </el-col>
+                <el-col :span="5">
+                  <div class="grid-content bg-purple cart">
+                    {{ item.salsecount }}
+                  </div>
+                </el-col>
+                <el-col :span="5">
+                  <div class="grid-content bg-purple view">
+                    {{ item.viewcount }}
+                  </div>
+                </el-col>
+              </div>
             </div>
           </div>
         </template>

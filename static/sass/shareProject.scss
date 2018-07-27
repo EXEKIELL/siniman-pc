@@ -102,8 +102,9 @@ $fz1:20px;
       .tright-3{
         margin-bottom: 30px;
         span{
-          font-size: 13px;
-          color: #333333;
+          font-size: 14px;
+          color: #888888;
+          font-weight: lighter;
           display: inline-block;
           vertical-align: middle;
         }
@@ -133,10 +134,10 @@ $fz1:20px;
 
         span{
           width: auto;
-
+          position: relative;
           text-align: center;
           font-size: 16px;
-          color: #000;
+          color: #555555;
           margin-right: 20px;
         }
 
@@ -147,14 +148,15 @@ $fz1:20px;
           content: '';
           display: block;
           position: absolute;
-          border-right: 1px solid #9b9b9b;
-          height: 65%;
-          right: -8px;
+          border-right: 1px solid #818181;
+          height: 70%;
+          right: -10px;
           top: 20%;
         }
       }
       .tright-5{
-        margin-bottom: 60px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid #eeeeee;
         >div:first-child{
           margin: 10px 0 10px 0;
           font-size: $fz1;
@@ -174,6 +176,7 @@ $fz1:20px;
         display: flex;
         justify-content: left;
         align-items: center;
+        margin: 35px 75px;
         >div:first-child{
           width: 40%;
           display: flex;
@@ -196,6 +199,12 @@ $fz1:20px;
             background-color: #a51e32;
             width: 100%;
             height: 55px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
+            -moz-box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
+            box-shadow: 0 0 15px rgba(165, 30, 30, 0.2);
           }
           button[disabled]{
             background-color: #888888
