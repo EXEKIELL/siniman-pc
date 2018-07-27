@@ -1,5 +1,5 @@
 <template>
-  <div id="shareCommunity">
+  <div id="shareCommunity" >
     <div class="wrap1">
       <div id="swiper1" class="swiper-container">
         <div class="swiper-wrapper">
@@ -35,6 +35,19 @@
               </div>
             </div>
           </li>
+          <li class="clearFix">
+            <span class="nav-left">总价：</span>
+            <div class="nav-right">
+              <div>
+                <div class="sel" @click="priceSel(null,null)">全部</div>
+              </div>
+              <div><div @click="priceSel(5000,10000)">5000-1万元</div></div>
+              <div><div @click="priceSel(10000,30000)">1万-3万元</div></div>
+              <div><div @click="priceSel(30000,50000)">3万-5万元</div></div>
+              <div><div @click="priceSel(50000,100000)">5万-10万元</div></div>
+              <div><div @click="priceSel(100000,null)">10万元以上</div></div>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="w3-seek">
@@ -42,11 +55,12 @@
           <div>排序：</div>
           <div>
             <ul class="orderby">
-              <!--<li class="sel"  @click="paixu1('默认')" >默认</li>-->
+              <li class="sel"  @click="paixu1('默认')" >默认</li>
               <!--{{item.text}}-->
               <li v-for="(item,index) in paixus"  :class="{sel:item.isSel}" :key="index" @click="paixu1(item.text,index)">
-                <span class="icon" :class="{icon0:index == 0,icon1:index == 1,icon2:index == 2,icon3:index == 3}"></span><span>{{item.text}}</span>
+                <span class="icon" :class="{icon_1:index===1,icon0:index == 0,icon1:index == 2,icon2:index == 3,icon3:index == 4}"></span><span>{{item.text}}</span>
               </li>
+
             </ul>
           </div>
           <!--<div>-->
@@ -61,68 +75,76 @@
         </div>
       </div>
       <div class="w3-cont" v-loading.body="listLoading">
-        <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
-          <div class="list1-img">
-            <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-            <div style="top: -30px;left: 0; z-index: 200">
-              <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+        <template v-if="postData.list.length>=1">
+          <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+            <div class="list1-img">
+              <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+              <div style="top: -30px;left: 0; z-index: 200">
+                <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+              </div>
             </div>
-          </div>
-          <div class="list1-cont">
-            <div class="price clearFix">
-              <div>{{ item.productionmark }}积分</div>
-              <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
-              <div class="area"><span>{{item.area}}m²</span></div>
-            </div>
-            <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
+            <div class="list1-cont">
+              <div class="price clearFix">
+                <div>{{ item.productionmark }}积分</div>
+                <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;总价：¥{{ item.totalPrice }}</div>
+                <div class="area"><span>{{item.area}}m²</span></div>
+              </div>
+              <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
 
-            <div class="l1cont-2 clearFix" v-if="item.customername != ''">
-              <div>
-                <span></span><span>{{item.customername}}</span>
-              </div>
-              <div>
-                <span></span><span>{{phoneStr(item.customercontact)}}</span>
-              </div>
-              <div>
-                <span></span><span>{{item.customeraddr|customeraddr }}</span>
+              <div class="l1cont-2 clearFix" v-if="item.customername != ''">
+                <div>
+                  <span></span><span>{{item.customername}}</span>
+                </div>
+                <div>
+                  <span></span><span>{{phoneStr(item.customercontact)}}</span>
+                </div>
+                <div>
+                  <span></span><span>{{item.customeraddr|customeraddr }}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="list1-tag" >
+            <div class="list1-tag" >
 
-            <template v-if="item.producttag[0].length>=1">
+              <template v-if="item.producttag[0].length>=1">
               <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
                 <template v-if="item1">
                     {{item1.tagname}}
                 </template>
 
               </span>
-            </template>
-            <template v-else>
-              <span style="border-color:#fff ">...</span>
-            </template>
-          </div>
-          <div class="list-user clearFix">
-            <el-col :span="12">
-              <div class="grid-left bg-purple userbox">
-                <div class="userimg">
-                  <img :src="item.userimg" alt="" onerror="'../../static/img/head05.png'">
+              </template>
+              <template v-else>
+                <span style="border-color:#fff ">...</span>
+              </template>
+            </div>
+            <div class="list-user clearFix" v-if="showUser">
+              <el-col :span="12">
+                <div class="grid-left bg-purple userbox">
+                  <div class="userimg">
+                    <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
+                  </div>
+                  <div class="username">{{ item.username }}</div>
                 </div>
-                <div class="username">{{ item.username }}</div>
-              </div>
-            </el-col>
-            <el-col :span="5">
-              <div class="grid-content bg-purple cart">
-              {{ item.salsecount }}
-              </div>
-            </el-col>
-            <el-col :span="5">
-              <div class="grid-content bg-purple view">
-                {{ item.viewcount }}
-              </div>
-            </el-col>
+              </el-col>
+              <el-col :span="5">
+                <div class="grid-content bg-purple cart">
+                  {{ item.salsecount }}
+                </div>
+              </el-col>
+              <el-col :span="5">
+                <div class="grid-content bg-purple view">
+                  {{ item.viewcount }}
+                </div>
+              </el-col>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
+            {{ lodingstr }}
+          </div>
+        </template>
+
       </div>
     </div>
     <div class="pagina">
@@ -135,20 +157,30 @@
         :total="postData.last_page*10">
       </el-pagination>
     </div>
+    <!--二维码组件-->
+    <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
+      <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
+  import VueQArt from 'vue-qart'
     export default {
+      components:{
+        VueQArt
+      },
       name: "ShareCommunity",
       data(){
         return {
-          postData:{},
+          postData:{list:[]},
           swiperList:[],
           tagsList:[],
           paixus:[
-            {text:"价格",type:"",isSel:false},
-            {text:"销量",isSel:false},
+            {text:"总价",type:"",isSel:false},
+            {text:"积分",isSel:false},
+            {text:"下载量",isSel:false},
             {text:"点赞量",isSel:false},
             {text:"收藏量",isSel:false}
           ],
@@ -156,21 +188,47 @@
           listData:[],
           tags:[],
           banner:[],
-          orderByField:'salsecount',
+          orderByField:'id',
           postTags:[],
           scoreStart:0,
           scoreEnd:1000,
           productName:null,
-          listLoading:false
+          listLoading:false,
+          showUser:false,
+          priceStart:null,
+          priceEnd:null,
+
+          config: {
+            value: "",
+            filter: 'color',
+            imagePath:'./static/img/logo01.png',
+            version:1,
+          },
+          downloadButton: false,
+          dialogFormVisible:false,
+          lodingstr:'加载中...'
         }
       },
       methods:{
+        diaclose(){
+          this.dialogFormVisible=false
+          this.config.value=''
+        },
         phoneStr(str){
           if(str){
             let str2 = str.substr(0,3)+"****"+str.substr(7);
             return str2;
           }
 
+        },
+        priceSel(min,max){
+          $('.clearFix').find('.nav-right div').on("click",function(){
+            $(this).parent().find('div').removeClass("sel")
+            $(this).children('div').addClass("sel")
+          })
+          this.priceStart=min
+          this.priceEnd=max
+          this.getproductList(1)
         },
         navSel(val,val1){
           $('.clearFix').find('.nav-right div').on("click",function(){
@@ -208,17 +266,19 @@
                 this.paixus[i].isSel=false
               }
             }
-            if(index == 0){
+            if(index==0){
+              this.orderByField = 'totalPrice'
+            } else if(index == 1){
               this.orderByField = 'productionmark'
-            }else if(index == 1){
-              this.orderByField = 'salsecount'
             }else if(index == 2){
+              this.orderByField = 'salsecount'
+            }else if(index == 3){
               this.orderByField = 'goodcount'
             }else{
               this.orderByField = 'favoritecount'
             }
           }else{
-            this.orderByField = 'salsecount'
+            this.orderByField = 'id'
             for (let i =0;i<this.paixus.length;i++){
               this.paixus[i].isSel=false
             }
@@ -229,21 +289,23 @@
         },
         toUrl(val){
 
-          this.$router.push({path:'/indexWrap/shareProject',query:{productId:val}})
+          let routeData=this.$router.resolve({path:'/indexWrap/shareProject',query:{productId:val}})
+          window.open(routeData.href, '_blank');
         },
-        share(){
-          this.$alert('分享', '温馨提示', {
-            confirmButtonText: '确定',
-            callback: action => {
+        share(id){
+          /*生成二维码*/
+          let url=this.$api.mobileUrl+"?id="+id
+          this.config.value=url
+          this.dialogFormVisible=true
+          // console.log(this.config.value)
 
-            }
-          });
         },
 
         getproductList(page){
           const that = this;
           that.listLoading=true
           // //获取方案列表
+          that.postData.list=[]
           this.$api.axiosPost('/product/productAll',1,{
             data:{
               orderByCondition:'DESC',
@@ -252,6 +314,8 @@
               scoreStart:that.scoreStart,
               scoreEnd:that.scoreEnd,
               productname:that.productName,
+              priceStart:that.priceStart,
+              priceEnd:that.priceEnd,
             },
             page:{
               pageNum:page,
@@ -261,7 +325,9 @@
             that.listLoading=false
             let data = res.data.data;
             that.postData = data;
-
+            if(that.postData.list.length<=0){
+              that.lodingstr="还没有相应的方案"
+            }
           })
         },
 
@@ -314,11 +380,7 @@
 
 <style lang="scss" scoped>
 @import "../../static/sass/shareCommunity";
-.totalPrice{
-  font-size: 16px !important;
-  color: #333333 !important;
-  background: none !important;
-}
+
   .area{
     float: right;
     color: #333333!important;

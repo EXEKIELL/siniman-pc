@@ -1,5 +1,5 @@
 <template>
-    <div id="indexWrap">
+    <div id="indexWrap" style="height: 100%">
       <el-container>
         <el-aside width="200px" v-if="true">
           <div class="asideWrap">
@@ -37,7 +37,7 @@
           <el-header>
             <div class="clearFix head">
               <div class="head-left">
-                <span><img :src="headLeft.src" onerror="this.src='../../static/img/head05.png'"></span><span>{{headLeft.text}}</span>
+                <span><img :src="headLeft.src" onerror="this.src='./static/img/head05.png'"></span><span>{{headLeft.text}}</span>
               </div>
               <div class="head-right">
                 <ul class="clearFix">
@@ -55,7 +55,7 @@
                   </li>
                   <li>
                     <router-link to="/indexWrap/integralDetail">
-                      <span></span><span>积分：</span><span>{{headRight.integral}}</span>
+                      <span></span><span>积分：</span><span>{{$store.state.login.integral}}</span>
                     </router-link>
                   </li>
                   <li v-if="false">
@@ -258,26 +258,60 @@
         }
       },
       mounted(){
-        let userinfo=JSON.parse(localStorage.getItem('user-info'))
-
-        this.headRight.headUrl = userinfo.img==''?'../../static/img/head05.png':userinfo.img;
-        this.headRight.integral = userinfo.score;
-
-        let unread= JSON.parse(localStorage.getItem('user-info')).unread;
-
-
-        let roles=JSON.parse(localStorage.getItem('user-info')).roles
+        let userinfo;
         let thas=this
+        if(JSON.parse(localStorage.getItem('user-info'))){
+            userinfo=JSON.parse(localStorage.getItem('user-info'))
+            this.headRight.headUrl = userinfo.img==''?'./static/img/head05.png':userinfo.img;
 
-        let rolesArray=JSON.parse(roles)
+            // this.headRight.integral = ;
 
-        for(let i=0;i<rolesArray.length;i++){
-          if(rolesArray[i].code=="DEALER"){
-            thas.shou2List[0].show=true
-          }else if(rolesArray[i].code=="SHOPMANAGER"){
-            thas.shou2List[1].show=true
-          }
+            let unread= JSON.parse(localStorage.getItem('user-info')).unread;
+
+
+            let roles=JSON.parse(localStorage.getItem('user-info')).roles
+
+
+            let rolesArray=JSON.parse(roles)
+
+            for(let i=0;i<rolesArray.length;i++){
+              if(rolesArray[i].code=="DEALER"){
+                thas.shou2List[0].show=true
+              }else if(rolesArray[i].code=="SHOPMANAGER"){
+                thas.shou2List[1].show=true
+              }
+            }
+
+        }else{
+
+          this.$api.axiosPost('/userinfo/userdata',1,{},function(res){
+
+            if(res.data.status === 200){
+              //保存用户信息到本地
+              userinfo=res.data.data
+              thas.headRight.headUrl = userinfo.img==''?'./static/img/head05.png':userinfo.img;
+              thas.headRight.integral = userinfo.score;
+
+              let unread= JSON.parse(localStorage.getItem('user-info')).unread;
+
+
+              let roles=JSON.parse(localStorage.getItem('user-info')).roles
+
+
+              let rolesArray=JSON.parse(roles)
+
+              for(let i=0;i<rolesArray.length;i++){
+                if(rolesArray[i].code=="DEALER"){
+                  thas.shou2List[0].show=true
+                }else if(rolesArray[i].code=="SHOPMANAGER"){
+                  thas.shou2List[1].show=true
+                }
+              }
+            }
+          })
         }
+
+
 
         //判断当前路由位置
         var to = this.$router.history.current.path

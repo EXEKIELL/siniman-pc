@@ -18,12 +18,81 @@
         </div>
       </div>
     </div>
+    <div class="list1">
+      <div class="l1-title">
+        <span>我的积分</span>
+      </div>
+      <div class="l1-cont">
+        <div>
+          <div class="bj">
+            <div>
+              <div>
+                <span>积分余额</span>
+              </div>
+              <div>
+                <span>{{ ago }}-{{ today2 }}</span>
+              </div>
+              <div>
+                <span>￥{{list1.total}}</span>
+              </div>
+            </div>
+            <div>
+              <img src="../../static/img/icon36.png" alt="">
+              <button class="link" @click="golink">积分兑换</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bj">
+            <div>
+              <div>
+                <span>近三个月获得积分</span>
+              </div>
+              <div>
+                <span>{{ ago }}-{{ today2 }}</span>
+              </div>
+              <div>
+                <span>￥{{list1.obtain}}</span>
+              </div>
+            </div>
+            <div class="list-right">
+              <img src="../../static/img/icon37.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bj">
+            <div>
+              <div>
+                <span>近三个月消耗积分</span>
+              </div>
+              <div>
+                <span>{{ ago }}-{{ today2 }}</span>
+              </div>
+              <div>
+                <span>￥{{list1.consume}}</span>
+              </div>
+            </div>
+            <div>
+              <img src="../../static/img/icon38.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="wrap2 clearFix">
+
+
       <div class="w2-left">
         <div class="clearFix left-1">
           <div class="clearFix">
-            <div>我的业绩：</div>
-            <div class="clearFix">
+            <div class="paren">
+              我的业绩
+              <img class="j3" src="../../static/img/icon3j.png" alt="">
+            </div>
+
+            <div class="clearFix date">
               <div class="detaSel1">
                 <el-date-picker
                   v-model="value1"
@@ -34,11 +103,11 @@
                   :end-placeholder="today">
                 </el-date-picker>
               </div>
-              <button class="aaa" @click="dianwo"></button>
+
             </div>
           </div>
           <div>
-            <router-link to="/indexWrap/myPerformaceDetail">全部明细</router-link>
+            <router-link to="/indexWrap/myPerformaceDetail">全部>></router-link>
           </div>
         </div>
         <div class="left-2">
@@ -48,8 +117,11 @@
       <div class="w2-right">
         <div class="clearFix left-1">
           <div class="clearFix">
-            <div>我的客户：</div>
-            <div class="clearFix">
+            <div class="paren">
+              我的客户
+              <img class="j3" src="../../static/img/icon3j.png" alt="">
+            </div>
+            <div class="clearFix date">
               <div class="detaSel2">
                 <el-date-picker
                   v-model="value2"
@@ -59,11 +131,11 @@
                   :end-placeholder="today">
                 </el-date-picker>
               </div>
-              <button class="aaa" @click="dianwo"></button>
+
             </div>
           </div>
           <div>
-            <router-link to="/indexWrap/myClientDetail">全部明细</router-link>
+            <router-link to="/indexWrap/myClientDetail">全部>></router-link>
           </div>
         </div>
         <div class="left-2">
@@ -90,14 +162,14 @@
           </li>
         </ul>
       </div>
-      <div class="w3-cont">
+      <div class="w3-cont" v-loading.body="listLoading">
         <template v-if="postData.list">
           <template v-if="postData.list.length>=1">
-            <div style="cursor: pointer;" class="list1"  v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+            <div style="cursor: pointer;" class="list1"  v-for="(item,index) in postData.list" :key="index" >
               <div class="list1-img" v-if="" style="">
-                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
 
-                <div style="top: 0;left: 0;">
+                <div style="top: 0;left: 0;z-index: 300">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>
                 </div>
                 <!--<div>-->
@@ -109,7 +181,7 @@
                 <!--</div>-->
                 <!--</div>-->
               </div>
-              <div class="list1-cont">
+              <div class="list1-cont" @click="toUrl(item.id)">
                 <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
                 <div class="l1cont-2 clearFix">
                   <div v-if="item.customername != '' && item.customername !='--' && item.customername !=0">
@@ -125,7 +197,7 @@
               </div>
 
               <div class="list1-tag" v-if="item.producttag[0].length>=1">
-                <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
+                <span  v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
                   <template v-if="item1">
                         {{item1.tagname}}
                   </template>
@@ -136,7 +208,7 @@
           </template>
           <template v-else>
             <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
-              该类目下还没有设计方案哦
+              {{ lodingstr }}
             </div>
           </template>
         </template>
@@ -153,16 +225,76 @@
         :total="postData.last_page*10">
       </el-pagination>
     </div>
+    <!--二维码组件-->
+    <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
+      <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
+    </el-dialog>
   </div>
 </template>
-<script src="../../static/js/personCenter.js"></script>
+<script src="../../static/js/personCenter.js">
+
+</script>
 <style lang="scss" scoped>
   @import "../../static/sass/personCenter";
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../../static/sass/public";
   .echarts{
-    width: 600px !important;
+    width: 100% !important;
     height: 320px !important;
+  }
+  .detaSel1 {
+    border: none !important;
+    background: none !important;
+    color: #000 !important;
+  }
+  .el-date-editor{
+    cursor:pointer;
+    opacity: 0;
+    border: none !important;
+    background: none !important;
+    color: #000 !important;
+  }
+  .el-range-input{
+    cursor:pointer;
+  }
+  .paren{
+    position: relative;
+    width: 88px;
+    text-align: left;
+    cursor:pointer;
+  }
+  .j3{
+    position: absolute;
+    right: 0;
+    top: 14px;
+    width: 15px;
+  }
+  .dateparen{
+    position: relative;
+  }
+  .date{
+    position: absolute;
+    top: 0;
+    left: -117px;
+    z-index: 999;
+  }
+  .link{
+    position: absolute;
+    bottom: 0.8rem;
+    background-color: #ffffff;
+    padding: 5px 5px;
+    cursor: pointer;
+    color: #f8917c;
+    font-size: 14px;
+    font-weight: lighter;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+  }
+  .link:hover{
+    -webkit-box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    -moz-box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   }
 </style>

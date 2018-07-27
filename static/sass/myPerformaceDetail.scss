@@ -19,6 +19,14 @@
           background: url("../../static/img/icon40.png") no-repeat #fff2ef;
           background-position: 50% 50%;
         }
+        .el-input__inner{
+          background:none !important;
+          .el-range-input{
+            background:none !important;
+            color: #000 !important;
+          }
+        }
+
       }
       >div:nth-child(1){
         height: 60px;
@@ -28,9 +36,9 @@
           width: 240px;
           border: 1px solid #ffcac0;
           border-right: 0;
-          background-color: #fff2ef;
+          //background-color: #fff2ef;
           padding: 20px;
-          color: #ffa897;
+          //color: #ffa897;
           font-size: 16px;
         }
         button{
@@ -38,6 +46,7 @@
           border: 1px solid #ffcac0;
           background-color: #fff2ef;
           color: #ffa897;
+          font-size: 16px;
         }
       }
     }

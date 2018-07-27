@@ -65,7 +65,7 @@
       align-items: center;
       >div:first-child{
         display: flex;
-        width: 50%;
+        width: 55%;
         >div:first-child{
           width: 7%;
           min-width: 44px;
@@ -97,6 +97,10 @@
                 background-size: 50% auto;
                 margin-right: 5px;
               }
+              .icon_1{
+                background: url("../../static/img/p0.png") no-repeat center;
+                background-size: 80% auto;
+              }
               .icon0{
                 background: url("../../static/img/p1.png") no-repeat center;
                 background-size: 80% auto;
@@ -121,6 +125,10 @@
             li.sel{
               font-weight: bold;
               color: #8794f4;
+              .icon_1{
+                background: url("../../static/img/p0_sel.png") no-repeat center;
+                background-size: 80% auto;
+              }
               .icon0{
                 background: url("../../static/img/p1_sel.png") no-repeat center;
                 background-size: 80% auto;
@@ -179,7 +187,8 @@
         button{
           width: 20%;
           color: #ffffff;
-          background-color: #bfbfbf;
+          //background-color: #bfbfbf;
+          background-color: #8693f3;
         }
         button:hover{
           background-color: #8693f3;
@@ -244,7 +253,7 @@
         border: 1px solid #f6f6f6;
         margin-bottom: 34px;
         margin-right: 4%;
-        height: 425px;
+        height: 370px;
         padding: 30px 0 15px 0;
         cursor: pointer;
         .list1-img{
@@ -318,7 +327,7 @@
           text-align: left;
           padding: 30px 20px 0 20px;
           .price{
-            font-size: 16px;
+            font-size: 1.5rem;
             margin-bottom: 10px;
             >div:first-child{
               //width: 70%;
@@ -328,8 +337,12 @@
               color: #333333;
             }
           }
+          .totalPrice{
+            font-size: 1.5rem ;
+
+          }
           .l1cont-1{
-            font-size: 17px;
+            font-size: 1.3rem;
             color: #333333;
             margin-bottom: 15px;
             >span:first-child{
@@ -339,6 +352,7 @@
           }
           .l1cont-2{
             margin-bottom: 15px;
+            margin-top: 25px;
             >div{
               display: inline-block;
               margin-right: 0px;
@@ -377,10 +391,13 @@
             width: auto;
             text-align: center;
             padding: 5px 5px;
-            font-size: 14px;
+            font-size: 1.3rem;
             color: #555555;
             margin-right: 5%;
             position: relative;
+          }
+          span:last-child:after{
+            border-right:none;
           }
           span:after{
             content: '';
@@ -392,6 +409,7 @@
             top: 20%;
           }
         }
+
         .list-user{
           font-size: 14px;
           padding: 0 20px 20px 20px;

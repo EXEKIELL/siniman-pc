@@ -15,6 +15,9 @@ var root='http://120.24.212.12:8080/share/';
 // var root='http://127.0.0.1:8080/share/';
 // var root = window.location.protocol+'//'+window.location.host+'/share/';
 
+//手机端链接，用来生成分享二维码的
+let mobileUrl='http://share.hengdikeji.com/mobile/#/HomeProduct';
+
 var headers = [
   {'Content-Type':'application/x-www-form-urlencoded'},
   {'Content-Type': 'application/json'},
@@ -168,6 +171,7 @@ function axiosGet(url,params,fun) {
 export default {
   axiosPost:axiosPost,
   axiosGet:axiosGet,
+  mobileUrl:mobileUrl,
   baseUrl:root,
   getToken:getToken,
   formatDate (date, fmt) {

@@ -32,13 +32,16 @@
           </ul>
         </div>
         <div class="w3-cont">
-
           <template v-if="productList.list.length>=1">
-            <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
+            <div class="list1" v-for="(item,index) in productList.list" :key="index" >
               <div class="list1-img">
-                <img :src="item.simg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
+                <img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
+
+                <div style="top: 0;left: 0;z-index: 300">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>
+                </div>
               </div>
-              <div class="list1-cont">
+              <div class="list1-cont" @click="toUrl(item.id)">
                 <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>
                 <div class="l1cont-2 clearFix">
                   <div>
@@ -63,7 +66,7 @@
           </template>
           <template v-else>
             <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
-              该类目下还没有设计方案哦
+              {{ lodingstr }}
             </div>
           </template>
         </div>
@@ -78,20 +81,38 @@
           :total="productList.last_page*10">
         </el-pagination>
       </div>
+
+      <!--二维码组件-->
+      <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
+        <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
+      </el-dialog>
     </div>
 </template>
 
 <script>
+  import VueQArt from 'vue-qart'
     export default {
+      components:{
+        VueQArt
+      },
       name: "MyProjectIndex",
       data(){
         return {
           tagsList:[],
-          productList:{},
+          productList:{list:[]},
           tags:[],
           postTags:[],
           orderByField:'salsecount',
-          prostatus:1
+          prostatus:1,
+          lodingstr:'加载中...',
+          config: {
+            value: "",
+            filter: 'color',
+            imagePath:'./static/img/logo01.png',
+            version:1,
+          },
+          downloadButton: false,
+          dialogFormVisible:false,
         }
       },
       methods:{
@@ -121,11 +142,13 @@
           this.change(1)
         },
         toUrl(val){
-          this.$router.push({path:'/indexWrap/myProject',query:{productId:val}})
+          let routeData=this.$router.resolve({path:'/indexWrap/myProject',query:{productId:val}})
+          window.open(routeData.href, '_blank');
         },
         change(val){
           const that = this;
           //获取方案列表
+          that.productList.list=[]
           this.$api.axiosPost('/product/productList',1,{
             data:{
               prostatus:that.prostatus,
@@ -140,10 +163,19 @@
           },function (res) {
             let data = res.data.data;
             that.productList = data;
+            if(that.productList.list.length<=0){
+              that.lodingstr="还没有相应的方案"
+            }
           })
         },
+        share(id){
+          /*生成二维码*/
+          let url=this.$api.mobileUrl+"?id="+id
+          this.config.value=url
+          this.dialogFormVisible=true
+          // console.log(this.config.value)
+        },
         prostatu(val){
-
           this.prostatus=val
           this.change(1)
         }
@@ -153,7 +185,6 @@
 
         // //标签获取
         this.$api.axiosPost('/tag/getTagList',1,{},function (res) {
-
           that.tagsList = res.data.data
         })
 
@@ -165,7 +196,10 @@
 
 <style lang="scss" scoped>
 @import "../../static/sass/myProjectIndex";
+  .list1{
+    cursor:pointer;
+  }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../../static/sass/public";
 </style>
