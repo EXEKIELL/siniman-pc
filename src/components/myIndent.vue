@@ -11,35 +11,26 @@
                 <div class="wrap_1">
                   <div class="w1_1">
                     <div class="w1-img">
-                      <img :src="item.userImg" alt="" onerror="this.src='./static/img/head05.png'" alt="">
+                      <img :src="item.openFace" alt="" onerror="this.src='./static/img/head05.png'" alt="">
                     </div>
-                    <div>{{ item.username }}</div>
+                    <div>{{ item.openName }}</div>
                   </div>
-                  <div class="w1_2">{{ item.createTime}}</div>
+                  <div class="w1_2">
+                    <button v-if="item.status==0" class="statusbuton status0" @click="updateStatu(index)">未沟通</button>
+                    <button v-else class="statusbuton status1">已沟通</button>
+                  </div>
                 </div>
                 <div class="wrap_2">
-                  <div class="w2-left">
-                    <img  :src="item.proImg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
-                  </div>
-                  <div class="w2-right">
-                    <div class="r1 textEllipsis">{{ item.productName }}</div>
-                    <div class="r2">
-                    <span v-for="(val,key) in item.protag" :key="key" v-if="key<4">
-                      <template v-if="val">{{ val.tagname }}</template>
-                    </span>
-                    </div>
-                    <div class="r3">{{ item.payIntegral }}积分</div>
-                    <div class="r4">
-                      <span class="icon"></span><span>{{ item.shopName }}</span>
-                    </div>
-                  </div>
+                  <div class="r1"><span class="thead">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>{{ item.uname }}</div>
+                  <div class="r1"><span class="thead">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</span>{{ item.mobile }}</div>
+                  <div class="r1"><span class="thead">预约时间：</span>{{ item.createTime|gettime }}</div>
                 </div>
               </div>
             </div>
           </template>
           <template v-else>
             <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
-              您还没有订单
+              {{ loadstr }}
             </div>
           </template>
 
@@ -59,6 +50,7 @@
 </template>
 
 <script>
+    import {transformDate} from '../../static/js/personCenter.js'
     export default {
       name: "MyIndent",
       data(){
@@ -66,18 +58,38 @@
           postData:{
             list:[]
           },
-          listLoading:false
+          listLoading:false,
+          loadstr:"加载中..."
+        }
+      },
+      filters:{
+        gettime:function (value) {
+          if (!value) return ''
+
+          let date = new Date(value);
+          let yy = date.getFullYear();
+          let mm = date.getMonth()+1<10?('0'+(date.getMonth()+1)):date.getMonth()+1;
+          let dd = date.getDate()<10?('0'+date.getDate()):date.getDate();
+          let h = date.getHours()<10?('0'+date.getHours()):date.getHours();
+          let minute = date.getMinutes();
+          minute = minute<10?('0'+minute):minute;
+          let second = date.getSeconds();
+          second = second<10?('0'+second):second;
+
+          return yy+'-'+mm+'-'+dd
         }
       },
       methods:{
         change(val){
           let that=this
           that.listLoading=true
+          that.loadstr="加载中..."
 
           that.postData.list=[]
           //获取我的订单列表
-          this.$api.axiosPost('/order/getOrderProductList',1,{
+          this.$api.axiosPost('/reserve/getlist',1,{
             data:{
+
             },
             page:{
               pageNum:val,
@@ -87,10 +99,29 @@
             let data = res.data.data;
             that.listLoading=false
             that.postData = data;
+            if(that.postData.list.length<=0){
+              that.loadstr="还没有您的预约"
+            }
           })
         },
         desc(id){
           this.$router.push({path:'/indexWrap/shareProject',query:{productId:id}})
+        },
+        updateStatu(index){
+          let that=this
+          this.$api.axiosPost('/reserve/updateStatu',1,{
+            data:{
+              id:that.postData.list[index].id
+            },
+            page:{
+              pageNum:1,
+              pageSize:10
+            }
+          },function (res) {
+
+            that.postData.list[index].status=1
+          })
+
         }
       },
       mounted(){
@@ -156,4 +187,16 @@ body > .el-container {
 .prodesc .el-tag{
   margin-right: 10px;
 }
+  .statusbuton{
+    padding: 2px 7px ;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  .status0{
+    background-color: #a61e32;
+  }
+  .status1{
+    background-color: #fdc405;
+  }
 </style>
