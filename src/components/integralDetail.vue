@@ -15,7 +15,7 @@
                   <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
-                  <span>￥{{list1.total}}</span>
+                  <span class="integral">{{list1.total}}</span>
                 </div>
               </div>
               <div>
@@ -34,7 +34,7 @@
                   <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
-                  <span>￥{{list1.obtain}}</span>
+                  <span class="integral">{{list1.obtain}}</span>
                 </div>
               </div>
               <div class="list-right">
@@ -52,7 +52,7 @@
                   <span>{{ ago }}-{{ today }}</span>
                 </div>
                 <div>
-                  <span>￥{{list1.consume}}</span>
+                  <span class="integral">{{list1.consume}}</span>
                 </div>
               </div>
               <div>

@@ -64,12 +64,12 @@
         }else if(val==2){
           that.$api.axiosPost('/userinfo/getClientConvertRateAnalysis',1,{},function (res) {
             let data=res.data.data
-            that.echarts3Data=[
-              data.allMeasureInTouchRate,
-              data.allCheckMeasureDealRate,
-              data.allSchemeDealRate,
-            ]
-
+            // that.echarts3Data=[
+            //   data.allMeasureInTouchRate,
+            //   data.allCheckMeasureDealRate,
+            //   data.allSchemeDealRate,
+            // ]
+            that.echarts3Data=data
             that.setOption2()
           })
         }
@@ -176,7 +176,7 @@
             text: '转化率统计分析'
           },
           legend: {
-            data:['百分比']
+            data:['个人','全国']
           },
           xAxis : [
             {
@@ -190,11 +190,33 @@
               type : 'value'
             }
           ],
+          //   data.allMeasureInTouchRate,
+          //   data.allCheckMeasureDealRate,
+          //   data.allSchemeDealRate,
           series: [
             {
-              name: '未选择',
+              name: '个人',
               type: 'bar',
-              data: self.echarts3Data,
+              data:[
+                self.echarts3Data.allMeasureInTouchRate,
+                self.echarts3Data.allCheckMeasureDealRate,
+                self.echarts3Data.allSchemeDealRate,
+              ],
+              label:{
+                normal:{
+                  show: true,
+                  position: 'top'
+                }
+              },
+            },
+            {
+              name: '全国',
+              type: 'bar',
+              data: [
+                self.echarts3Data.searchCheckMeasureDealRate,
+                self.echarts3Data.searchCheckMeasureDealRate,
+                self.echarts3Data.searchSchemeDealRate,
+              ],
               label:{
                 normal:{
                   show: true,

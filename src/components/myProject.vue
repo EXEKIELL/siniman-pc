@@ -4,7 +4,7 @@
       <div class="top-left">
         <div class="bigImg" style="justify-content: center;-webkit-justify-content: center;">
           <img style="width: initial;max-height: 100%;max-width: 100%;" v-if="imgInfo.length == 0" :src="productInfo.simg" alt="">
-          <img v-else src="" alt="" ref="bigImg">
+          <img v-else :src="imgInfo[0].img" alt="" ref="bigImg">
         </div>
         <div id="swiper1" class="swiper-container">
           <div class="swiper-wrapper">
@@ -44,15 +44,15 @@
             <template v-if="item">{{item.tagname}}</template>
           </span>
         </div>
-        <div class="tright-4">
-          <div>需求描述</div>
+        <div class="tright-4" style="height: 173px;overflow: hidden">
+          <div>需求描述 <span style="font-size: 14px;color: blue;cursor:pointer;" @click="btn1(2)">编辑方案信息</span></div>
           <div>
             <p>{{productInfo.productdesc}}</p>
           </div>
         </div>
         <div class="tright-5">
           <button @click="btn1(1)"><span></span><span>分享家·赢豪礼</span></button>
-          <button @click="btn1(2)"><span></span><span>编辑方案信息</span></button>
+          <button @click="toKjl"><span></span><span>编辑方案</span></button>
         </div>
       </div>
     </div>
@@ -204,6 +204,12 @@
         </div>
       </div>
     </div>
+    <el-dialog title="方案设计工具"  custom-class="editproduct" :visible.sync="dialogFormVisible">
+      <div :style="{height:windowHeight,width:'100%'}">
+        <iframe style="width: 100%;height: 100%" :src="kjurl" frameborder="0"></iframe>
+      </div>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -240,7 +246,11 @@
           projectSpaceList:[],
           value5:[],
           sysconfig:{},
-          listLoading:false
+          listLoading:false,
+          access_token:'',
+          dialogFormVisible:false,
+          kjurl:'',
+          windowHeight:""
         }
       },
 
@@ -363,6 +373,10 @@
             that.productInfo = JSON.parse(res.data.productInfo);
             //编辑信息赋值
             that.form1 = JSON.parse(res.data.productInfo);
+            if(res.data.access_token){
+              that.access_token=res.data.access_token
+            }
+
             var res1 = JSON.parse(res.data.productInfo);
             var desid = res1.desid;
             var st = res1.createtime;
@@ -397,6 +411,44 @@
             })
           })
         },
+        /**去酷家乐**/
+        toKjl(){
+          if(this.access_token){
+            this.dialogFormVisible=true;
+            let that=this
+            if(!this.kjurl){
+              let url="https://www.kujiale.com/v/auth?accesstoken="+this.access_token+"&dest=1&designid="+this.form1.desid;
+              this.kjurl=url;
+
+              if (window.postMessage) {
+                var callback = function(ev) {
+                  let action=JSON.parse(ev.data)
+                  /*发生了保存行为的时候去更新下载状态*/
+                  if(action.action=="kjl_saved"){
+                    that.$api.axiosPost('/product/editDownload',1,{
+                      proid:that.form1.id
+                    },function () {
+
+                    })
+                  }
+                };
+                if ('addEventListener' in document) {
+                  window.addEventListener('message', callback, false);
+                } else if ('attachEvent' in document) {
+                  window.attachEvent('onmessage', callback);
+                }
+              } else {
+                // 如果不支持postMessage， 则使用ie6/7的window共有属性navigator进行hack
+                window.navigator.listenKJL = function(msg) {
+                  alert(msg)
+                  // var data = JSON.parse(ev.data)
+                };
+              }
+            }
+          }else{
+            this.$message.warning("状态错误，请刷新页面");
+          }
+        },
       },
 
       updated(){
@@ -409,7 +461,9 @@
         })
       },
       mounted(){
+        let windowHeight=window.innerHeight
 
+        this.windowHeight=windowHeight+'px'
         let sysconfig=JSON.parse(localStorage.getItem("sysconfig"))
         this.sysconfig=sysconfig
 
@@ -462,5 +516,10 @@
 </style>
 <style lang="scss">
 @import "../../static/sass/public";
+.editproduct{
+  width: 100%;
+  height: 100%;
+  margin-top: 0 !important;
+}
 
 </style>

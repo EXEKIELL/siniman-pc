@@ -33,76 +33,27 @@
         </div>
         <div class="w3-cont">
           <template v-if="productList.list.length>=1">
-            <!--<div class="list1" v-for="(item,index) in productList.list" :key="index" >-->
-              <!--<div class="list1-img">-->
-                <!--<img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">-->
 
-                <!--<div style="top: 0;left: 0;z-index: 300">-->
-                  <!--<button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="list1-cont" @click="toUrl(item.id)">-->
-                <!--<div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>-->
-                <!--<div class="l1cont-2 clearFix">-->
-                  <!--<div>-->
-                    <!--<span></span><span>{{item.customername}}</span>-->
-                  <!--</div>-->
-                  <!--<div>-->
-                    <!--<span></span><span>{{item.customercontact}}</span>-->
-                  <!--</div>-->
-                  <!--<div>-->
-                    <!--<span></span><span>{{item.customeraddr}}</span>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="list1-tag">-->
-              <!--<span v-for="(item,index) in item.producttag[0]" :key="index" v-if="index<4">-->
-                <!--<template v-if="item">-->
-                   <!--{{item.tagname}}-->
-                <!--</template>-->
-              <!--</span>-->
-              <!--</div>-->
-            <!--</div>-->
             <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
               <div class="list1-img">
-                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-                <div style="top: -30px;left: 0; z-index: 200">
+                <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <div style="top: 0;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
                 </div>
-                <div>
-
-                  <div>
-                    <img src="../../static/img/img_sm01.png" alt="">
+                <div v-if="item.renders.length>=1">
+                  <div v-for="val in item.renders">
+                    <img :src="val.img" @mouseenter="replaImg(index,val.img)" alt="">
                     <div class="maskSm">
-                      <button>设为封面</button>
                     </div>
                   </div>
-                  <div>
-                    <img src="../../static/img/img_sm01.png" alt="">
-                    <div class="maskSm">
-                      <button>设为封面</button>
-                    </div>
-                  </div>
-                  <div>
-                    <img src="../../static/img/img_sm01.png" alt="">
-                    <div class="maskSm">
-                      <button>设为封面</button>
-                    </div>
-                  </div>
-                  <div>
-                    <img src="../../static/img/img_sm01.png" alt="">
-                    <div class="maskSm">
-                      <button>设为封面</button>
-                    </div>
-                  </div>
-
                 </div>
               </div>
               <div class="list1-wrap">
                 <div class="list1-cont">
                   <div class="price">
-                    <div>{{ item.productionmark }}积分</div>
-                    <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
+                    <div>{{ item.productionmark }}积分 {{ item.bigimg }}</div>
+                    <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;总价：¥{{ item.totalPrice }}</div>
                     <div class="area"><span>{{item.area}}m²</span></div>
                   </div>
                   <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
@@ -153,6 +104,7 @@
                     </div>
                   </el-col>
                 </div>
+                <div v-if="item.download==1" class="download">下载方案</div>
               </div>
             </div>
 
@@ -175,18 +127,15 @@
         </el-pagination>
       </div>
 
-      <!--二维码组件-->
-      <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
-        <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
-      </el-dialog>
+      <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
     </div>
 </template>
 
 <script>
-  import VueQArt from 'vue-qart'
+  import share from './common/share'
     export default {
       components:{
-        VueQArt
+        share
       },
       name: "MyProjectIndex",
       data(){
@@ -196,15 +145,11 @@
           tags:[],
           postTags:[],
           showUser:false,
-          orderByField:'salsecount',
+          orderByField:'id',
           prostatus:1,
           lodingstr:'加载中...',
-          config: {
-            value: "",
-            filter: 'color',
-            imagePath:'./static/img/logo01.png',
-            version:1,
-          },
+          username:'',
+          url:'',
           downloadButton: false,
           dialogFormVisible:false,
         }
@@ -253,6 +198,8 @@
         change(val){
           const that = this;
           //获取方案列表
+          that.lodingstr="加载中..."
+
           that.productList.list=[]
           this.$api.axiosPost('/product/productList',1,{
             data:{
@@ -268,6 +215,7 @@
           },function (res) {
             let data = res.data.data;
             that.productList = data;
+
             if(that.productList.list.length<=0){
               that.lodingstr="还没有相应的方案"
             }
@@ -276,13 +224,16 @@
         share(id){
           /*生成二维码*/
           let url=this.$api.mobileUrl+"?id="+id
-          this.config.value=url
+          this.url=url
           this.dialogFormVisible=true
           // console.log(this.config.value)
         },
         prostatu(val){
           this.prostatus=val
           this.change(1)
+        },
+        replaImg(index,img){
+          $('.bigimg_'+index).attr('src',img);
         }
       },
       filters:{

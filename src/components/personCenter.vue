@@ -33,7 +33,7 @@
                 <span>{{ ago }}-{{ today2 }}</span>
               </div>
               <div>
-                <span>￥{{list1.total}}</span>
+                <span class="integral">{{list1.total}}</span>
               </div>
             </div>
             <div>
@@ -52,7 +52,7 @@
                 <span>{{ ago }}-{{ today2 }}</span>
               </div>
               <div>
-                <span>￥{{list1.obtain}}</span>
+                <span class="integral">{{list1.obtain}}</span>
               </div>
             </div>
             <div class="list-right">
@@ -70,7 +70,7 @@
                 <span>{{ ago }}-{{ today2 }}</span>
               </div>
               <div>
-                <span>￥{{list1.consume}}</span>
+                <span class="integral">{{list1.consume}}</span>
               </div>
             </div>
             <div>
@@ -165,59 +165,29 @@
       <div class="w3-cont" v-loading.body="listLoading">
         <template v-if="postData.list">
           <template v-if="postData.list.length>=1">
-            <!--<div style="cursor: pointer;" class="list1"  v-for="(item,index) in postData.list" :key="index" >-->
-              <!--<div class="list1-img" v-if="" style="">-->
-                <!--<img :src="item.simg" @click="toUrl(item.id)" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">-->
 
-                <!--<div style="top: 0;left: 0;z-index: 300">-->
-                  <!--<button style="border: 0;background-color: rgba(255,0,0,0.8);" @click="share(item.id)">分享家·赢豪礼</button>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;<div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<img src="../../static/img/img_sm01.png" alt="">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="maskSm">&ndash;&gt;-->
-                <!--&lt;!&ndash;<button>设为封面</button>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-              <!--</div>-->
-              <!--<div class="list1-cont" @click="toUrl(item.id)">-->
-                <!--<div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span><span>{{item.area}}m²</span></div>-->
-                <!--<div class="l1cont-2 clearFix">-->
-                  <!--<div v-if="item.customername != '' && item.customername !='&#45;&#45;' && item.customername !=0">-->
-                    <!--<span></span><span>{{item.customername}}</span>-->
-                  <!--</div>-->
-                  <!--<div v-if="item.customercontact != '' && item.customercontact !=0 && item.customercontact !='&#45;&#45;' ">-->
-                    <!--<span></span><span>{{item.customercontact}}</span>-->
-                  <!--</div>-->
-                  <!--<div v-if="item.customeraddr != '' && item.customeraddr !=0 && item.customeraddr !='&#45;&#45;'  ">-->
-                    <!--<span></span><span>{{item.customeraddr}}</span>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="list1-tag" v-if="item.producttag[0].length>=1">-->
-                <!--<span  v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">-->
-                  <!--<template v-if="item1">-->
-                        <!--{{item1.tagname}}-->
-                  <!--</template>-->
-
-                <!--</span>-->
-              <!--</div>-->
-            <!--</div>-->
             <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
               <div class="list1-img">
                 <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-                <div style="top: -30px;left: 0; z-index: 200">
+
+                <div style="top: 0;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
                 </div>
               </div>
               <div class="list1-wrap">
                 <div class="list1-cont">
                   <div class="price">
-                    <div>{{ item.productionmark }}积分</div>
-                    <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;装修价格：¥{{ item.totalPrice }}</div>
-                    <div class="area"><span>{{item.area}}m²</span></div>
+                    <div style="width: 100%">
+                      {{ item.productionmark }}积分
+                      <template v-if="item.totalPrice">
+                        <span>总价：¥{{ item.totalPrice }}</span>
+                        <span>{{item.area}}m²</span>
+                      </template>
+                      <template v-else>
+                        <span style="float: right">{{item.area}}m²</span>
+                      </template>
+                    </div>
+
                   </div>
                   <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
 
@@ -289,10 +259,8 @@
         :total="postData.last_page*10">
       </el-pagination>
     </div>
-    <!--二维码组件-->
-    <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
-      <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
-    </el-dialog>
+
+    <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
   </div>
 </template>
 <script src="../../static/js/personCenter.js">

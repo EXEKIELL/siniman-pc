@@ -1,9 +1,9 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
-import VueQArt from 'vue-qart'
+import share from '@/components/common/share'
 export default {
   components:{
-    VueQArt
+    share
   },
   name: 'PersonCenter',
   data(){
@@ -31,7 +31,7 @@ export default {
       showUser:false,
       totalPage:null,
       postTags:[],
-      orderByField:'salsecount',
+      orderByField:'id',
       list01:[
         {
           productname:'方案名称',
@@ -52,12 +52,10 @@ export default {
         list:{},
         lastList:{}
       },
-      config: {
-        value: "",
-        filter: 'color',
-        imagePath:'./static/img/logo01.png',
-        version:1,
-      },
+
+      username:'',
+      url:'',
+
       downloadButton: false,
       dialogFormVisible:false,
       today2:'',
@@ -118,7 +116,7 @@ export default {
     share(id){
       /*生成二维码*/
       let url=this.$api.mobileUrl+"?id="+id
-      this.config.value=url
+      this.url=url
       this.dialogFormVisible=true
       // console.log(this.config.value)
     },
@@ -178,6 +176,7 @@ export default {
       const that = this;
       // //获取方案列表
       that.postData.list=[]
+      that.lodingstr="加载中..."
       this.listLoading=true
       this.$api.axiosPost('/product/productList',1,{
         data:{
@@ -194,7 +193,8 @@ export default {
         that.listLoading=false
         let data = res.data.data;
         that.postData = data;
-        if(that.postData.length<=0){
+
+        if(that.postData.list.length<=0){
           that.lodingstr="还没有相应的方案";
         }
       })

@@ -70,7 +70,7 @@
           <!--</div>-->
         </div>
         <div>
-          <input type="text" placeholder="请输入方案名称" v-model="productName">
+          <input type="text" style="font-size: 14px" placeholder="方案名称/设计师姓名/客户姓名" v-model="productName">
           <button @click="getproductList(1)">搜索</button>
         </div>
       </div>
@@ -79,8 +79,8 @@
           <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
             <div class="list1-img">
               <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-              <div style="top: -30px;left: 0; z-index: 200">
-                <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+              <div style="top: 0;left: 0; z-index: 200">
+                <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id,item.username)">分享家·赢豪礼</button>
               </div>
             </div>
             <div class="list1-wrap">
@@ -159,20 +159,15 @@
         :total="postData.last_page*10">
       </el-pagination>
     </div>
-    <!--二维码组件-->
-    <el-dialog title="扫码分享" custom-class="qart" :visible.sync="dialogFormVisible" @close="diaclose">
-      <vue-q-art :config="config" :downloadButton="downloadButton"></vue-q-art>
-    </el-dialog>
 
+    <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
   </div>
 </template>
 
 <script>
-  import VueQArt from 'vue-qart'
+  import share from './common/share'
     export default {
-      components:{
-        VueQArt
-      },
+      components:{share},
       name: "ShareCommunity",
       data(){
         return {
@@ -200,15 +195,11 @@
           priceStart:null,
           priceEnd:null,
 
-          config: {
-            value: "",
-            filter: 'color',
-            imagePath:'./static/img/logo01.png',
-            version:1,
-          },
           downloadButton: false,
           dialogFormVisible:false,
-          lodingstr:'加载中...'
+          username:'',
+          url:'',
+          lodingstr:'加载中...',
         }
       },
       methods:{
@@ -294,10 +285,11 @@
           let routeData=this.$router.resolve({path:'/indexWrap/shareProject',query:{productId:val}})
           window.open(routeData.href, '_blank');
         },
-        share(id){
+        share(id,username){
           /*生成二维码*/
           let url=this.$api.mobileUrl+"?id="+id
-          this.config.value=url
+          this.url=url
+          this.username=username
           this.dialogFormVisible=true
           // console.log(this.config.value)
 
@@ -306,6 +298,7 @@
         getproductList(page){
           const that = this;
           that.listLoading=true
+          that.lodingstr="加载中..."
           // //获取方案列表
           that.postData.list=[]
           this.$api.axiosPost('/product/productAll',1,{

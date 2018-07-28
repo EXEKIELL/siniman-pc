@@ -5,10 +5,10 @@
     flex-wrap: wrap;
     padding: 45px;
     .wrap-list{
-      width: 98%;
+      width: 70%;
       overflow: hidden;
       transition: 0.5s;
-      margin-bottom: 30px;
+      margin: 0 auto;
       >div:first-child{
         position: relative;
         margin: 25px;

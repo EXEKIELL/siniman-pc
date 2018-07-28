@@ -56,7 +56,7 @@
           <span>店长名称</span>
           <span>门店销售</span>
           <span>方案数量</span>
-          <span>备注</span>
+          <span>操作</span>
         </li>
         <li v-for="(item,index) in postList" :key="index">
           <span>{{item.shopname}}</span>
@@ -165,7 +165,7 @@
         let that = this
         //地区查询
         this.$api.axiosPost('/area/getByParentId',1,{
-          parentId:''
+          parentId:0
         },function (res) {
           that.province = res.data.data
 
