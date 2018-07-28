@@ -27,8 +27,10 @@
         this.config.value=val
       }
     },
+
     methods:{
       diaclose(){}
     }
   }
 </script>
+

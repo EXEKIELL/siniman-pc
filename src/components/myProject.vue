@@ -252,6 +252,7 @@
         </div>
       </div>
     </div>
+
     <el-dialog title="方案设计工具"  custom-class="editproduct" :visible.sync="dialogFormVisible">
       <div :style="{height:windowHeight,width:'100%'}">
         <iframe style="width: 100%;height: 100%" :src="kjurl" frameborder="0"></iframe>

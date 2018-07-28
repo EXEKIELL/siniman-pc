@@ -251,8 +251,7 @@
                 <div v-if="item.renders.length>=1">
                   <div v-for="val in item.renders">
                     <img :src="val.img" @mouseenter="replaImg(index,val.img)" alt="">
-                    <div class="maskSm">
-                    </div>
+                    <div class="maskSm"></div>
                   </div>
                 </div>
               </div>

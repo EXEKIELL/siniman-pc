@@ -79,10 +79,17 @@
           <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
             <div class="list1-img">
               <div class="img">
-                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
               </div>
               <div style="top: -15px;left: 0; z-index: 200">
                 <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id,item.username)">分享家·赢豪礼</button>
+              </div>
+              <div v-if="item.renders.length>=1" class="maskSm">
+                <div v-for="val in item.renders">
+                  <img :src="val.img" @mouseenter="replaImg(index,val.img)" alt="">
+                  <div class="maskSm"></div>
+                </div>
               </div>
             </div>
             <div class="list1-wrap">
@@ -327,6 +334,9 @@
             }
           })
         },
+        replaImg(index,img){
+          $('.bigimg_'+index).attr('src',img);
+        },
 
       },
       filters:{
@@ -383,6 +393,7 @@
     color: #333333!important;
     font-weight: bold;
   }
+
 </style>
 <style lang="scss">
   @import "../../static/sass/public";
