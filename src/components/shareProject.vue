@@ -6,15 +6,19 @@
             <img v-if="imgInfo.length>=1" :src="imgInfo[0].img" alt="" ref="bigImg">
             <img style="width: initial;max-height: 100%;max-width: 100%;" v-else :src="productInfo.simg" alt="">
           </div>
-          <div id="swiper1" class="swiper-container">
-            <div class="swiper-wrapper">
-              <div v-if="imgInfo.length == 0" class="swiper-slide">
-                <img :src="productInfo.simg" alt="">
-              </div>
-              <div v-else style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
-                <img :src="item.img" alt="">
+          <div class="small">
+            <div id="swiper1" class="swiper-container">
+              <div class="swiper-wrapper">
+                <div v-if="imgInfo.length == 0" class="swiper-slide">
+                  <img :src="productInfo.simg" alt="">
+                </div>
+                <div v-else style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+                  <img :src="item.img" alt="">
+                </div>
               </div>
             </div>
+            <div class="swiper-button-prev prev01"></div>
+            <div class="swiper-button-next next01"></div>
           </div>
         </div>
         <div class="top-right">
@@ -324,7 +328,9 @@
           slidesPerView: 4,
           paginationClickable: true,
           spaceBetween: 20,
-          freeMode: true
+          freeMode: true,
+          prevButton:'.prev01',
+          nextButton:'.next01'
         })
       },
       mounted(){

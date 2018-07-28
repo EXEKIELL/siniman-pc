@@ -6,22 +6,24 @@
           <img style="width: initial;max-height: 100%;max-width: 100%;" v-if="imgInfo.length == 0" :src="productInfo.simg" alt="">
           <img v-else :src="imgInfo[0].img" alt="" ref="bigImg">
         </div>
-        <div id="swiper1" class="swiper-container">
-          <div class="swiper-wrapper">
-            <div v-if="imgInfo.length==0" class="swiper-slide">
-              <img :src="productInfo.simg" alt="">
-            </div>
-            <div v-else class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
-                 @mouseenter="check(item.img,index)">
-              <img :src="item.img" alt="">
-              <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}" style="display: none" @click="setCover(item.id,index)">
-                <button>{{ item.cover===1?'封面':'设置封面' }}</button>
+        <div class="small">
+          <div id="swiper1" class="swiper-container">
+            <div class="swiper-wrapper">
+              <div v-if="imgInfo.length==0" class="swiper-slide">
+                <img :src="productInfo.simg" alt="">
+              </div>
+              <div v-else class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
+                   @mouseenter="check(item.img,index)">
+                <img :src="item.img" alt="">
+                <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}" style="display: none" @click="setCover(item.id,index)">
+                  <button>{{ item.cover===1?'封面':'设置封面' }}</button>
+                </div>
               </div>
             </div>
           </div>
+          <div class="swiper-button-prev prev01"></div>
+          <div class="swiper-button-next next01"></div>
         </div>
-        <div class="swiper-button-prev prev01"></div>
-        <div class="swiper-button-next next01"></div>
       </div>
       <div class="top-right">
         <!--<div class="tright-1">-->

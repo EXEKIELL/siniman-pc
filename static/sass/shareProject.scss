@@ -31,6 +31,41 @@ $fz1:20px;
           }
         }
       }
+      .small{
+        position: relative;
+        #swiper1{
+          height: 100px;
+          margin: 15px 0;
+          .swiper-wrapper{
+            height: 100%;
+            .swiper-slide{
+              overflow: hidden;
+              cursor: pointer;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              img{
+                width: 100%;
+              }
+            }
+          }
+        }
+        .prev01,.next01{
+          width: 30px;
+          height: 70px;
+          top: 40%;
+        }
+        .prev01{
+          left: -40px;
+          background: url("../../static/img/l01.png") no-repeat center;
+          background-size: 100% auto;
+        }
+        .next01{
+          right: -40px;
+          background: url("../../static/img/r01.png") no-repeat center;
+          background-size: 100% auto;
+        }
+      }
     }
     .top-right{
       width: 65%;
