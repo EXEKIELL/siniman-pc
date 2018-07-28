@@ -20,6 +20,8 @@
             </div>
           </div>
         </div>
+        <div class="swiper-button-prev prev01"></div>
+        <div class="swiper-button-next next01"></div>
       </div>
       <div class="top-right">
         <!--<div class="tright-1">-->
@@ -505,7 +507,9 @@
           slidesPerView: 4,
           paginationClickable: true,
           spaceBetween: 20,
-          freeMode: true
+          freeMode: true,
+          prevButton:'.prev01',
+          nextButton:'.next01'
         })
       },
       mounted(){
