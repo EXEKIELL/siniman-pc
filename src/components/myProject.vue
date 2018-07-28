@@ -51,7 +51,7 @@
           <!--</div>-->
         <!--</div>-->
         <div class="tright-1">
-          <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span>
+          <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
         </div>
 
         <div class="tright-4">
@@ -61,7 +61,7 @@
               </template>
 
             </span>
-          <span>{{productInfo.area}}m²</span>
+
         </div>
 
         <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
@@ -87,7 +87,9 @@
         </div>
 
         <div class="tright-5">
-          <div>需求描述</div>
+          <div>需求描述
+            <span style="font-size: 14px;color: blue;cursor:pointer;" @click="btn1(2)">编辑方案信息</span>
+          </div>
           <div>
             <p>{{productInfo.productdesc}}</p>
           </div>
