@@ -36,9 +36,11 @@
 
             <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
               <div class="list1-img">
-                <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-                <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-                <div style="top: 0;left: 0; z-index: 200">
+                <div class="img">
+                  <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                  <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                </div>
+                <div  class="share" style="top: -15px;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
                 </div>
                 <div v-if="item.renders.length>=1">
