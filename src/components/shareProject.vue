@@ -53,21 +53,6 @@
               </span>
             </span>
           </div>
-          <!--<div class="tright-2 shouc">-->
-            <!--<span style="display: none"></span>-->
-            <!--<span style="display: none">-->
-              <!--<span></span>-->
-              <!--<span>{{productInfo.salsecount}}</span>-->
-            <!--</span>-->
-            <!--<span style="display: none">-->
-              <!--<span></span>-->
-              <!--<span>{{ productInfo.viewcount }}</span>-->
-            <!--</span>-->
-            <!--<span :class="{colle:productInfo.hascollect}" @click="collect()">-->
-              <!--<span></span>-->
-              <!--<span>收藏</span>-->
-            <!--</span>-->
-          <!--</div>-->
 
           <div class="tright-5">
             <div>需求描述</div>
@@ -81,6 +66,21 @@
                 <img style="width: 100%;height: 100%;" :src="productInfo.userimg" onerror="this.src='../../static/img/head05.png'" alt="">
               </div>
               <span>{{productInfo.username}}</span>
+              <div class="tright-2 shouc">
+                <span style="display: none"></span>
+                <span style="display: none">
+              <span></span>
+              <span>{{productInfo.salsecount}}</span>
+            </span>
+                <span style="display: none">
+              <span></span>
+              <span>{{ productInfo.viewcount }}</span>
+            </span>
+                <span :class="{colle:productInfo.hascollect}" @click="collect()">
+              <span></span>
+              <span>收藏</span>
+            </span>
+              </div>
             </div>
             <div>
               <button @click="lijiduihuan" ref="duihuanbtn">{{text1}}</button>
@@ -370,8 +370,8 @@
     background: none !important;
   }
   .shouc{
-    float: right;
-    margin-top: -41px !important;
+    position: relative;
+    left: 40px;
 
   }
 </style>

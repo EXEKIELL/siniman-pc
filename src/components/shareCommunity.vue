@@ -78,8 +78,10 @@
         <template v-if="postData.list.length>=1">
           <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
             <div class="list1-img">
-              <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-              <div style="top: 0;left: 0; z-index: 200">
+              <div class="img">
+                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+              </div>
+              <div style="top: -15px;left: 0; z-index: 200">
                 <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id,item.username)">分享家·赢豪礼</button>
               </div>
             </div>

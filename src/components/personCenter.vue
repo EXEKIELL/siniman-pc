@@ -166,28 +166,102 @@
         <template v-if="postData.list">
           <template v-if="postData.list.length>=1">
 
+            <!--<div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">-->
+              <!--<div class="list1-img">-->
+                <!--<img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">-->
+
+                <!--<div style="top: 0;left: 0; z-index: 200">-->
+                  <!--<button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="list1-wrap">-->
+                <!--<div class="list1-cont">-->
+                  <!--<div class="price">-->
+                    <!--<div style="width: 100%">-->
+                      <!--{{ item.productionmark }}积分-->
+                      <!--<template v-if="item.totalPrice">-->
+                        <!--<span>总价：¥{{ item.totalPrice }}</span>-->
+                        <!--<span>{{item.area}}m²</span>-->
+                      <!--</template>-->
+                      <!--<template v-else>-->
+                        <!--<span style="float: right">{{item.area}}m²</span>-->
+                      <!--</template>-->
+                    <!--</div>-->
+
+                  <!--</div>-->
+                  <!--<div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>-->
+
+                  <!--<div class="l1cont-2 clearFix" v-if="item.customername != ''">-->
+                    <!--<div>-->
+                      <!--<span></span><span>{{item.customername}}</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                      <!--<span></span><span>{{phoneStr(item.customercontact)}}</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                      <!--<span></span><span>{{item.customeraddr|customeraddr }}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="list1-tag" >-->
+
+                  <!--<template v-if="item.producttag[0].length>=1">-->
+              <!--<span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">-->
+                <!--<template v-if="item1">-->
+                    <!--{{item1.tagname}}-->
+                <!--</template>-->
+
+              <!--</span>-->
+                  <!--</template>-->
+                  <!--<template v-else>-->
+                    <!--<span style="border-color:#fff ">...</span>-->
+                  <!--</template>-->
+                <!--</div>-->
+                <!--<div class="list-user clearFix" v-if="showUser">-->
+                  <!--<el-col :span="12">-->
+                    <!--<div class="grid-left bg-purple userbox">-->
+                      <!--<div class="userimg">-->
+                        <!--<img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">-->
+                      <!--</div>-->
+                      <!--<div class="username">{{ item.username }}</div>-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                  <!--<el-col :span="5">-->
+                    <!--<div class="grid-content bg-purple cart">-->
+                      <!--{{ item.salsecount }}-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                  <!--<el-col :span="5">-->
+                    <!--<div class="grid-content bg-purple view">-->
+                      <!--{{ item.viewcount }}-->
+                    <!--</div>-->
+                  <!--</el-col>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
             <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
               <div class="list1-img">
-                <img :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
-
-                <div style="top: 0;left: 0; z-index: 200">
+                <div class="img">
+                  <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                  <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
+                </div>
+                <div class="share" style="top: -15px;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+                </div>
+                <div v-if="item.renders.length>=1">
+                  <div v-for="val in item.renders">
+                    <img :src="val.img" @mouseenter="replaImg(index,val.img)" alt="">
+                    <div class="maskSm">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="list1-wrap">
                 <div class="list1-cont">
                   <div class="price">
-                    <div style="width: 100%">
-                      {{ item.productionmark }}积分
-                      <template v-if="item.totalPrice">
-                        <span>总价：¥{{ item.totalPrice }}</span>
-                        <span>{{item.area}}m²</span>
-                      </template>
-                      <template v-else>
-                        <span style="float: right">{{item.area}}m²</span>
-                      </template>
-                    </div>
-
+                    <div>{{ item.productionmark }}积分 {{ item.bigimg }}</div>
+                    <div class="totalPrice" v-if="item.totalPrice">&nbsp;&nbsp;总价：¥{{ item.totalPrice }}</div>
+                    <div class="area"><span>{{item.area}}m²</span></div>
                   </div>
                   <div class="l1cont-1 clearFix"><span>{{item.productname}}</span><span>{{item.housetype}}</span></div>
 
@@ -237,8 +311,10 @@
                     </div>
                   </el-col>
                 </div>
+                <div v-if="item.download==1" class="download">下载方案</div>
               </div>
             </div>
+
           </template>
           <template v-else>
             <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
@@ -329,4 +405,5 @@
     -moz-box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   }
+
 </style>

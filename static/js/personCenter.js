@@ -113,6 +113,9 @@ export default {
       let routeData=this.$router.resolve({path:'/indexWrap/myProject',query:{productId:val}})
       window.open(routeData.href, '_blank');
     },
+    replaImg(index,img){
+      $('.bigimg_'+index).attr('src',img);
+    },
     share(id){
       /*生成二维码*/
       let url=this.$api.mobileUrl+"?id="+id

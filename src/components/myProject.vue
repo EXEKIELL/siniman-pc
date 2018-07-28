@@ -22,35 +22,77 @@
         </div>
       </div>
       <div class="top-right">
+        <!--<div class="tright-1">-->
+          <!--<span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>-->
+        <!--</div>-->
+        <!--<div class="tright-2" v-if="productInfo.customername != '' && productInfo.customername!='&#45;&#45;'">-->
+          <!--<template v-if="productInfo.customername">-->
+            <!--<span></span><span>{{productInfo.customername}}</span>-->
+          <!--</template>-->
+
+          <!--<template v-if="productInfo.customercontact">-->
+            <!--<span></span><span>{{productInfo.customercontact}}</span>-->
+          <!--</template>-->
+
+          <!--<template v-if="productInfo.customeraddr">-->
+            <!--<span></span><span>{{productInfo.customeraddr}}</span>-->
+          <!--</template>-->
+
+        <!--</div>-->
+        <!--<div class="tright-3">-->
+          <!--<span v-for="(item,index) in productInfo.producttag[0]" :key="index" >-->
+            <!--<template v-if="item">{{item.tagname}}</template>-->
+          <!--</span>-->
+        <!--</div>-->
+        <!--<div class="tright-4" style="height: 173px;overflow: hidden">-->
+          <!--<div>需求描述 <span style="font-size: 14px;color: blue;cursor:pointer;" @click="btn1(2)">编辑方案信息</span></div>-->
+          <!--<div>-->
+            <!--<p>{{productInfo.productdesc}}</p>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="tright-1">
-          <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
+          <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span>
         </div>
-        <div class="tright-2" v-if="productInfo.customername != '' && productInfo.customername!='--'">
-          <template v-if="productInfo.customername">
-            <span></span><span>{{productInfo.customername}}</span>
-          </template>
 
-          <template v-if="productInfo.customercontact">
-            <span></span><span>{{productInfo.customercontact}}</span>
-          </template>
+        <div class="tright-4">
+            <span v-for="(item,index) in productInfo.producttag[0]" :key="index">
+              <template v-if="item">
+                   {{item.tagname}}
+              </template>
 
-          <template v-if="productInfo.customeraddr">
-            <span></span><span>{{productInfo.customeraddr}}</span>
-          </template>
-
+            </span>
+          <span>{{productInfo.area}}m²</span>
         </div>
-        <div class="tright-3">
-          <span v-for="(item,index) in productInfo.producttag[0]" :key="index" >
-            <template v-if="item">{{item.tagname}}</template>
-          </span>
+
+        <div class="tright-3" style="margin-right: 0" v-if="productInfo.customername != ''">
+          <span></span><span>{{productInfo.customername}}</span>
+          <span></span><span>{{ phoneStr(productInfo.customercontact) }}</span>
+          <span></span><span>{{productInfo.customeraddr?productInfo.customeraddr:'无'}}</span>
         </div>
-        <div class="tright-4" style="height: 173px;overflow: hidden">
-          <div>需求描述 <span style="font-size: 14px;color: blue;cursor:pointer;" @click="btn1(2)">编辑方案信息</span></div>
+        <div class="tright-2">
+            <span class="price">
+              <span style=""></span>
+              <span></span>
+              <span style="color: red;font-size: 16px;">
+
+                {{productInfo.productionmark}}积分
+                &nbsp;&nbsp;
+                <span v-if="productInfo.totalPrice" class="totalPrice" style="color: #ff0101;font-size: 14px;">
+                  <span style="font-size: 14px;color: #888888;background: none"> 装修总格 :</span>
+
+                  {{ productInfo.totalPrice+'元' }}</span>
+
+              </span>
+            </span>
+        </div>
+
+        <div class="tright-5">
+          <div>需求描述</div>
           <div>
             <p>{{productInfo.productdesc}}</p>
           </div>
         </div>
-        <div class="tright-5">
+        <div class="tright-7">
           <button @click="btn1(1)"><span></span><span>分享家·赢豪礼</span></button>
           <button @click="toKjl"><span></span><span>编辑方案</span></button>
         </div>
@@ -255,7 +297,13 @@
       },
 
       methods:{
+        phoneStr(str){
+          if(str){
+            let str2 = str.substr(0,3)+"****"+str.substr(7);
+            return str2;
+          }
 
+        },
         navBtn(index,component){
           this.navIndex=index
 
