@@ -13,7 +13,7 @@
                     <div class="w1-img">
                       <img :src="item.openFace" alt="" onerror="this.src='./static/img/head05.png'" alt="">
                     </div>
-                    <div>{{ item.openName }}</div>
+                    <div class="nickname">昵称:{{ item.openName }}</div>
                   </div>
                   <div class="w1_2">
                     <button v-if="item.status==0" class="statusbuton status0" @click="updateStatu(index)">未沟通</button>
@@ -198,5 +198,11 @@ body > .el-container {
   }
   .status1{
     background-color: #fdc405;
+  }
+  .nickname{
+    width: 142px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 </style>

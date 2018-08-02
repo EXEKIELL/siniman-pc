@@ -4,7 +4,7 @@
       <div v-if="shareSpaceInfo.length == 0" style="width: 100%;text-align: center;font-size: 18px;color: #333333;">暂无图片描述</div>
       <div v-else class="wrap-list" v-for="(item,index) in shareSpaceInfo" :key="index">
         <div class="list001" style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;justify-content: center;">
-          <img :src='item.img' @click="click">
+          <img :src='item.img' @click="click(index)" style="cursor:pointer;">
           <div class="tags01">
             <span class="ic"></span><span>{{ item.roomname }}</span>
           </div>
@@ -12,26 +12,42 @@
             <img src="../../static/img/icon20.png" alt="">
           </button>
         </div>
-        <div>
+        <div v-if="item.description">
           <div class="xianshi clearFix" >
             <div>
               <span>创意描述：</span>
-              <span v-if="item.description">{{item.description}}</span>
-              <span v-else>设计师暂未对该效果图进行创意描述</span>
+              <span>{{item.description}}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <el-dialog
+      :visible.sync="centerDialogVisible"
+      :fullscreen="true"
+      center>
+      <el-carousel v-if="centerDialogVisible" :interval="4000" :height="h" :initial-index="cardIndex" arrow="always">
+        <el-carousel-item v-for="(item,index) in shareSpaceInfo" :key="index">
+          <img :src='item.img' alt="" style="width: 80%;margin: 0 auto">
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
+
     export default {
       name: "ShareSpace",
       data(){
         return {
           indexs:null,
+          centerDialogVisible:false,
+          cardIndex:0,
+          w:'',
+          h:'',
         }
       },
       props:{
@@ -40,16 +56,26 @@
           required:true
         }
       },
+
       methods:{
-        click(){
-          console.log(this.shareSpaceInfo)
+        click(index){
+          this.cardIndex=index
+          console.log(index)
+          this.centerDialogVisible=true
         }
-      }
+      },
+      mounted(){
+        let w=window.innerWidth
+        let h=window.innerHeight
+        this.w=w+'px'
+        this.h=h+'px'
+      },
     }
 </script>
 
 <style lang="scss" scoped>
 @import "../../static/sass/shareSpace";
+
 .tags01{
   position: absolute;
   padding: 10px 30px;
@@ -81,4 +107,23 @@
     z-index: 100;
     opacity: 1;
   }
+
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  /*background-color: #99a9bf;*/
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  /*background-color: #d3dce6;*/
+}
+ .el-dialog{
+   margin-top: 0 !important;
+ }
 </style>

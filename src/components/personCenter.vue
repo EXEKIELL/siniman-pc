@@ -4,9 +4,16 @@
       <div id="swiper1" class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-            <router-link to="#">
-              <img :src="item.imgurl" alt="">
-            </router-link>
+            <template v-if="item.link">
+              <a :href="item.link" target="_blank">
+                <img :src="item.imgurl" alt="">
+              </a>
+            </template>
+            <template v-else>
+              <router-link to="#">
+                <img :src="item.imgurl" alt="">
+              </router-link>
+            </template>
           </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -239,23 +246,30 @@
                 <!--</div>-->
               <!--</div>-->
             <!--</div>-->
-            <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+            <div class="list1" v-for="(item,index) in postData.list" :key="index" >
               <div class="list1-img">
-                <div class="img">
+                <div class="img" @click="toUrl(item.id)">
+                  <div v-if="item.download==1" class="download" style="background-image: url('./static/img/icon2_03.png')"></div>
                   <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
                   <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
                 </div>
-                <div class="share" style="top: -15px;left: 0; z-index: 200">
-                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+                <div class="share" style="top: -1px;left: 0; z-index: 200">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享到朋友圈</button>
                 </div>
                 <div v-if="item.renders.length>=1">
-                  <div v-for="val in item.renders">
+                  <div v-for="(val,key) in item.renders" :key="key">
                     <img :src="val.img" @mouseenter="replaImg(index,val.img)" alt="">
-                    <div class="maskSm"></div>
+                    <div class="maskSm">
+
+                      <button :class="{sel:val.cover===1}" @click="setCover(item.desid,val.id,key,item.renders)">
+                        {{ val.cover===1?'封面':'设为封面' }}
+
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="list1-wrap">
+              <div class="list1-wrap" @click="toUrl(item.id)">
                 <div class="list1-cont">
                   <div class="price">
                     <div>{{ item.productionmark }}积分 {{ item.bigimg }}</div>
@@ -310,8 +324,9 @@
                     </div>
                   </el-col>
                 </div>
-                <div v-if="item.download==1" class="download">下载方案</div>
+
               </div>
+
             </div>
 
           </template>
@@ -335,7 +350,7 @@
       </el-pagination>
     </div>
 
-    <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
+    <share v-if="dialogFormVisible" :username="username" :url="url" :downloadButton="downloadButton"  @diaclose="diaclose"></share>
   </div>
 </template>
 <script src="../../static/js/personCenter.js">

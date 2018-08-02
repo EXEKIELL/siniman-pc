@@ -14,9 +14,12 @@
           </div>
           <div v-if="sel==1">
               <div class="echarts" id="echarts1"></div>
+              <div style="height: 20px"></div>
               <div class="echarts" id="echarts2"></div>
           </div>
+
           <div v-if="sel==2">
+
             <div class="echarts" id="echarts3"></div>
           </div>
 
@@ -240,6 +243,6 @@
     width: 800px;
     height: 600px;
     background-color: #fff;
-    margin-top: 20px;
+    margin: 0 auto;
   }
 </style>

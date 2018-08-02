@@ -4,9 +4,16 @@
       <div id="swiper1" class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-            <router-link to="#">
-              <img :src="item.imgurl" alt="">
-            </router-link>
+            <template v-if="item.link">
+              <a :href="item.link" target="_blank">
+                <img :src="item.imgurl" alt="">
+              </a>
+            </template>
+            <template v-else>
+              <router-link to="#">
+                <img :src="item.imgurl" alt="">
+              </router-link>
+            </template>
           </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -55,9 +62,11 @@
           <div>排序：</div>
           <div>
             <ul class="orderby">
-              <li class="sel"  @click="paixu1('默认')" >默认</li>
+              <li class="sel"  @click="paixu1('默认','','id')" >
+                <span class="time"></span> <span>时间</span>
+              </li>
               <!--{{item.text}}-->
-              <li v-for="(item,index) in paixus"  :class="{sel:item.isSel}" :key="index" @click="paixu1(item.text,index)">
+              <li v-for="(item,index) in paixus"  :class="{sel:item.isSel}" :key="index" @click="paixu1(item.text,index,item.type)">
                 <span class="icon" :class="{icon_1:index===1,icon0:index == 0,icon1:index == 2,icon2:index == 3,icon3:index == 4}"></span><span>{{item.text}}</span>
               </li>
 
@@ -77,13 +86,23 @@
       <div class="w3-cont" v-loading.body="listLoading">
         <template v-if="postData.list.length>=1">
           <div class="list1" v-for="(item,index) in postData.list" :key="index" @click="toUrl(item.id)">
+            <div class="list-user">
+              <el-col :span="12">
+                <div class="grid-left bg-purple userbox ">
+                  <div class="userimg">
+                    <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
+                  </div>
+                  <div class="username">{{ item.username }}</div>
+                </div>
+              </el-col>
+            </div>
             <div class="list1-img">
               <div class="img">
                 <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
                 <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
               </div>
-              <div style="top: -15px;left: 0; z-index: 200">
-                <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id,item.username)">分享家·赢豪礼</button>
+              <div style="top: -43px;right: 0;   z-index: 200">
+                <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id,item.username)">分享到朋友圈</button>
               </div>
               <div v-if="item.renders.length>=1" class="maskSm">
                 <div v-for="val in item.renders">
@@ -127,26 +146,7 @@
                   <span style="border-color:#fff ">...</span>
                 </template>
               </div>
-              <div class="list-user clearFix" v-if="showUser">
-                <el-col :span="12">
-                  <div class="grid-left bg-purple userbox">
-                    <div class="userimg">
-                      <img :src="item.userimg" alt="" onerror="this.src='./static/img/head05.png'">
-                    </div>
-                    <div class="username">{{ item.username }}</div>
-                  </div>
-                </el-col>
-                <el-col :span="5">
-                  <div class="grid-content bg-purple cart">
-                    {{ item.salsecount }}
-                  </div>
-                </el-col>
-                <el-col :span="5">
-                  <div class="grid-content bg-purple view">
-                    {{ item.viewcount }}
-                  </div>
-                </el-col>
-              </div>
+
             </div>
           </div>
         </template>
@@ -169,7 +169,7 @@
       </el-pagination>
     </div>
 
-    <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
+    <share v-if="dialogFormVisible" :username="username" :url="url" :downloadButton="downloadButton"  @diaclose="diaclose"></share>
   </div>
 </template>
 
@@ -184,11 +184,11 @@
           swiperList:[],
           tagsList:[],
           paixus:[
-            {text:"总价",type:"",isSel:false},
-            {text:"积分",isSel:false},
-            {text:"下载量",isSel:false},
-            {text:"点赞量",isSel:false},
-            {text:"收藏量",isSel:false}
+            {text:"总价",isSel:false,type:'totalPrice'},
+            {text:"积分",isSel:false,type:'productionmark'},
+            {text:"下载量",isSel:false,type:'salsecount'},
+            {text:"点赞量",isSel:false,type:'goodcount'},
+            {text:"收藏量",isSel:false,type:'favoritecount'}
           ],
           totalPage:0,
           listData:[],
@@ -209,12 +209,14 @@
           username:'',
           url:'',
           lodingstr:'加载中...',
+          orderByCondition:"DESC",
+
         }
       },
       methods:{
         diaclose(){
           this.dialogFormVisible=false
-          this.config.value=''
+          this.url=""
         },
         phoneStr(str){
           if(str){
@@ -257,7 +259,7 @@
 
           this.getproductList(1)
         },
-        paixu1(val,index){
+        paixu1(val,index,type){
           if(val != '默认'){
             $('.orderby li').eq(0).removeClass("sel")
 
@@ -268,25 +270,30 @@
                 this.paixus[i].isSel=false
               }
             }
-            if(index==0){
-              this.orderByField = 'totalPrice'
-            } else if(index == 1){
-              this.orderByField = 'productionmark'
-            }else if(index == 2){
-              this.orderByField = 'salsecount'
-            }else if(index == 3){
-              this.orderByField = 'goodcount'
-            }else{
-              this.orderByField = 'favoritecount'
-            }
+
           }else{
-            this.orderByField = 'id'
+
             for (let i =0;i<this.paixus.length;i++){
               this.paixus[i].isSel=false
             }
 
             $('.orderby li').eq(0).addClass("sel")
           }
+
+
+          if(this.orderByField!=type){
+            this.orderByCondition="DESC"
+
+          }else{
+            if(this.orderByCondition=="DESC"){
+              this.orderByCondition=null
+            }else{
+              this.orderByCondition="DESC"
+            }
+          }
+          this.orderByField=type
+
+
           this.getproductList(1)
         },
         toUrl(val){
@@ -312,7 +319,7 @@
           that.postData.list=[]
           this.$api.axiosPost('/product/productAll',1,{
             data:{
-              orderByCondition:'DESC',
+              orderByCondition:that.orderByCondition,
               orderByField:that.orderByField,
               tags:that.postTags,
               scoreStart:that.scoreStart,
@@ -352,14 +359,13 @@
         }
       },
       mounted(){
-        var swiper1 = new Swiper('#swiper1',{
-          pagination: '.swiper-pagination',
-          paginationClickable: true,
-          loop:true,
-          prevButton:'.swiper-button-prev',
-          nextButton:'.swiper-button-next'
-        });
+
         const that = this;
+        // this.
+        let username=this.$route.query.username;
+        if(username){
+          this.productName=username
+        }
         this.getproductList(1)
 
         // //标签获取
@@ -373,11 +379,21 @@
             imgType:1
           },
           page:{
-            pageNum:1,
-            pageSize:1
+            pageNum:0,
+            pageSize:100
           }
         },function (res) {
           that.swiperList = res.data.data
+          setTimeout(function () {
+            var swiper1 = new Swiper('#swiper1',{
+              pagination: '.swiper-pagination',
+              paginationClickable: true,
+              loop:true,
+              prevButton:'.swiper-button-prev',
+              nextButton:'.swiper-button-next',
+              autoplay : 3000,
+            });
+          },500)
         })
 
 

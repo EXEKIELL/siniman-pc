@@ -107,10 +107,10 @@
             {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false},
             {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false},
             {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true},
+            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true},
             {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true},
             {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true},
             {text:"方案获客",path:"/indexWrap/myIndent",selClass:false,show:true},
-            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true},
             {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true},
           ]
         }
@@ -149,11 +149,12 @@
           // $('.el-input__inner').focus()
         },
         click1(index){
-          $('#lis2 .shou2>li').removeClass('sel')
+          // $('#lis2 .shou2>li').removeClass('sel')
           for(var i = 0;i<this.shou2List.length;i++){
             this.shou2List[i].selClass = false;
           }
           this.shou2List[index].selClass = true
+
         },
         toTop(){
           $('html , body').animate({scrollTop: 0},'slow');
@@ -206,55 +207,6 @@
           $('#lis2 .list2 span').css({
             transform:"rotateZ(90deg)"
           })
-        }else if(to == '/indexWrap/accountAssignment'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
-        }else if(to == '/indexWrap/myShop'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
-        }else if(to == '/indexWrap/myProjectIndex'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
-        }else if(to == '/indexWrap/myData'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
-        }else if(to == '/indexWrap/integralDetail'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
-        }else if(to == '/indexWrap/myIndent'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
-        }else if(to == '/indexWrap/myCollect'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(7)').addClass('sel')
         }
       },
       mounted(){
@@ -311,8 +263,6 @@
           })
         }
 
-
-
         //判断当前路由位置
         var to = this.$router.history.current.path
         if(to == '/indexWrap/shareCommunity'){
@@ -331,56 +281,19 @@
           $('#lis2 .list2 span').css({
             transform:"rotateZ(90deg)"
           })
-        }else if(to == '/indexWrap/accountAssignment'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(1)').addClass('sel')
-        }else if(to == '/indexWrap/myShop'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(2)').addClass('sel')
-        }else if(to == '/indexWrap/myProjectIndex'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(3)').addClass('sel')
-        }else if(to == '/indexWrap/myData'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(4)').addClass('sel')
-        }else if(to == '/indexWrap/integralDetail'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(5)').addClass('sel')
-        }else if(to == '/indexWrap/myIndent'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(6)').addClass('sel')
-        }else if(to == '/indexWrap/myCollect'){
-          $('#lis1 .list1').removeClass('selBar')
-          $('#lis2 .list2').addClass('selBar')
-          for(var i = 0;i<$('#lis2 .shou2>li').length;i++){
-            $('#lis2 .shou2>li').removeClass('sel')
-          }
-          $('#lis2 .shou2>li:nth-child(7)').addClass('sel')
         }
+        for(let item in this.shou2List){
+          if(this.shou2List[item].path==to){
+            this.shou2List[item].selClass=true
+            $('#lis2 .list2').addClass('selBar')
+            $('#lis2 .list2 span').css({
+              transform:"rotateZ(90deg)"
+            })
+          }
+        }
+        let wh=$(window).height();
+        console.log(wh)
+        $('.asideWrap').css({height:wh+"px",backgroundColor:'#333'});
         $(window).scroll(function (event) {
           if($(this).scrollTop()>100){
             $('.top').show()

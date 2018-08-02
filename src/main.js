@@ -19,6 +19,7 @@ import md5 from 'js-md5'
 let Base64 = require('js-base64').Base64;
 
 
+
 Vue.prototype.$qs = qs;
 Vue.prototype.$api = api;
 Vue.prototype.$axios = axios;

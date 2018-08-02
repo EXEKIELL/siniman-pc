@@ -3,16 +3,18 @@
       <div class="mp-top clearFix">
         <div class="top-left">
           <div class="bigImg" style="display: flex;display: -webkit-flex;align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center">
-            <img v-if="imgInfo.length>=1" :src="imgInfo[0].img" alt="" ref="bigImg">
-            <img style="width: initial;max-height: 100%;max-width: 100%;" v-else :src="productInfo.simg" alt="">
+            <img style="width: initial;max-height: 100%;max-width: 100%;" :src="productInfo.simg" alt="" ref="bigImg">
           </div>
           <div class="small">
             <div id="swiper1" class="swiper-container">
               <div class="swiper-wrapper">
-                <div v-if="imgInfo.length == 0" class="swiper-slide">
-                  <img :src="productInfo.simg" alt="">
+                <div class="swiper-slide" @mouseenter="check(productInfo.simg)">
+                  <img :src="productInfo.simg" alt="" >
                 </div>
-                <div v-else style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;" class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @click="check(item.img)">
+                <div v-if="imgInfo.length >= 1"
+                     style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;"
+                     class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @mouseenter="check(item.img)"
+                >
                   <img :src="item.img" alt="">
                 </div>
               </div>
@@ -170,7 +172,7 @@
                   <span>{{productInfo.productname}}</span><span>{{productInfo.housetype}}</span><span>{{productInfo.area}}m²</span>
                 </div>
               </div>
-              <div><button @click="closetan">完成</button></div>
+              <div><button @click="closetan">完成·查看已下载方案</button></div>
             </div>
           </div>
         </div>
@@ -186,7 +188,7 @@
       name: "ShareProject",
       data(){
         return {
-          text1:"立即兑换",
+          text1:"积分下载",
           detail:ShareSpace,
           score:null,
           beizhu:'',
@@ -298,6 +300,9 @@
             this.suc = false;
             this.suc1 = false;
           }
+          let routeData=this.$router.resolve({path:'/indexWrap/myProjectIndex'})
+          window.open(routeData.href, '_blank');
+
         },
         check(val){
           var bigImg = this.$refs.bigImg
@@ -334,8 +339,7 @@
         })
       },
       mounted(){
-        var productId = this.$router.history.current.query.productId;
-
+        let productId = this.$router.history.current.query.productId;
         let that = this;
         that.userInfo=localStorage.getItem('user-info')
 

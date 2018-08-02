@@ -7,11 +7,11 @@
       <div class="w3-cont">
         <div class="list1" v-for="(item,index) in getList.list" :key="index" @click="prodesc(item.productId)">
           <div class="list1-img">
-            <div class="img">
+            <div class="img" style="display: flex;justify-content: center;align-items: center;">
               <img :src="item.product.simg" :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" alt="">
             </div>
             <div  class="share" style="top: -15px;left: 0; z-index: 200">
-              <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share1(item.product.id)">分享家·赢豪礼</button>
+              <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share1(item.product.id)">分享到朋友圈</button>
             </div>
           </div>
           <div class="list1-wrap">
@@ -59,7 +59,7 @@
         :total="getList.last_page*10">
       </el-pagination>
     </div>
-    <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
+    <share v-if="dialogFormVisible" :username="username" :url="url" :downloadButton="downloadButton"  @diaclose="diaclose"></share>
 
   </div>
 </template>
@@ -81,6 +81,10 @@
         }
       },
       methods:{
+        diaclose(){
+          this.dialogFormVisible=false
+          this.url=""
+        },
         change(val){
           let that=this
           //获取我的订单列表

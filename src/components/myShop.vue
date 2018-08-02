@@ -47,7 +47,7 @@
         <button @click="search(1)">搜索</button>
       </div>
     </div>
-    <div class="list2">
+    <div class="list2 shoplist">
       <ul>
         <li>
           <span>名称</span>
@@ -58,15 +58,22 @@
           <span>方案数量</span>
           <span>操作</span>
         </li>
-        <li v-for="(item,index) in postList" :key="index">
-          <span>{{item.shopname}}</span>
-          <span>{{item.detailaddress}}</span>
-          <span>{{item.shopcontact}}</span>
-          <span>{{item.contacts}}</span>
-          <span>{{item.shopsales == null?0:item.shopsales}}</span>
-          <span>{{item.shopCount == null?0:item.shopCount}}</span>
-          <span @click="NavTo(item.id)">查看详情</span>
-        </li>
+        <template v-if="postList.length>=1">
+          <li v-for="(item,index) in postList" :key="index">
+            <span>{{item.shopname}}</span>
+            <span>{{item.detailaddress}}</span>
+            <span>{{item.shopcontact}}</span>
+            <span>{{item.contacts}}</span>
+            <span>{{item.shopsales == null?0:item.shopsales}}</span>
+            <span>{{item.shopCount == null?0:item.shopCount}}</span>
+            <span @click="NavTo(item.id)">查看详情</span>
+          </li>
+        </template>
+        <template v-else>
+          <div style="height: 100px;line-height: 100px; width: 100%;text-align: center;font-size: 20px">
+            {{ lodingstr }}
+          </div>
+        </template>
       </ul>
     </div>
     <div class="pagina">
@@ -96,7 +103,9 @@
           region:[],
           postList:[],
           userInfo:localStorage.getItem('user-info'),
-          last_page:1
+          last_page:1,
+          lodingstr:'加载中...',
+
         }
       },
       methods:{
@@ -156,6 +165,9 @@
           },function (res) {
 
             that.postList = res.data.data.list
+            if(that.postList.length<=0){
+              that.lodingstr="您还没有相关门店..."
+            }
             that.last_page = res.data.data.last_page
           })
         }
@@ -182,4 +194,8 @@
 </style>
 <style lang="scss">
   @import "../../static/sass/public";
+  .pagina{
+    padding-top: 0px;
+
+  }
 </style>

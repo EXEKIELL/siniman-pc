@@ -14,7 +14,7 @@
               </div>
               <div>
                 <div><span :class="{news:updateStatus(item.status,item.id,index)}">{{item.msgtype}}</span></div>
-                <div><span>{{item.msg}}</span></div>
+                <div v-html="item.msg"><span></span></div>
                 <div></div>
                 <div>
                   <a v-if="item.openType==1" v-show="item.link!=''" :href="item.link">点击查看</a>

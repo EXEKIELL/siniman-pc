@@ -133,6 +133,38 @@
     }
   }
 }
+#shareSpace{
+  .el-dialog__wrapper{
+    .el-dialog{
+      background-color: #000;
+      .el-carousel__indicators{
+        display: none;
+      }
+      .el-carousel__arrow{
+        font-size: 24px !important;
+      }
+      .el-dialog__headerbtn{
+        font-size: 24px !important;
+      }
+    }
+  }
+}
+#projectSpace{
+  .el-dialog__wrapper{
+    .el-dialog{
+      background-color: #000;
+      .el-carousel__indicators{
+        display: none;
+      }
+      .el-carousel__arrow{
+        font-size: 24px !important;
+      }
+      .el-dialog__headerbtn{
+        font-size: 24px !important;
+      }
+    }
+  }
+}
 #myProject{
   .btn-prev,.btn-next{
     font-size: 14px;
@@ -795,11 +827,13 @@
 }
 .download{
   position: absolute;
-  bottom: 0;
+  top: -1px !important;
   right: 0;
-  transform:rotate(-30deg);
-  font-size: 14px;
-  color: rgba(220,20,60,0.6);
+  width: 100px;
+  height: 100px;
+  display: block;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 .list1-tag span{
   font-size: 14px !important;

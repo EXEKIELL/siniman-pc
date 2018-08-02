@@ -1,10 +1,10 @@
 <template>
-    <div id="myProjectIndex">
+    <div id="myProjectIndex" >
       <div class="wrap3">
         <div class="w3-title">
           <span>我的方案</span>
         </div>
-        <div class="w3-nav">
+        <div class="w3-nav" v-loading.body="listLoading">
           <ul>
             <li class="clearFix">
               <span class="nav-left">状态：</span>
@@ -14,6 +14,9 @@
                 </div>
                 <div @click="prostatu(0)">
                   <div :class="{sel:prostatus==0}">待审核</div>
+                </div>
+                <div @click="prostatu(-1)">
+                  <div :class="{sel:prostatus==-1}">未通过方案</div>
                 </div>
               </div>
             </li>
@@ -34,14 +37,18 @@
         <div class="w3-cont">
           <template v-if="productList.list.length>=1">
 
-            <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)">
+            <div class="list1" v-for="(item,index) in productList.list" :key="index" @click="toUrl(item.id)" style="position: relative">
               <div class="list1-img">
                 <div class="img">
+                  <div v-if="item.download==1 && item.prostatus!=-1" class="download" style="background-image: url('./static/img/icon2_03.png')"></div>
                   <img :class="'bigimg_'+index" v-if="item.renders.length>=1" :src="item.renders[0].img"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
                   <img :class="'bigimg_'+index" v-else :src="item.simg"  :onerro="'this.src=\''+$api.getSystemConfig('productImg')+'\''" ralt="">
                 </div>
-                <div  class="share" style="top: -15px;left: 0; z-index: 200">
-                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享家·赢豪礼</button>
+                <div v-if="item.prostatus==1" class="share" style="top: -1px;left: 0; z-index: 200">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享到朋友圈</button>
+                </div>
+                <div v-if="item.prostatus==-1" class="share" style="top: -1px;right: 0; z-index: 200">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);float: right;margin-right: 0" @click.stop="updateProstatus(index)">提交方案</button>
                 </div>
                 <div v-if="item.renders.length>=1">
                   <div v-for="val in item.renders">
@@ -106,8 +113,9 @@
                     </div>
                   </el-col>
                 </div>
-                <div v-if="item.download==1" class="download">下载方案</div>
+
               </div>
+
             </div>
 
           </template>
@@ -129,7 +137,7 @@
         </el-pagination>
       </div>
 
-      <share :username="username" :url="url" :downloadButton="downloadButton" :dialogFormVisible="dialogFormVisible"></share>
+      <share v-if="dialogFormVisible" :username="username" :url="url" :downloadButton="downloadButton" @diaclose="diaclose"></share>
     </div>
 </template>
 
@@ -154,12 +162,13 @@
           url:'',
           downloadButton: false,
           dialogFormVisible:false,
+          listLoading:false
         }
       },
       methods:{
         diaclose(){
           this.dialogFormVisible=false
-          this.config.value=''
+          this.url=""
         },
         phoneStr(str){
           if(str){
@@ -201,7 +210,7 @@
           const that = this;
           //获取方案列表
           that.lodingstr="加载中..."
-
+          that.listLoading=true
           that.productList.list=[]
           this.$api.axiosPost('/product/productList',1,{
             data:{
@@ -217,7 +226,7 @@
           },function (res) {
             let data = res.data.data;
             that.productList = data;
-
+            that.listLoading=false
             if(that.productList.list.length<=0){
               that.lodingstr="还没有相应的方案"
             }
@@ -236,6 +245,17 @@
         },
         replaImg(index,img){
           $('.bigimg_'+index).attr('src',img);
+        },
+        /*提交方案重新审核*/
+        updateProstatus(index){
+          let that=this
+
+          let id=that.productList.list[index].id
+
+          this.$api.axiosPost('/product/updateStatus',1,{proid:id},function (res) {
+              that.$message.success('提交成功');
+              that.productList.list.splice(index,1)
+          })
         }
       },
       filters:{

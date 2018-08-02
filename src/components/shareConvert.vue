@@ -11,7 +11,14 @@
         <div class="list-2">
           <div>
             <div><span></span><span>{{ item.username }}</span></div>
-            <div><span></span><span>{{ item.shoplist[0].shopname }}</span></div>
+            <div><span></span>
+              <span v-if="item.shoplist.length>=1">
+                <template v-if="item.shoplist[0]">
+                     {{ item.shoplist[0].shopname }}
+                </template>
+
+              </span>
+            </div>
           </div>
           <div>
             <div>

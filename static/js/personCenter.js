@@ -70,7 +70,6 @@ export default {
     }
   },
   methods:{
-
     navSel(val,val1){
       $('.clearFix').find('.nav-right div').on("click",function(){
         $(this).parent().find('div').removeClass("sel")
@@ -125,7 +124,7 @@ export default {
     },
     diaclose(){
       this.dialogFormVisible=false
-      this.config.value=''
+      this.url=""
     },
     change(val){
       let that = this
@@ -354,7 +353,28 @@ export default {
         ]
       }
       echart.setOption(option)
-    }
+    },
+    //设置为封面
+    setCover(desid,id,index,item){
+      let that=this;
+      console.log(item)
+      if(item[index].cover===1){
+        return false;
+      }
+      that.$api.axiosPost('/render/setcover',1,{
+        id:id,
+        designId:desid
+      },function(){
+        for (let i=0;i<item.length;i++){
+          if(index===i){
+            item[i].cover=1
+          }else{
+            item[i].cover=0
+          }
+        }
+
+      })
+    },
   },
   watch:{
     screenWidth (val) {
@@ -380,13 +400,7 @@ export default {
     const that = this
 
     this.str1 = this.$store.state.login.str1;
-    let swiper1 = new Swiper('#swiper1',{
-      pagination: '.swiper-pagination',
-      paginationClickable: true,
-      loop:true,
-      prevButton:'.swiper-button-prev',
-      nextButton:'.swiper-button-next'
-    })
+
 
     let date=new Date()
     let today=this.$api.formatDate(date,'yyyy-MM-dd')
@@ -405,11 +419,22 @@ export default {
         imgType:1
       },
       page:{
-        pageNum:1,
-        pageSize:1
+        pageNum:0,
+        pageSize:100
       }
     },function (res) {
       that.swiperList = res.data.data
+      setTimeout(function(){
+        let swiper1 = new Swiper('#swiper1',{
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          loop:true,
+          prevButton:'.swiper-button-prev',
+          nextButton:'.swiper-button-next',
+          autoplay : 3000,
+        })
+      },500)
+
     })
 
     // //标签获取

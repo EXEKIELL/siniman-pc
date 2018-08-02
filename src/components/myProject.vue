@@ -3,19 +3,21 @@
     <div class="mp-top clearFix">
       <div class="top-left">
         <div class="bigImg" style="justify-content: center;-webkit-justify-content: center;">
-          <img style="width: initial;max-height: 100%;max-width: 100%;" v-if="imgInfo.length == 0" :src="productInfo.simg" alt="">
-          <img v-else :src="imgInfo[0].img" alt="" ref="bigImg">
+          <img :src="productInfo.simg" alt="" ref="bigImg">
         </div>
         <div class="small">
           <div id="swiper1" class="swiper-container">
             <div class="swiper-wrapper">
-              <div v-if="imgInfo.length==0" class="swiper-slide">
+
+              <div class="swiper-slide min-swiper" @mouseenter="check(productInfo.simg,-1)">
                 <img :src="productInfo.simg" alt="">
               </div>
-              <div v-else class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
+              <div v-if="imgInfo.length>=1" class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
                    @mouseenter="check(item.img,index)">
                 <img :src="item.img" alt="">
-                <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}" style="display: none" @click="setCover(item.id,index)">
+                <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}"
+                     style="display: none"
+                     @click="setCover(item.id,index)">
                   <button>{{ item.cover===1?'封面':'设置封面' }}</button>
                 </div>
               </div>
@@ -101,6 +103,17 @@
         <div class="tright-7">
           <button @click="btn1(1)"><span></span><span>分享家·赢豪礼</span></button>
           <button @click="toKjl"><span></span><span>编辑方案</span></button>
+          <button @click="cxtj()" style="background-color: #409eff;margin-left: 18px">
+            <span style="display: none"></span>
+            <span @click="cxtj" style="color: #fff">重新提交</span>
+          </button>
+        </div>
+        <div class="tright-7" v-if="productInfo.prostatus==-1">
+          <el-button
+            style="background: none;padding: 0;color: #409eff;overflow: hidden;text-align: left;width: 70%;text-overflow:ellipsis;white-space: nowrap;"
+            type="text"  @click="bohuiyuany()">
+            你的方案被驳回,原因：{{ productInfo.statusdes }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -253,8 +266,8 @@
       </div>
     </div>
 
-    <el-dialog title="方案设计工具"  custom-class="editproduct" :visible.sync="dialogFormVisible">
-      <div :style="{height:windowHeight,width:'100%'}">
+    <el-dialog title="方案设计工具"  custom-class="editproduct" :visible.sync="dialogFormVisible"  @close="diaclose">
+      <div :style="{height:windowHeight,width:windowWidth}">
         <iframe style="width: 100%;height: 100%" :src="kjurl" frameborder="0"></iframe>
       </div>
 
@@ -299,11 +312,38 @@
           access_token:'',
           dialogFormVisible:false,
           kjurl:'',
-          windowHeight:""
+          windowHeight:"",
+          windowWidth:''
         }
       },
 
       methods:{
+        diaclose(){
+          this.$confirm('新生成的渲染图大约需要5-10分钟的时间同步到分享家哦～','提示',{
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(()=>{
+          }).catch(()=>{})
+        },
+        bohuiyuany(){
+          let that=this
+          this.$confirm(this.productInfo.statusdes,'驳回原因',{
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(()=>{
+
+          }).catch(()=>{})
+        },
+        cxtj(){
+          this.$confirm('是否提交审核?','提示',{
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(()=>{
+          }).catch(()=>{})
+        },
         phoneStr(str){
           if(str){
             let str2 = str.substr(0,3)+"****"+str.substr(7);
@@ -354,10 +394,26 @@
           this.$api.axiosPost('/product/update',1,that.form1,function (res) {
 
             that.$data.bianjiBox = false;
-            that.getdesc()
+
             $('body').css({
               overflow:'initial'
             })
+
+            if(that.productInfo.prostatus==-1){
+              that.$confirm('是否提交审核?','提示',{
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(()=>{
+                that.$api.axiosPost('/product/updateStatus',1,{proid:that.form1.id},function (res) {
+                  that.$message.success('提交成功');
+                })
+
+              }).catch((error)=>{
+                console.log(error)
+              })
+            }
+            that.getdesc()
           })
         },
         closeBox(){
@@ -437,6 +493,7 @@
             var st = res1.createtime;
             that.listLoading=false
             let producttag=that.form1.producttag[0]
+            that.value5=[]
             for(let i=0;i<producttag.length;i++){
               that.value5.push(producttag[i].id)
             }
@@ -452,10 +509,10 @@
 
               that.projectSpaceList = res.data.renders;
 
-              var bigImg = that.$refs.bigImg;
-              $(bigImg).attr({
-                src:res.data.renders[0].img
-              })
+              // var bigImg = that.$refs.bigImg;
+              // $(bigImg).attr({
+              //   src:res.data.renders[0].img
+              // })
               $('.min-swiper').hover(function(){
 
                 $(this).children(".min-swiper").show();
@@ -485,6 +542,14 @@
                     },function () {
 
                     })
+                  }else if(action.action=="kjl_logout"){
+                    this.dialogFormVisible=false;
+                    this.$confirm('新生成的渲染图大约需要5-10分钟的时间同步到分享家哦～','提示',{
+                      confirmButtonText: '确定',
+                      cancelButtonText: '取消',
+                      type: 'warning'
+                    }).then(()=>{
+                    }).catch(()=>{})
                   }
                 };
                 if ('addEventListener' in document) {
@@ -519,8 +584,12 @@
       },
       mounted(){
         let windowHeight=window.innerHeight
+        let windowWidth=window.innerWidth
 
         this.windowHeight=windowHeight+'px'
+        this.windowWidth=windowWidth+'px'
+        $('.editproduct').css({"width":this.windowWidth,"height":this.windowHeight})
+
         let sysconfig=JSON.parse(localStorage.getItem("sysconfig"))
         this.sysconfig=sysconfig
 
