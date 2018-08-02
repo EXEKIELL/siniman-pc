@@ -10,7 +10,7 @@
               <ul>
                 <li class="list1" @click="handleChange1">
                   <router-link to="/indexWrap/shareCommunity">
-                    <span></span>分享社区
+                    <span></span>方案市场
                   </router-link>
                 </li>
               </ul>
@@ -30,8 +30,8 @@
                       </router-link>
                     </template>
                     <template v-else>
-                      <div @click="showSlide">
-                        <router-link to="" style="position: relative">
+                      <div @click="showSlide($event)">
+                        <router-link :to="item.path" style="position: relative">
                           <span></span>{{item.text}}<span class="icon"></span>
                         </router-link>
                       </div>
@@ -120,20 +120,22 @@
             {src:"./static/img/img01.png"}
           ],
           shou2List:[
-            {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
-            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[]},
             {text:"我的方案",path:"/indexWrap/myProjectIndex1",selClass:false,show:true,
               children:[
-                  {text:'已上架',path:'/indexWrap/myProjectIndex1',status:1},
-                  {text:'待审核',path:'/indexWrap/myProjectIndex2',status:0},
-                  {text:'未通过',path:'/indexWrap/myProjectIndex3',status:-1}
-                ]
+                {text:'已上架',path:'/indexWrap/myProjectIndex1',status:1},
+                {text:'待审核',path:'/indexWrap/myProjectIndex2',status:0},
+                {text:'未通过',path:'/indexWrap/myProjectIndex3',status:-1},
+                {text:"我的收藏",path:'/indexWrap/myCollect',status:''},
+              ]
             },
-            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true,children:[]},
-            {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true,children:[]},
             {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true,children:[]},
             {text:"方案获客",path:"/indexWrap/myIndent",selClass:false,show:true,children:[]},
             {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true,children:[]},
+            {text:"我的员工",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[
+                {text:"我的门店",path:"/indexWrap/myShop"},
+              ]
+            },
+            {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true,children:[]},
           ]
         }
       },
@@ -202,10 +204,11 @@
             });
           });
         },
-        showSlide(){
-          if($('.shou3').css('display') == 'block'){
-            $('.shou3').slideUp();
-            $('.icon').css({
+        showSlide(e){
+          console.log($(e.target));
+          if($(e.target).parent('div').siblings('.shou3').css('display') == 'block'){
+            $(e.target).parent('div').siblings('.shou3').slideUp();
+            $(e.target).find('.icon').css({
               '-webkit-transform': 'rotateZ(0deg)',
               '-moz-transform': 'rotateZ(0deg)',
               '-ms-transform': 'rotateZ(0deg)',
@@ -213,8 +216,8 @@
               'transform': 'rotateZ(0deg)'
             })
           }else{
-            $('.shou3').slideDown();
-            $('.icon').css({
+            $(e.target).parent('div').siblings('.shou3').slideDown();
+            $(e.target).find('.icon').css({
               '-webkit-transform': 'rotateZ(90deg)',
             '-moz-transform': 'rotateZ(90deg)',
             '-ms-transform': 'rotateZ(90deg)',

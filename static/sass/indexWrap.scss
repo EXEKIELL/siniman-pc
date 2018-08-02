@@ -222,7 +222,7 @@
                 width: 20px;
                 height: 20px;
                 margin-right: 5px;
-                background: url("../../static/img/icon02.png") no-repeat;
+                background: url("../../static/img/icon66.png") no-repeat;
               }
             }
           }
@@ -243,15 +243,15 @@
           >li:first-child{
             a{
               span{
-                background: url("../../static/img/icon60.png") no-repeat;
-                background-size: 100% 80%;
+                background: url("../../static/img/icon03.png") no-repeat;
+
               }
             }
           }
           >li:nth-child(3){
             a{
               span{
-                background: url("../../static/img/icon03.png") no-repeat;
+                background: url("../../static/img/icon04.png") no-repeat;
               }
             }
           }
@@ -259,21 +259,23 @@
             a{
               span{
 
-                background: url("../../static/img/icon65.png") no-repeat;
+                background: url("../../static/img/icon/icon-Report.png") no-repeat;
+                background-size: 80% 80%;
               }
             }
           }
           >li:nth-child(5){
             a{
               span{
-                background: url("../../static/img/icon05.png") no-repeat;
+                background: url("../../static/img/icon60.png") no-repeat;
+                background-size: 90% auto;
               }
             }
           }
           >li:nth-child(6){
             a{
               span{
-                background: url("../../static/img/icon66.png") no-repeat;
+                background: url("../../static/img/icon05.png") no-repeat;
               }
             }
           }
