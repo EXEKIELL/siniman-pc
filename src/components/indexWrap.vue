@@ -31,14 +31,14 @@
                     </template>
                     <template v-else>
                       <div @click="showSlide">
-                        <router-link to="">
+                        <router-link to="" style="position: relative">
                           <span></span>{{item.text}}<span class="icon"></span>
                         </router-link>
                       </div>
                     </template>
                     <ul class="shou3">
                       <li v-for="(item1,index1) in item.children" :key="index1">
-                        <router-link :to="item1.path">
+                        <router-link :to="{path:item1.path,query:{prostatus:item1.status},cache:false}">
                           {{item1.text}}
                         </router-link>
                       </li>
@@ -122,11 +122,11 @@
           shou2List:[
             {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
             {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[]},
-            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true,
+            {text:"我的方案",path:"/indexWrap/myProjectIndex1",selClass:false,show:true,
               children:[
-                  {text:'已上架',path:'##'},
-                  {text:'待审核',path:'###'},
-                  {text:'未通过',path:'####'}
+                  {text:'已上架',path:'/indexWrap/myProjectIndex1',status:1},
+                  {text:'待审核',path:'/indexWrap/myProjectIndex2',status:0},
+                  {text:'未通过',path:'/indexWrap/myProjectIndex3',status:-1}
                 ]
             },
             {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true,children:[]},

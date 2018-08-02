@@ -270,9 +270,18 @@
           return ''
         }
       },
+
+      watch:{
+        $route:function (val) {
+          let status=val.query.prostatus
+          this.prostatus=status
+          this.change(1)
+        }
+      },
       mounted(){
         let that = this;
-
+        let prostatus = this.$route.query.prostatus;
+        this.prostatus=prostatus
         // //标签获取
         this.$api.axiosPost('/tag/getTagList',1,{},function (res) {
           that.tagsList = res.data.data

@@ -71,9 +71,28 @@ const router = new Router({
           },
         },
         {
-          path: '/indexWrap/myProjectIndex',
-          name: 'MyProjectIndex',
+          path: '/indexWrap/myProjectIndex1',
+          name: 'MyProjectIndex1',
           component: MyProjectIndex,
+
+          meta:{
+            requireAuth:true //是否登录验证
+          },
+        },
+        {
+          path: '/indexWrap/myProjectIndex2',
+          name: 'MyProjectIndex2',
+          component: MyProjectIndex,
+
+          meta:{
+            requireAuth:true //是否登录验证
+          },
+        },
+        {
+          path: '/indexWrap/myProjectIndex3',
+          name: 'MyProjectIndex3',
+          component: MyProjectIndex,
+
           meta:{
             requireAuth:true //是否登录验证
           },

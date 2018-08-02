@@ -143,6 +143,7 @@ export default {
         },function (res) {
           let data = res.data.data
           that.orderStats.lastList=data;
+
           that.setOption()
         })
 
@@ -212,6 +213,7 @@ export default {
       let chart = document.getElementById('canvas1');
 
       let echart = echarts.init(chart);
+
       let OrderStats=this.orderStats.list
       let LastStats=this.orderStats.lastList
 
