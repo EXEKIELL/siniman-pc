@@ -121,7 +121,7 @@
           ],
           shou2List:[
             {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
-            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false},
+            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[]},
             {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true,
               children:[
                   {text:'已上架',path:'##'},
