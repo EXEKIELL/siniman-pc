@@ -24,13 +24,22 @@
                 </li>
                 <ul class="shou2">
                   <li v-for="(item,index) in shou2List" v-show="item.show" :class="{sel:item.selClass}" :key="index" @click="click1(index)">
-                    <router-link :to="item.path">
-                      <span></span>{{item.text}}
-                    </router-link>
+                    <template v-if="item.children.length==0">
+                      <router-link :to="item.path">
+                        <span></span>{{item.text}}
+                      </router-link>
+                    </template>
+                    <template v-else>
+                      <div @click="showSlide">
+                        <router-link to="">
+                          <span></span>{{item.text}}
+                        </router-link>
+                      </div>
+                    </template>
                     <ul class="shou3">
                       <li v-for="(item1,index1) in item.children" :key="index1">
                         <router-link :to="item1.path">
-                          <span></span>{{item1.text}}
+                          {{item1.text}}
                         </router-link>
                       </li>
                     </ul>
@@ -186,6 +195,15 @@
               message: '已取消删除'
             });
           });
+        },
+        showSlide(){
+          console.log();
+
+          if($('.shou3').css('display') == 'block'){
+            $('.shou3').slideUp();
+          }else{
+            $('.shou3').slideDown();
+          }
         }
       },
       computed:{
@@ -314,6 +332,9 @@
 
 <style lang="scss" scoped>
   @import "../../static/sass/indexWrap";
+  .shou3{
+    display: none;
+  }
 </style>
 <style lang="scss">
   @import "../../static/sass/public";
