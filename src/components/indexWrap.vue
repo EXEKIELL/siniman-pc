@@ -36,7 +36,7 @@
                         </router-link>
                       </div>
                     </template>
-                    <ul class="shou3">
+                    <ul class="shou3" style="text-align: right;margin-right: 45px">
                       <li v-for="(item1,index1) in item.children" :key="index1">
                         <router-link :to="{path:item1.path,query:{prostatus:item1.status},cache:false}">
                           {{item1.text}}

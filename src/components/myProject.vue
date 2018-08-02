@@ -9,13 +9,10 @@
           <div id="swiper1" class="swiper-container">
             <div class="swiper-wrapper">
 
-              <div class="swiper-slide min-swiper" @mouseenter="check(productInfo.simg,-1)">
-                <img :src="productInfo.simg" alt="">
-              </div>
               <div v-if="imgInfo.length>=1" class="swiper-slide min-swiper" v-for="(item,index) in imgInfo" :key="index"
                    @mouseenter="check(item.img,index)">
                 <img :src="item.img" alt="">
-                <div :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}"
+                <div v-if="item.cover>=0" :class="{'maskSm sel':item.cover===1,'maskSm':item.cover===0}"
                      style="display: none"
                      @click="setCover(item.id,index)">
                   <button>{{ item.cover===1?'封面':'设置封面' }}</button>
@@ -103,7 +100,7 @@
         <div class="tright-7">
           <button @click="btn1(1)"><span></span><span>分享家·赢豪礼</span></button>
           <button @click="toKjl"><span></span><span>编辑方案</span></button>
-          <button @click="cxtj()" style="background-color: #409eff;margin-left: 18px">
+          <button v-if="productInfo.prostatus==-1" @click="cxtj()" style="background-color: #409eff;margin-left: 18px">
             <span style="display: none"></span>
             <span @click="cxtj" style="color: #fff">重新提交</span>
           </button>
@@ -508,7 +505,7 @@
               that.imgInfo = res.data.renders;
 
               that.projectSpaceList = res.data.renders;
-
+              that.projectSpaceList .unshift({img:that.form1.simg,description:false})
               // var bigImg = that.$refs.bigImg;
               // $(bigImg).attr({
               //   src:res.data.renders[0].img

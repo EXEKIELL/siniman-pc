@@ -8,9 +8,7 @@
           <div class="small">
             <div id="swiper1" class="swiper-container">
               <div class="swiper-wrapper">
-                <div class="swiper-slide" @mouseenter="check(productInfo.simg)">
-                  <img :src="productInfo.simg" alt="" >
-                </div>
+
                 <div v-if="imgInfo.length >= 1"
                      style="display: flex;align-items: center;display: -webkit-flex;-webkit-align-items: center;"
                      class="swiper-slide"  v-for="(item,index) in imgInfo" :key="index" @mouseenter="check(item.img)"
@@ -363,7 +361,7 @@
             that.imgInfo = res.data.renders;
             that.shareSpaceInfo = res.data.renders;
 
-
+            that.shareSpaceInfo.unshift({img:that.productInfo.simg,description:false})
           })
         })
 
