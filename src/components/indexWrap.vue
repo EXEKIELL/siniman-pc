@@ -112,8 +112,14 @@
           ],
           shou2List:[
             {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
-            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[{text:'已上架',path:'##'},{text:'待审核',path:'###'},{text:'未通过',path:'####'}]},
-            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true,children:[]},
+            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false},
+            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true,
+              children:[
+                  {text:'已上架',path:'##'},
+                  {text:'待审核',path:'###'},
+                  {text:'未通过',path:'####'}
+                ]
+            },
             {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true,children:[]},
             {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true,children:[]},
             {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true,children:[]},
