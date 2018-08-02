@@ -27,6 +27,13 @@
                     <router-link :to="item.path">
                       <span></span>{{item.text}}
                     </router-link>
+                    <ul class="shou3">
+                      <li v-for="(item1,index1) in item.children" :key="index1">
+                        <router-link :to="item1.path">
+                          <span></span>{{item1.text}}
+                        </router-link>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </ul>
@@ -104,14 +111,14 @@
             {src:"./static/img/img01.png"}
           ],
           shou2List:[
-            {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false},
-            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false},
-            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true},
-            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true},
-            {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true},
-            {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true},
-            {text:"方案获客",path:"/indexWrap/myIndent",selClass:false,show:true},
-            {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true},
+            {text:"我的账号",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
+            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[{text:'已上架',path:'##'},{text:'待审核',path:'###'},{text:'未通过',path:'####'}]},
+            {text:"我的方案",path:"/indexWrap/myProjectIndex",selClass:false,show:true,children:[]},
+            {text:"我的收藏",path:'/indexWrap/myCollect',selClass:false,show:true,children:[]},
+            {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true,children:[]},
+            {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true,children:[]},
+            {text:"方案获客",path:"/indexWrap/myIndent",selClass:false,show:true,children:[]},
+            {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true,children:[]},
           ]
         }
       },
