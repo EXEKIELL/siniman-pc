@@ -158,7 +158,7 @@
         <ul>
           <li class="clearFix" v-for="(item,index) in tagList" :key="index">
             <span class="nav-left">{{item.cat_name+'：'}}</span>
-            <div class="nav-right">
+            <div class="nav-right clearFix">
               <div>
                 <div @click="navSel('全部',index)" class="sel" >全部</div>
               </div>
