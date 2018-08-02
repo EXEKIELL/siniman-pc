@@ -32,7 +32,7 @@
                     <template v-else>
                       <div @click="showSlide">
                         <router-link to="">
-                          <span></span>{{item.text}}
+                          <span></span>{{item.text}}<span class="icon"></span>
                         </router-link>
                       </div>
                     </template>
@@ -197,12 +197,24 @@
           });
         },
         showSlide(){
-          console.log();
-
           if($('.shou3').css('display') == 'block'){
             $('.shou3').slideUp();
+            $('.icon').css({
+              '-webkit-transform': 'rotateZ(0deg)',
+              '-moz-transform': 'rotateZ(0deg)',
+              '-ms-transform': 'rotateZ(0deg)',
+              '-o-transform': 'rotateZ(0deg)',
+              'transform': 'rotateZ(0deg)'
+            })
           }else{
             $('.shou3').slideDown();
+            $('.icon').css({
+              '-webkit-transform': 'rotateZ(90deg)',
+            '-moz-transform': 'rotateZ(90deg)',
+            '-ms-transform': 'rotateZ(90deg)',
+            '-o-transform': 'rotateZ(90deg)',
+            'transform': 'rotateZ(90deg)'
+            })
           }
         }
       },
@@ -334,6 +346,14 @@
   @import "../../static/sass/indexWrap";
   .shou3{
     display: none;
+  }
+  .icon{
+    width: 15px;
+    height: 15px;
+    background: url("../../static/img/icon01.png") no-repeat center!important;
+    position: absolute;
+    right: 10px;
+    top: 20px;
   }
 </style>
 <style lang="scss">
