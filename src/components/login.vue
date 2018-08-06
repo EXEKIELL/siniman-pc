@@ -5,7 +5,7 @@
         <div>
           <img src="../../static/img/logo01.png" alt="">
         </div>
-        <div><span>诗尼曼分享家后台登录</span></div>
+        <div><span>诗尼曼分享家</span></div>
         <div>
           <form class="form1"  v-if="loging">
             <div>

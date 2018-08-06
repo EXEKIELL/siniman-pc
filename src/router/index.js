@@ -20,6 +20,8 @@ import MyIndent from '@/components/myIndent'
 import IndexWrap from '@/components/indexWrap'
 import MyCollect from '@/components/myCollect'
 
+import MyPass from '@/components/myPass'
+
 import MyReport from '@/components/MyReport'
 
 Vue.use(Router)
@@ -71,6 +73,15 @@ const router = new Router({
           },
         },
         {
+          path: '/indexWrap/myProjectIndex',
+          name: 'MyProjectIndex',
+          component: MyProjectIndex,
+
+          meta:{
+            requireAuth:true //是否登录验证
+          },
+        },
+        {
           path: '/indexWrap/myProjectIndex1',
           name: 'MyProjectIndex1',
           component: MyProjectIndex,
@@ -89,9 +100,19 @@ const router = new Router({
           },
         },
         {
-          path: '/indexWrap/myProjectIndex3',
-          name: 'MyProjectIndex3',
+          path: '/indexWrap/myDownload',
+          name: 'myDownload',
           component: MyProjectIndex,
+
+          meta:{
+            requireAuth:true //是否登录验证
+          },
+        },
+        /*退回方案*/
+        {
+          path: '/indexWrap/myPass',
+          name: 'myPass',
+          component: MyPass,
 
           meta:{
             requireAuth:true //是否登录验证
@@ -208,13 +229,15 @@ router.beforeEach((to,from,next)=>{
 
   if(code){
 
+    let path=to.path
     localStorage.setItem('token',code)
     if(localStorage.getItem('sysconfig')==null){
       store.dispatch('login/getSystem');
     }
     store.dispatch('login/getUserInfo');
+
     next({
-      path: '/indexWrap/personCenter',
+      path:path?path: '/indexWrap/personCenter',
     })
 
   }

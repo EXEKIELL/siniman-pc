@@ -2,7 +2,7 @@
     <div id="indexWrap" style="height: 100%">
       <el-container>
         <el-aside width="200px" v-if="true">
-          <div class="asideWrap">
+          <div class="asideWrap" style="overflow-y: scroll">
             <div class="logo">
               <img src="../../static/img/logo.png" alt="">
             </div>
@@ -31,16 +31,19 @@
                     </template>
                     <template v-else>
                       <div @click="showSlide($event)">
-                        <router-link :to="item.path" style="position: relative">
+
+                        <a href="javascript:;" @click="tourl(item1.path,item1.status)" style="position: relative">
                           <span></span>{{item.text}}<span class="icon"></span>
-                        </router-link>
+                        </a>
+
                       </div>
                     </template>
-                    <ul class="shou3" style="text-align: right;margin-right: 45px">
-                      <li v-for="(item1,index1) in item.children" :key="index1">
-                        <router-link :to="{path:item1.path,query:{prostatus:item1.status},cache:false}">
+                    <ul class="shou3" style="text-align: right;margin-right: 45px;">
+                      <li v-for="(item1,index1) in item.children" :key="index1" :class="item1.className">
+                        <a href="javascript:;" @click="tourl(item1.path,item1.status)">
                           {{item1.text}}
-                        </router-link>
+                        </a>
+
                       </li>
                     </ul>
                   </li>
@@ -120,26 +123,33 @@
             {src:"./static/img/img01.png"}
           ],
           shou2List:[
-            {text:"我的方案",path:"/indexWrap/myProjectIndex1",selClass:false,show:true,
+            {text:"方案管理",path:"/indexWrap/myProjectIndex1",selClass:false,show:true,
               children:[
-                {text:'已上架',path:'/indexWrap/myProjectIndex1',status:1},
-                {text:'待审核',path:'/indexWrap/myProjectIndex2',status:0},
-                {text:'未通过',path:'/indexWrap/myProjectIndex3',status:-1},
-                {text:"我的收藏",path:'/indexWrap/myCollect',status:''},
+                {text:'已上架',path:'/indexWrap/myProjectIndex1',status:1,selHas:'myProjectIndex1',className:''},
+                {text:'已下载',path:'/indexWrap/myDownload',status:-2,selHas:'myDownload',className:''},
+                {text:'待审核',path:'/indexWrap/myProjectIndex2',status:0,selHas:'myProjectIndex2',className:''},
+                {text:'未通过',path:'/indexWrap/myPass',status:-1,selHas:'myPass',className:''},
+                {text:"我的收藏",path:'/indexWrap/myCollect',status:'',selHas:'myCollect',className:''},
               ]
             },
             {text:"积分明细",path:"/indexWrap/integralDetail",selClass:false,show:true,children:[]},
             {text:"方案获客",path:"/indexWrap/myIndent",selClass:false,show:true,children:[]},
             {text:"我的报表",path:'/indexWrap/myReport',selClass:false,show:true,children:[]},
-            {text:"我的员工",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[
-                {text:"我的门店",path:"/indexWrap/myShop"},
-              ]
-            },
+
+            {text:"我的员工",path:"/indexWrap/accountAssignment",selClass:false,show:false,children:[]},
+            {text:"我的门店",path:"/indexWrap/myShop",selClass:false,show:false,children:[]},
+
             {text:"我的资料",path:"/indexWrap/myData",selClass:false,show:true,children:[]},
           ]
         }
       },
       methods:{
+        tourl(path,status){
+          let routeData=this.$router.resolve({path:path,query:{prostatus:status}})
+
+          window.open(routeData.href, '_self');
+
+        },
         handleChange1(){
           $('#lis2 .list2').css({
             "background-color":"#333333"
@@ -205,7 +215,7 @@
           });
         },
         showSlide(e){
-          console.log($(e.target));
+
           if($(e.target).parent('div').siblings('.shou3').css('display') == 'block'){
             $(e.target).parent('div').siblings('.shou3').slideUp();
             $(e.target).find('.icon').css({
@@ -216,7 +226,9 @@
               'transform': 'rotateZ(0deg)'
             })
           }else{
-            $(e.target).parent('div').siblings('.shou3').slideDown();
+
+            $(e.target).parent('div').siblings('.shou3').css('display','block');
+            // $(e.target).parent('div').siblings('.shou3').slideDown();
             $(e.target).find('.icon').css({
               '-webkit-transform': 'rotateZ(90deg)',
             '-moz-transform': 'rotateZ(90deg)',
@@ -246,13 +258,27 @@
           $('#lis1 .list1').addClass('selBar')
           $('#lis2 .shou2').slideUp();
           $('#lis1 .shou1').slideDown();
-        }else if(to == '/indexWrap/personCenter'){
+        }else{
           this.headLeft.text = '个人中心'
           $('#lis1 .list1').removeClass('selBar')
           $('#lis2 .list2').addClass('selBar')
           $('#lis2 .list2 span').css({
             transform:"rotateZ(90deg)"
           })
+          let show3=this.shou2List[0].children
+
+          for(let item in show3){
+            if(to.indexOf(show3[item].selHas) !=-1 ){
+              show3[item].className='sel'
+              $('.shou3').css('display','block')
+              return true;
+            }else{
+              show3[item].className=''
+              $('.shou3').css('display','none')
+            }
+          }
+
+
         }
       },
       mounted(){
@@ -274,9 +300,9 @@
 
             for(let i=0;i<rolesArray.length;i++){
               if(rolesArray[i].code=="DEALER"){
-                thas.shou2List[0].show=true
+                thas.shou2List[4].show=true
               }else if(rolesArray[i].code=="SHOPMANAGER"){
-                thas.shou2List[1].show=true
+                thas.shou2List[5].show=true
               }
             }
 
@@ -338,7 +364,7 @@
           }
         }
         let wh=$(window).height();
-        console.log(wh)
+
         $('.asideWrap').css({height:wh+"px",backgroundColor:'#333'});
         $(window).scroll(function (event) {
           if($(this).scrollTop()>100){
@@ -347,6 +373,11 @@
             $('.top').hide()
           }
         })
+        $('.shou3 li').click(function(){
+            $('.shou3 li').removeClass('sel');
+            $(this).addClass('sel')
+        })
+
       }
     }
 </script>
@@ -363,6 +394,9 @@
     position: absolute;
     right: 10px;
     top: 20px;
+  }
+  .shou3 .sel a{
+    color: red !important;
   }
 </style>
 <style lang="scss">

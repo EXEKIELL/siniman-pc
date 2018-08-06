@@ -4,6 +4,7 @@ import router from '../../router/index'
 import md5 from 'js-md5'
 import store from "../index"
 import qs from 'qs'
+import {Loading} from 'element-ui'
 let Base64 = require('js-base64').Base64;
 const loginInfo = {
   namespaced:true,
@@ -103,10 +104,12 @@ const loginInfo = {
     //用户登录请求
     LoginPost(context){
 
+      let loadinginstace = Loading.service({fullscreen:true})
       api.axiosPost('/user/userLogin',0,{
         username:$.trim(context.state.form.username),
         password:Base64.encode($.trim(context.state.form.pswd))
       },function (res) {
+        loadinginstace.close()
         if(!res.data.data.verify_key){
           //保存token
           context.commit('GETTOKEN',res.data.data.access_token);

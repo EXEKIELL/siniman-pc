@@ -12,13 +12,13 @@
               <li><span :class="{sel:sel==2}" @click="change(2)">客户转化率分析</span></li>
             </ul>
           </div>
-          <div v-if="sel==1">
-              <div class="echarts" id="echarts1"></div>
-              <div style="height: 20px"></div>
+          <div v-show="sel===1">
+              <div class="echarts" id="echarts1" style="margin-bottom: 20px"></div>
+
               <div class="echarts" id="echarts2"></div>
           </div>
 
-          <div v-if="sel==2">
+          <div v-show="sel===2">
 
             <div class="echarts" id="echarts3"></div>
           </div>
@@ -49,32 +49,11 @@
         this.sel=val
         let that=this
         if(val==1){
-          that.$api.axiosPost('/userinfo/getClientStatusAnalysis',1,{},function (res) {
-            let data=res.data.data
-            that.echarts1Data=[
-              {value:data.hasCheckedClientCount,name:'接触客户'},
-              {value:data.hasSendedClientCount,name:'派尺客户'},
-              {value:data.hasMeasuredClientCount,name:'量尺客户'},
-              {value:data.hasSchemeClientCount,name:'方案客户'},
-              {value:data.hasCheckedClientCount,name:'确图客户'},
-              {value:data.hasOrderClientCount,name:'下单客户'}
-            ]
-            for (let item in data){
-              that.echarts2Data.push(data[item])
-            }
-            that.setOption()
-          })
+
+          that.setOption()
         }else if(val==2){
-          that.$api.axiosPost('/userinfo/getClientConvertRateAnalysis',1,{},function (res) {
-            let data=res.data.data
-            // that.echarts3Data=[
-            //   data.allMeasureInTouchRate,
-            //   data.allCheckMeasureDealRate,
-            //   data.allSchemeDealRate,
-            // ]
-            that.echarts3Data=data
-            that.setOption2()
-          })
+
+          that.setOption2()
         }
       },
       setOption:function(){
@@ -233,7 +212,34 @@
       }
     },
     mounted(){
-      this.change(1)
+      let that=this
+      that.$api.axiosPost('/userinfo/getClientStatusAnalysis',1,{},function (res) {
+        let data=res.data.data
+        that.echarts1Data=[
+          {value:data.hasCheckedClientCount,name:'接触客户'},
+          {value:data.hasSendedClientCount,name:'派尺客户'},
+          {value:data.hasMeasuredClientCount,name:'量尺客户'},
+          {value:data.hasSchemeClientCount,name:'方案客户'},
+          {value:data.hasCheckedClientCount,name:'确图客户'},
+          {value:data.hasOrderClientCount,name:'下单客户'}
+        ]
+        for (let item in data){
+          that.echarts2Data.push(data[item])
+        }
+        that.change(1)
+      })
+      that.$api.axiosPost('/userinfo/getClientConvertRateAnalysis',1,{},function (res) {
+        let data=res.data.data
+        // that.echarts3Data=[
+        //   data.allMeasureInTouchRate,
+        //   data.allCheckMeasureDealRate,
+        //   data.allSchemeDealRate,
+        // ]
+        that.echarts3Data=data
+
+      })
+
+
     }
   }
 </script>

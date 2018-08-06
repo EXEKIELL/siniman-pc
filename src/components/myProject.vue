@@ -104,6 +104,10 @@
             <span style="display: none"></span>
             <span @click="cxtj" style="color: #fff">重新提交</span>
           </button>
+          <button v-if="productInfo.prostatus==-2" @click="cxtj()" style="background-color: #409eff;margin-left: 18px">
+            <span style="display: none"></span>
+            <span @click="cxtj" style="color: #fff">提交审核</span>
+          </button>
         </div>
         <div class="tright-7" v-if="productInfo.prostatus==-1">
           <el-button
@@ -334,13 +338,19 @@
           }).catch(()=>{})
         },
         cxtj(){
+          let that=this
           this.$confirm('是否提交审核?','提示',{
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(()=>{
+            that.$api.axiosPost('/product/updateStatus',1,{proid:that.form1.id},function (res) {
+              that.$message.success('提交成功');
+              that.getdesc(that.form1.id)
+            })
           }).catch(()=>{})
         },
+
         phoneStr(str){
           if(str){
             let str2 = str.substr(0,3)+"****"+str.substr(7);
@@ -404,6 +414,7 @@
               }).then(()=>{
                 that.$api.axiosPost('/product/updateStatus',1,{proid:that.form1.id},function (res) {
                   that.$message.success('提交成功');
+                  that.getdesc(that.form1.id)
                 })
 
               }).catch((error)=>{

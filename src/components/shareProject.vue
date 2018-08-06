@@ -298,7 +298,7 @@
             this.suc = false;
             this.suc1 = false;
           }
-          let routeData=this.$router.resolve({path:'/indexWrap/myProjectIndex'})
+          let routeData=this.$router.resolve({path:'/indexWrap/myDownload',query:{prostatus:-2}})
           window.open(routeData.href, '_blank');
 
         },

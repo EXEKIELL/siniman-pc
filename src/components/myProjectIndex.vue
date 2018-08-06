@@ -6,7 +6,7 @@
         </div>
         <div class="w3-nav" v-loading.body="listLoading">
           <ul>
-            <li class="clearFix">
+            <li class="clearFix" style="display: none">
               <span class="nav-left">状态：</span>
               <div class="nav-right">
                 <div @click="prostatu(1)">
@@ -47,8 +47,8 @@
                 <div v-if="item.prostatus==1" class="share" style="top: -1px;left: 0; z-index: 200">
                   <button style="border: 0;background-color: rgba(255,0,0,0.8);" @click.stop="share(item.id)">分享到朋友圈</button>
                 </div>
-                <div v-if="item.prostatus==-1" class="share" style="top: -1px;right: 0; z-index: 200">
-                  <button style="border: 0;background-color: rgba(255,0,0,0.8);float: right;margin-right: 0" @click.stop="updateProstatus(index)">提交方案</button>
+                <div v-if="item.prostatus==-2" class="share" style="top: -1px;left: 0; z-index: 200">
+                  <button style="border: 0;background-color: rgba(255,0,0,0.8);float: right;margin-right: 0" @click.stop="updateProstatus(index)">提交审核</button>
                 </div>
                 <div v-if="item.renders.length>=1">
                   <div v-for="val in item.renders">
@@ -82,8 +82,8 @@
                 <div class="list1-tag" >
 
                   <template v-if="item.producttag[0].length>=1">
-              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="index1<4">
-                <template v-if="item1">
+              <span v-for="(item1,index1) in item.producttag[0]" :key="index1" v-if="item1 && index1<4">
+                <template>
                     {{item1.tagname}}
                 </template>
 
@@ -255,6 +255,9 @@
           this.$api.axiosPost('/product/updateStatus',1,{proid:id},function (res) {
               that.$message.success('提交成功');
               that.productList.list.splice(index,1)
+              if(that.productList.list.length<=0){
+                that.lodingstr="还没有相应的方案"
+              }
           })
         }
       },
@@ -273,8 +276,10 @@
 
       watch:{
         $route:function (val) {
+          window.location.reload()
           let status=val.query.prostatus
           this.prostatus=status
+          this.listLoading=true
           this.change(1)
         }
       },

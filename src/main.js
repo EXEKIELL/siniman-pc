@@ -18,7 +18,7 @@ import qs from 'qs'
 import md5 from 'js-md5'
 let Base64 = require('js-base64').Base64;
 
-
+import 'babel-polyfill'
 
 Vue.prototype.$qs = qs;
 Vue.prototype.$api = api;
