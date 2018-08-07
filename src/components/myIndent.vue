@@ -11,7 +11,7 @@
                 <div class="wrap_1">
                   <div class="w1_1">
                     <div class="w1-img">
-                      <img :src="item.openFace" alt="" onerror="this.src='./static/img/head05.png'" alt="">
+                      <img :src="item.openFace" alt="" onerror="this.src='./static/img/head05.png'">
                     </div>
                     <div class="nickname">昵称:{{ item.openName }}</div>
                   </div>

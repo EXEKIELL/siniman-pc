@@ -32,7 +32,7 @@
                     <template v-else>
                       <div @click="showSlide($event)">
 
-                        <a href="javascript:;" @click="tourl(item1.path,item1.status)" style="position: relative">
+                        <a href="javascript:;" @click="tourl(item.children[0].path,item.children[0].status)" style="position: relative">
                           <span></span>{{item.text}}<span class="icon"></span>
                         </a>
 
